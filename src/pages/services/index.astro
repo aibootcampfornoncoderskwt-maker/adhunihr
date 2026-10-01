@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ImageCredit from '../../components/ImageCredit.astro';
+import {services,industries} from '../../data/site';
+import ClientCopy from '../../components/ClientCopy.astro';
+import ClientFAQ from '../../components/ClientFAQ.astro';
+import client from '../../data/client-content.json';
+const copy=client.Services;
+---
+<Base title="Recruitment Services | Adhuni HR Solutions" description="Explore seven recruitment services: permanent hiring, project staffing, technical manpower, specialist recruitment, bulk hiring, leadership search and process support." image="/images/interview.webp" breadcrumbs={[{name:'Services',href:'/services/'}]}><PageHero eyebrow="Services" title="Recruitment built around your requirement." description="Flexible manpower sourcing and recruitment support tailored to role, workforce size, location, experience level and hiring timeline." image="interview.webp" alt="Recruiter discussing professional experience with a candidate" cta={{label:'Submit Your Requirement',href:'/employers/#requirement'}}/>
+<section class="section"><div class="container"><div class="catalog-cards">{services.map(service=><a class="catalog-card" href={`/services/${service.slug}/`}><img src={`/images/${service.image}`} alt={service.alt} width="1536" height="1024" loading="lazy"/><div><h2>{service.title}</h2><p>{service.description}</p><span class="text-link">Explore service →</span></div></a>)}</div></div></section>
+<section class="section surface"><div class="container"><div class="eyebrow">OUR RECRUITMENT PROCESS</div><ClientCopy text={copy['Our recruitment process']}/></div></section>
+<section class="section"><div class="container"><div class="eyebrow">INDUSTRIES</div><h2>Multi-industry by design.</h2><div class="catalog-sector-links">{industries.map(industry=><a href={`/industries/${industry.slug}/`}>{industry.title} →</a>)}</div></div></section>
+<section class="section surface"><div class="container"><h2>Frequently asked questions.</h2><ClientFAQ questions={copy.FAQs.split('\n').filter(line=>line.startsWith('- ')).map(line=>line.slice(2))}/></div></section>
+<section class="section"><div class="container"><ClientCopy text={copy['Call to action']}/><a class="button navy" href="/employers/">Submit Your Requirement →</a></div></section><div class="container"><ImageCredit image="interview.webp"/></div></Base>

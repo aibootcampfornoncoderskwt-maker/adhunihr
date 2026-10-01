@@ -1,0 +1,5 @@
+---
+interface Props {eyebrow:string;title:string;description:string;image:string;alt:string;parent?:{name:string;href:string};cta?:{label:string;href:string};}
+const {eyebrow,title,description,image,alt,parent,cta}=Astro.props;
+---
+<section class="page-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span>{parent&&<><a href={parent.href}>{parent.name}</a><span aria-hidden="true">/</span></>}<span aria-current="page">{eyebrow}</span></nav><div class="page-hero-grid"><div class="page-hero-copy"><div class="eyebrow light">{eyebrow}</div><h1>{title}</h1><p>{description}</p>{cta&&<a class="button amber" href={cta.href}>{cta.label} <span aria-hidden="true">↗</span></a>}</div><figure class="page-hero-visual"><img src={`/images/${image}`} alt={alt} width="1536" height="1024" fetchpriority="high"/><figcaption>People. Opportunities. Businesses.</figcaption></figure></div></div></section>

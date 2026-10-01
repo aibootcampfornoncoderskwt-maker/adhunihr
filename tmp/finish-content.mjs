@@ -1,0 +1,14 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const path='src/scripts/site.ts';
+let source=readFileSync(path,'utf8');
+source=source.replace("const data=Object.fromEntries(new FormData(form));const response=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});", "const data=new FormData(form);const upload=data.get('attachment');if(upload instanceof File&&upload.size>2*1024*1024)throw new Error('Attachment must be 2 MB or smaller.');const response=await fetch('/api/contact',{method:'POST',body:data});");
+source=source.replace("document.querySelector<HTMLFormElement>('#employer-panel form')", "document.querySelector<HTMLFormElement>('form:has(input[name=type][value=employer])')");
+source=source.replace("if (field && Array.from(field.options).some(option => option.value === value)) field.value = value;", "if (field && Array.from(field.options).some(option => option.value === value)) field.value = value;");
+writeFileSync(path,source);
+let home=readFileSync('src/pages/index.astro','utf8');
+home=home.replace('href="#contact">Find the Right Talent','href="/employers/#requirement">Find the Right Talent');
+writeFileSync('src/pages/index.astro',home);
+let header=readFileSync('src/components/Header.astro','utf8').replace('href="/#contact">Hire Talent','href="/employers/#requirement">Hire Talent');
+writeFileSync('src/components/Header.astro',header);
+let privacy=readFileSync('src/pages/privacy.astro','utf8').replace('The form asks for your name, email address, optional phone number, company or role, preferred market and enquiry details. Please do not include identity documents, passport numbers or sensitive personal information.','The forms ask for contact details and the information relevant to your hiring requirement, career profile or general enquiry. Candidates can provide qualifications, experience, skills, passport status and an optional CV. General enquiries can include an optional attachment. Please do not send passport scans, identity numbers or unrelated sensitive information.').replace('Enquiries are sent to the company’s configured email recipient to respond to the request.','Enquiries and optional attachments are sent to the company’s configured email recipient to respond to the request. Candidate information may be shared with relevant employers for recruitment purposes. Uploaded files are processed for email delivery; this website does not create a candidate account or a separate CV database.');
+writeFileSync('src/pages/privacy.astro',privacy);

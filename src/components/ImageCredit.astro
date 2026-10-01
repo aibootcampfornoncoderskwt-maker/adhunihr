@@ -1,0 +1,9 @@
+---
+const {image}=Astro.props;
+const credits:Record<string,{name:string;author:string;url:string;license:string;licenseUrl:string}>={
+'oil-refinery.webp':{name:'Hemmingstedt refinery',author:'Dirk Ingo Franke',url:'https://commons.wikimedia.org/wiki/File:Hemmingstedt_raffinerie_nacht_uebersichtlich.JPG',license:'CC BY-SA 2.0 DE',licenseUrl:'https://creativecommons.org/licenses/by-sa/2.0/de/'},
+'manufacturing.webp':{name:'Tesla Robot Dance',author:'Steve Jurvetson',url:'https://commons.wikimedia.org/wiki/File:Tesla_Robot_Dance_(7408451314).jpg',license:'CC BY 2.0',licenseUrl:'https://creativecommons.org/licenses/by/2.0/'},
+'hospitality.webp':{name:'Tables and Chairs in Modern Restaurant',author:'Vidal Balielo Jr.',url:'https://www.pexels.com/photo/tables-and-chairs-in-modern-restaurant-12688956/',license:'Pexels licence',licenseUrl:'https://www.pexels.com/license/'}};
+const credit=credits[image];
+---
+<details class="photo-credits"><summary>About this image</summary>{credit?<p><a href={credit.url}>{credit.name}</a> — {credit.author}. <a href={credit.licenseUrl}>{credit.license}</a>. Converted to WebP and cropped for display. An illustrative industry setting, not an Adhuni project.</p>:<p>AI-generated illustrative workplace scene. It does not depict actual Adhuni staff, offices, clients or projects.</p>}</details>

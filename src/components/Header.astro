@@ -1,0 +1,18 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import {services,industries} from '../data/site';
+const current=Astro.url.pathname;
+const serviceIcons:Record<string,string>={'permanent-recruitment':'person','contract-project-staffing':'calendar','skilled-technical-manpower':'helmet','professional-specialist-recruitment':'badge','high-volume-recruitment':'users','executive-leadership-search':'leadership','recruitment-process-support':'workflow'};
+const industryIcons:Record<string,string>={'engineering-technical':'tools','construction-infrastructure':'building','oil-gas-energy':'energy','manufacturing':'factory','hospitality':'hospitality','healthcare':'health','logistics-supply-chain':'truck','information-technology':'monitor','retail-ecommerce':'shop','banking-finance-corporate-services':'briefcase','facilities-management':'maintenance','education-professional-services':'book'};
+const groups=[{label:'Services',items:services,route:'services'},{label:'Industries',items:industries,route:'industries'}];
+---
+<div class="header-stack" id="header-stack"><div class="topbar"><div class="container topbar-inner"><a class="utility-email" href="mailto:info@adhunihr.com"><Icon name="mail" size={17}/><bdi dir="ltr">info@adhunihr.com</bdi></a><span class="utility-message">Multi-industry recruitment with a Middle East focus</span><div class="utility-actions"><SocialLinks/><div class="language-switch" role="group" aria-label="Choose language"><button type="button" data-language="en" lang="en" aria-pressed="true">English</button><span aria-hidden="true">/</span><button type="button" data-language="ar" lang="ar" aria-pressed="false">العربية</button></div></div></div></div>
+<header class="site-header"><div class="container nav-inner"><Logo/><button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation"><Icon name="menu"/></button><nav id="primary-nav" aria-label="Main navigation">
+<a href="/" class:list={[{active:current==='/'}]} aria-current={current==='/'?'page':undefined}>Home</a>
+{groups.map(group=><details class:list={['nav-dropdown','catalog-dropdown',{'nav-current':current.startsWith('/'+group.route+'/')}]}><summary>{group.label}<Icon name="chevron" size={13}/></summary><div class:list={["dropdown-panel","catalog-menu",`catalog-menu--${group.route}`]}><div class="catalog-menu-top"><span>{group.label==='Services'?'RECRUITMENT SOLUTIONS':'INDUSTRIES WE SERVE'}</span><a href={`/${group.route}/`}>View all {group.label.toLowerCase()} →</a></div><div class="catalog-menu-links">{group.items.map(item=><a href={`/${group.route}/${item.slug}/`} aria-current={current===`/${group.route}/${item.slug}/`?'page':undefined}><span class="catalog-item-icon"><Icon name={serviceIcons[item.slug] || industryIcons[item.slug] || "briefcase"} size={21}/></span><div class="catalog-item-copy"><strong>{item.title}</strong><span>{item.short}</span></div><span class="catalog-item-arrow"><Icon name="arrow" size={16}/></span></a>)}</div></div></details>)}
+{[{label:'Our Approach',href:'/our-approach/'},{label:'About',href:'/about/'},{label:'Contact',href:'/contact/'}].map(link=><a href={link.href} class:list={[{active:current===link.href}]} aria-current={current===link.href?'page':undefined}>{link.label}</a>)}
+<a class="button navy nav-cta" href="/employers/#requirement">Hire Talent <span class="cta-arrow"><Icon name="arrow" size={22}/></span></a></nav></div></header></div>
+
+

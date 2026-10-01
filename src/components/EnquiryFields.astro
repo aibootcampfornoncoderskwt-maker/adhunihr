@@ -1,0 +1,9 @@
+---
+import {countries} from '../data/site';
+interface Field {name:string;label:string;required:boolean;type:string;placeholder:string;}
+interface Props {items:Field[];}
+const {items}=Astro.props;
+---
+{items.map(field=><label class:list={[{full:field.type==='textarea'||field.type==='file'}]}>{field.label}{field.required&&<span aria-hidden="true"> *</span>}
+{field.type==='textarea'?<textarea name={field.name} required={field.required} rows="4" maxlength="4000" placeholder={field.placeholder}/>:field.type==='select'?<select name={field.name} required={field.required}><option value="">{field.placeholder}</option>{(field.name==='country'?[...countries.map(c=>c.name),'India','Other']:['Employer requirement','Candidate enquiry','General enquiry','Request a call']).map(option=><option value={option}>{option}</option>)}</select>:field.type==='file'?<><input name="attachment" type="file" accept=".pdf,.doc,.docx"/><span class="small-note">PDF, DOC or DOCX. Maximum 2 MB.</span></>:<input name={field.name} type={field.type as "text"|"email"|"tel"|"number"|"date"} required={field.required} placeholder={field.type==='date'?undefined:field.placeholder} min={field.type==='number'?1:undefined} max={field.type==='number'?100000:undefined} step={field.type==='number'?1:undefined} maxlength={field.type==='email'?254:500} autocomplete={field.name==='name'?'name':field.name==='email'?'email':field.name==='phone'?'tel':field.name==='company'?'organization':undefined}/>}
+</label>)}

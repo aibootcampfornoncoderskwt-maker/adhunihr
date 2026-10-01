@@ -1,0 +1,20 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import {services,industries} from '../data/site';
+const current=Astro.url.pathname;
+---
+<div class="header-stack" id="header-stack">
+<div class="topbar"><div class="container topbar-inner"><a class="utility-email" href="mailto:info@adhunihr.com"><Icon name="mail" size={17}/><bdi dir="ltr">info@adhunihr.com</bdi></a><span class="utility-message">Connecting Indian talent with all six GCC markets</span><div class="utility-actions"><SocialLinks/><div class="language-switch" role="group" aria-label="Choose language"><button type="button" data-language="en" lang="en" aria-pressed="true">English</button><span aria-hidden="true">/</span><button type="button" data-language="ar" lang="ar" aria-pressed="false">العربية</button></div></div></div></div>
+<header class="site-header">
+ <div class="container nav-inner"><Logo/><button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation"><Icon name="menu"/></button>
+ <nav id="primary-nav" aria-label="Main navigation">
+  <a href="/" class:list={[{active:current==='/'}]}>Home</a>
+  {[['Services',services,'services'],['Industries',industries,'industries']].map(([label,items,route])=><details class="nav-dropdown"><summary>{label}<Icon name="chevron" size={13}/></summary><div class="dropdown-panel">{(items as typeof services).map(item=><a href={`/${route}/${item.slug}/`}><strong>{item.title}</strong><span>{item.short}</span></a>)}</div></details>)}
+  <a href="/#approach">Our Approach</a><a href="/#about">About</a><a href="/#contact">Contact</a>
+  <a class="button navy nav-cta" href="/#contact">Hire Talent <span class="cta-arrow"><Icon name="arrow" size={22}/></span></a>
+ </nav></div>
+</header>
+
+</div>

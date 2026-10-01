@@ -1,0 +1,5 @@
+---
+import BrandArtwork from './BrandArtwork.astro';
+const {footer=false}=Astro.props;
+---
+<a href="/" class:list={['brand-logo',{ 'footer-logo':footer }]} aria-label="Adhuni HR Solutions home"><BrandArtwork reversed={footer}/></a>

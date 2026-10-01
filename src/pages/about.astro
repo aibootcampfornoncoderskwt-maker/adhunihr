@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ImageCredit from '../components/ImageCredit.astro';
+import ClientCopy from '../components/ClientCopy.astro';
+import client from '../data/client-content.json';
+const copy=client['About Us'];
+---
+<Base title="About Adhuni | Adhuni HR Solutions" description="People. Opportunities. Businesses. Learn about Adhuni’s recruitment approach, mission and values." image="/images/team.webp" pageType="AboutPage" breadcrumbs={[{name:'About',href:'/about/'}]}><PageHero eyebrow="About" title="People. Opportunities. Businesses." description="Effective recruitment starts with understanding people and businesses — their requirements, expectations and goals." image="team.webp" alt="Professionals exchanging ideas during a team discussion" cta={{label:'Our recruitment approach',href:'/our-approach/'}}/>
+<section class="section"><div class="container split"><img class="section-image" src="/images/interview.webp" width="1500" height="1000" alt="Recruitment discussion"/><div><h2>Who We Are</h2><ClientCopy text={copy['Who We Are']}/></div></div></section>
+<section class="section surface"><div class="container split"><div><div class="eyebrow">OUR VISION</div><ClientCopy text={copy['Our vision']}/></div><div><div class="eyebrow">OUR MISSION</div><ClientCopy text={copy['Our mission']}/></div></div></section>
+<section class="section"><div class="container"><div class="eyebrow">OUR VALUES</div><ClientCopy text={copy['Our values']}/></div></section>
+<section class="section surface"><div class="container"><div class="eyebrow">MIDDLE EAST FOCUS</div><ClientCopy text={copy['Middle East focus']}/></div></section>
+<section class="section"><div class="container"><ClientCopy text={copy['Call to action']}/><div class="client-actions"><a class="button navy" href="/employers/">For Employers →</a><a class="button amber" href="/candidates/">For Candidates →</a></div></div></section><div class="container"><ImageCredit image="team.webp"/></div></Base>

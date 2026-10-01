@@ -1,0 +1,41 @@
+{
+  "tool": "Built-in image_gen",
+  "assets": [
+    {
+      "name": "healthcare",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape editorial website sector photograph, 1536x1024. Two adult male medical professionals, one Indian physician wearing a white coat and one clinical technician in navy scrubs, consulting a tablet in a bright modern hospital corridor, no patient, no readable patient data, candid natural expressions. Realistic photography with natural skin texture, credible anatomy and workplace equipment, restrained navy and warm neutral colour palette, uncluttered composition with subjects centrally framed for responsive cropping. No logos, no visible brand, no text overlay, no watermark. Illustrative recruitment sector scene, not a real company staff photograph.",
+      "source": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a0f343-e457-7b91-958b-0dc123d01fc3\\exec-9546e3f0-7f84-4553-803a-661e3fba4053.png",
+      "destination": "public/images/sector-healthcare.webp"
+    },
+    {
+      "name": "education",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape editorial website sector photograph, 1536x1024. An adult male Indian instructor guiding two adult male trainees at a modern vocational classroom table, notebooks and laptop, daylight, no children, authentic professional learning context. Realistic photography with natural skin texture, credible anatomy and workplace equipment, restrained navy and warm neutral colour palette, uncluttered composition with subjects centrally framed for responsive cropping. No logos, no visible brand, no text overlay, no watermark. Illustrative recruitment sector scene, not a real company staff photograph.",
+      "source": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a0f343-e457-7b91-958b-0dc123d01fc3\\exec-c0685085-483d-43ee-94e3-86f9bab4a3c0.png",
+      "destination": "public/images/sector-education.webp"
+    },
+    {
+      "name": "technology",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape editorial website sector photograph, 1536x1024. Two adult male IT infrastructure engineers inspecting racks in a modern data centre, one using a tablet, neat cabling, subtle cool lighting, realistic equipment, no dramatic science fiction. Realistic photography with natural skin texture, credible anatomy and workplace equipment, restrained navy and warm neutral colour palette, uncluttered composition with subjects centrally framed for responsive cropping. No logos, no visible brand, no text overlay, no watermark. Illustrative recruitment sector scene, not a real company staff photograph.",
+      "source": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a0f343-e457-7b91-958b-0dc123d01fc3\\exec-ae8e1e10-f5e6-4771-a46f-fcc501285077.png",
+      "destination": "public/images/sector-technology.webp"
+    },
+    {
+      "name": "retail",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape editorial website sector photograph, 1536x1024. An adult male retail supervisor and adult male associate checking products and stock using a handheld scanner in a well organised contemporary store, natural light, unbranded packaging. Realistic photography with natural skin texture, credible anatomy and workplace equipment, restrained navy and warm neutral colour palette, uncluttered composition with subjects centrally framed for responsive cropping. No logos, no visible brand, no text overlay, no watermark. Illustrative recruitment sector scene, not a real company staff photograph.",
+      "source": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a0f343-e457-7b91-958b-0dc123d01fc3\\exec-a9c1924c-a191-4edd-8cdd-a38353836851.png",
+      "destination": "public/images/sector-retail.webp"
+    },
+    {
+      "name": "facilities",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape editorial website sector photograph, 1536x1024. Two adult male facilities technicians inspecting an HVAC plant room in a modern commercial building, navy workwear and appropriate protective equipment, one checks a maintenance checklist, equipment safely enclosed. Realistic photography with natural skin texture, credible anatomy and workplace equipment, restrained navy and warm neutral colour palette, uncluttered composition with subjects centrally framed for responsive cropping. No logos, no visible brand, no text overlay, no watermark. Illustrative recruitment sector scene, not a real company staff photograph.",
+      "source": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a0f343-e457-7b91-958b-0dc123d01fc3\\exec-d67e1df7-0192-41ab-8b0a-c1dea1bf426c.png",
+      "destination": "public/images/sector-facilities.webp"
+    },
+    {
+      "name": "oil-gas",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape recruitment website sector photograph, 1536x1024. Primary request: a clear daylight oil and gas refinery scene with two adult technicians in appropriate PPE reviewing a clipboard on a safe refinery walkway. Subjects wear white hard hats, clear safety glasses and navy or orange long-sleeved protective coveralls. Background clearly shows realistic processing towers, silver pipes and industrial steel structures in a modern Gulf-region refinery. Bright natural daylight, balanced exposure, realistic skin and equipment textures, professional candid editorial photography. Medium-wide composition, both workers grouped near the centre, refinery infrastructure readable behind them; keep heads and clipboard inside central area for both 3:2 and square crops. No large empty sky, no dark night scene, no smoke, no logos, no text overlays, no watermark. Illustrative industry scene, not actual Adhuni staff or projects.",
+      "source": "C:/Users/ADMIN/.codex/generated_images/01a0f343-e457-7b91-958b-0dc123d01fc3/exec-d6f1a024-d593-422a-99d6-92a2693ca086.png",
+      "destination": "public/images/sector-oil-gas.webp"
+    }
+  ]
+}

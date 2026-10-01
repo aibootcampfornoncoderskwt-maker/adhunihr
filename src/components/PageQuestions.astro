@@ -1,0 +1,5 @@
+---
+interface Props {questions:string[][];}
+const {questions}=Astro.props;
+---
+<div class="faq-list page-questions">{questions.map(([question,answer],index)=><details open={index===0}><summary>{question}<span class="faq-plus" aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>

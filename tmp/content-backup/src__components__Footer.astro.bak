@@ -1,0 +1,17 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import SocialLinks from './SocialLinks.astro';
+import {services,countries} from '../data/site';
+---
+<footer id="site-footer" class="site-footer footer-refined"><div class="container">
+<div class="footer-invitation"><div><span class="eyebrow light">PEOPLE. POSSIBILITY. THE NEXT STEP.</span><h2>Your next hire starts<br/>with a conversation.</h2></div><a class="button amber" href="/#contact">Discuss your hiring needs</a></div>
+<div class="footer-grid">
+<div class="footer-brand"><Logo footer/><p>Connecting Indian talent with businesses across all six GCC markets.</p><SocialLinks/></div>
+<div><h3>Explore</h3><a href="/">Home</a><a href="/#about">About Adhuni</a><a href="/#approach">Our approach</a><a href="/#candidates">For candidates</a><a href="/#contact">Contact</a></div>
+<div><h3>Recruitment</h3>{services.map(s=><a href={`/services/${s.slug}/`}>{s.title}</a>)}</div>
+<div class="footer-contact"><h3>Let’s connect</h3><a class="footer-email" href="mailto:info@adhunihr.com"><span class="footer-contact-icon"><Icon name="mail" size={20}/></span><span><small>Email our team</small><bdi dir="ltr">info@adhunihr.com</bdi></span></a><p>Tell us the role, the market and the timing.</p><a class="footer-contact-link" href="/#contact">Start a conversation</a></div>
+</div>
+<div class="footer-markets"><span class="footer-markets-title">Our GCC markets</span><nav aria-label="GCC recruitment markets">{countries.map(c=><a class="footer-market" href={`/locations/${c.slug}/`}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</a>)}</nav></div>
+<div class="footer-bottom"><span>© {new Date().getFullYear()} Adhuni HR Solutions.</span><a href="/privacy/">Privacy notice</a><a class="footer-top-link" href="#top">Back to top <span aria-hidden="true">↑</span></a><a href="https://www.ticodetech.com/" target="_blank" rel="noopener noreferrer">Developed by <strong>Ticode Technologies</strong></a></div>
+</div></footer>

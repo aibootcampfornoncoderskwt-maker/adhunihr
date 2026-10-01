@@ -1,0 +1,21 @@
+---
+interface Props { text: string; }
+const {text}=Astro.props;
+// Source copy is rendered as text, never injected as HTML.
+const blocks=text.split(/\n\n+/).filter(block=>! /^(Source image:|Note:|Answers:|Visible advisory|>|Fields \(|These are source|The supplied content|\|)/.test(block));
+const clean=(value:string)=>value.replace(/^\*\*|\*\*$/g,'');
+---
+<div class="client-copy">
+{blocks.map(block=> {
+ if(block.startsWith('Eyebrow:')) return <div class="eyebrow">{block.slice(9)}</div>;
+ if(block.startsWith('Heading:')) return <h2>{block.slice(9)}</h2>;
+ if(block.startsWith('Card heading:')) return <h3>{block.slice(14)}</h3>;
+ if(/^(Button|Buttons|Image overlay|Checkbox):/.test(block)) return null;
+ if(block.startsWith('Image overlay subtitle:')) return null;
+ if(block.startsWith('Countries:')) return <ul class="client-tags">{block.slice(11).replace(/\.$/,'').split('; ').map(item=><li>{item}</li>)}</ul>;
+ if(/^\d+\. \*\*/.test(block)) return <div class="client-card-grid">{block.split('\n').map(line=>{const match=line.match(/^\d+\. \*\*(.+?):\*\* (.+)$/);return match && <article><h3>{match[1]}</h3><p>{match[2]}</p></article>;})}</div>;
+ if(/^\d+\. /.test(block)) return <ol class="client-steps">{block.split('\n').map(line=><li>{line.replace(/^\d+\. /,'')}</li>)}</ol>;
+ if(block.startsWith('- ')) return <ul class="client-list">{block.split('\n').map(line=><li>{line.slice(2)}</li>)}</ul>;
+ return <p>{clean(block.replace(/^Notice: /,''))}</p>;
+})}
+</div>

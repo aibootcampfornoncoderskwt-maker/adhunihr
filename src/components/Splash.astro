@@ -1,0 +1,43 @@
+---
+import BrandArtwork from './BrandArtwork.astro';
+---
+<script is:inline>
+  (() => {
+    if (location.pathname === '/' || location.pathname === '/index.html') {
+      document.documentElement.dataset.intro='active';
+    }
+  })();
+</script>
+<div class="brand-splash" id="brand-splash" role="dialog" aria-modal="true" aria-label="Welcome to Adhuni HR Solutions">
+  <div class="splash-centre">
+    <BrandArtwork class="splash-logo"/>
+    <div class="splash-under-logo"><div class="splash-track" role="progressbar" aria-label="Preparing website"><span></span></div><span class="splash-status" role="status">Connecting people and opportunity</span></div>
+  </div>
+</div>
+<script is:inline>
+(() => {
+  const root=document.documentElement;
+  const splash=document.getElementById('brand-splash');
+  if(!splash || root.dataset.intro!=='active'){splash?.remove();return;}
+  const start=performance.now();
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let done=false,deadline;
+  function finish(){
+    if(done)return;done=true;clearTimeout(deadline);
+    splash.classList.add('splash-complete');
+    const hadFocus=splash.contains(document.activeElement);
+    setTimeout(()=>{
+      root.removeAttribute('data-intro');
+      const shell=document.getElementById('site-shell');if(shell)shell.inert=false;
+      splash.remove();document.removeEventListener('keydown',onKey);
+      if(hadFocus)document.querySelector('.skip-link')?.focus({preventScroll:true});
+    },reduced?0:600);
+  }
+  function onKey(e){if(e.key==='Escape')finish();if(e.key==='Tab'){e.preventDefault();}}
+  document.addEventListener('keydown',onKey);
+  function ready(){setTimeout(finish,Math.max(0,(reduced?1200:2200)-(performance.now()-start)));}
+  if(document.readyState==='complete')ready();else window.addEventListener('load',ready,{once:true});
+  deadline=setTimeout(finish,3500);
+  window.addEventListener('pageshow',e=>{if(e.persisted)finish();});
+})();
+</script>

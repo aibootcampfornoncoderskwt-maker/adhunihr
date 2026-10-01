@@ -1,0 +1,6 @@
+---
+import Icon from './Icon.astro';
+import {socialLinks} from '../data/contact';
+---
+<div class="social-follow"><span class="follow-label">Follow us:</span><div class="social-links" aria-label="Social media">{socialLinks.map(s=>s.url?<a href={s.url} aria-label={`Adhuni on ${s.name}`} target="_blank" rel="noopener noreferrer"><Icon name={s.icon} size={19}/></a>:<span class="social-unconfigured" role="img" aria-label={`${s.name} — profile link pending`} title={`${s.name} profile link pending`}><Icon name={s.icon} size={19}/></span>)}</div>
+</div>

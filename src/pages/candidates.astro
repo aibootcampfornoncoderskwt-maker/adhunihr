@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import ClientCopy from '../components/ClientCopy.astro';
+import ClientFAQ from '../components/ClientFAQ.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import client from '../data/client-content.json';
+const copy=client['For Candidates'];
+---
+<Base title="For Candidates | Adhuni HR Solutions" description="Submit your CV and profile details for suitable recruitment opportunities."><section class="detail-hero"><div class="container"><div class="eyebrow light">FOR CANDIDATES</div><h1>Your Next Opportunity Could Start Here.</h1><p>Submit your CV and profile details so our recruitment team can consider your experience for suitable opportunities.</p><a href="#registration" class="button amber">Submit Your CV →</a></div></section>
+<section id="how-it-works" class="section"><div class="container"><div class="eyebrow">HOW IT WORKS</div><ClientCopy text={copy['How it works']}/></div></section>
+<section id="registration" class="section surface"><div class="container client-registration"><div><div class="eyebrow">CANDIDATE REGISTRATION</div><h2>Put your profile forward.</h2><p>Keep your information accurate and your CV updated. Include relevant technical skills, certifications and licences.</p><p class="client-notice">Submitting your CV does not guarantee employment. Selection depends on employer requirements and the recruitment process.</p></div><div class="contact-workspace"><EnquiryForm type="candidate"/></div></div></section>
+<section class="section"><div class="container"><div class="eyebrow">CANDIDATE GUIDELINES</div><ClientCopy text={copy['Candidate guidelines']}/></div></section>
+<section class="section surface"><div class="container"><div class="eyebrow">CANDIDATE TRUST &amp; SAFETY</div><h2>Recruitment should be built on trust.</h2><p class="section-intro">Adhuni HR Solutions aims to maintain a professional and transparent recruitment experience. Candidates should receive clear information about the opportunity, employer process and relevant next steps.</p><ClientFAQ questions={copy['Candidate trust & safety'].split('\n').filter(line=>line.startsWith('- ')).map(line=>line.slice(2))}/></div></section>
+{import.meta.env.PUBLIC_CONTACT_ENABLED==='true'&&import.meta.env.PUBLIC_TURNSTILE_SITE_KEY&&<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</Base>

@@ -1,0 +1,30 @@
+---
+import fields from '../data/enquiry-fields.json';
+import EnquiryFields from './EnquiryFields.astro';
+import {services} from '../data/site';
+interface Props {type:'employer'|'candidate'|'general';}
+const {type}=Astro.props;
+const enabled=import.meta.env.PUBLIC_CONTACT_ENABLED==='true';
+const key=import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+const button={employer:'Submit Requirement',candidate:'Submit Your CV',general:'Send Enquiry'}[type];
+---
+<form class="contact-form client-form" data-contact-form data-enabled={String(enabled)} method="post" action="/api/contact" enctype="multipart/form-data">
+<input type="hidden" name="type" value={type}/>
+{type==='employer'?<>
+<p class="employer-form-intro">Start with the essentials. Fields marked * are required.</p>
+<fieldset class="enquiry-group"><legend><span>01</span> Your details</legend><div class="form-grid"><EnquiryFields items={fields.employer.filter(f=>['company','name','designation','email','phone'].includes(f.name))}/></div></fieldset>
+<fieldset class="enquiry-group"><legend><span>02</span> Hiring requirement</legend><div class="form-grid">
+<label class="full">Recruitment service <span>(optional)</span><select name="service"><option value="">Help me choose</option>{services.map(service=><option value={service.slug}>{service.title}</option>)}</select></label>
+<EnquiryFields items={fields.employer.filter(f=>['country','industry','position_job_title','number_of_vacancies'].includes(f.name))}/>
+</div></fieldset>
+<details class="enquiry-optional"><summary>Additional information <span>Optional — add role details and timing</span></summary><div class="form-grid"><EnquiryFields items={fields.employer.filter(f=>['qualification','experience_required','work_location','salary_benefits','expected_joining_date','job_description','additional_requirements'].includes(f.name))}/></div></details>
+</>:<div class="form-grid"><EnquiryFields items={fields[type]}/></div>}
+<div class="form-grid">
+<label class="consent full"><input type="checkbox" name="consent" required/><span>I acknowledge that the information provided may be used to respond to my enquiry in accordance with privacy and recruitment practices. I have read the <a href="/privacy/">privacy notice</a>.</span></label>
+<div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"/></label></div></div>
+{enabled&&key&&<div class="cf-turnstile" data-sitekey={key}></div>}
+<button class="button navy submit-button" type="submit">{button} →</button><p class="form-status" role="status" aria-live="polite"></p>
+{type==='candidate'&&<p class="form-note">Information may be used to consider you for relevant opportunities and communicated to employers as necessary for recruitment purposes, in accordance with applicable privacy requirements.</p>}
+{type==='employer'&&<p class="form-note">By submitting, you acknowledge that the information may be used to respond to your enquiry and evaluate recruitment opportunities.</p>}
+{!enabled&&<p class="form-note">Enquiries are not being collected on this preview. The form will be available when the website launches.</p>}
+</form>

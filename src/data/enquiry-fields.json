@@ -1,0 +1,281 @@
+{
+  "employer": [
+    {
+      "name": "company",
+      "label": "Company Name",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. Al-Noor Enterprises"
+    },
+    {
+      "name": "name",
+      "label": "Contact Person",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. John Doe"
+    },
+    {
+      "name": "designation",
+      "label": "Designation",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. HR Director / Project Manager"
+    },
+    {
+      "name": "email",
+      "label": "Email",
+      "required": true,
+      "type": "email",
+      "placeholder": "e.g. hr@company.com"
+    },
+    {
+      "name": "phone",
+      "label": "Phone / WhatsApp",
+      "required": true,
+      "type": "tel",
+      "placeholder": "e.g. +971 50 123 4567"
+    },
+    {
+      "name": "country",
+      "label": "Country",
+      "required": true,
+      "type": "select",
+      "placeholder": "Select Country"
+    },
+    {
+      "name": "industry",
+      "label": "Industry",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. Construction & Infrastructure"
+    },
+    {
+      "name": "position_job_title",
+      "label": "Position / Job Title",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. Senior Electrical Engineer"
+    },
+    {
+      "name": "number_of_vacancies",
+      "label": "Number of Vacancies",
+      "required": true,
+      "type": "number",
+      "placeholder": "1"
+    },
+    {
+      "name": "qualification",
+      "label": "Qualification",
+      "required": false,
+      "type": "text",
+      "placeholder": ""
+    },
+    {
+      "name": "experience_required",
+      "label": "Experience Required",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. 5-8 years Gulf experience"
+    },
+    {
+      "name": "work_location",
+      "label": "Work Location",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. Riyadh, KSA"
+    },
+    {
+      "name": "salary_benefits",
+      "label": "Salary / Benefits",
+      "required": false,
+      "type": "text",
+      "placeholder": ""
+    },
+    {
+      "name": "expected_joining_date",
+      "label": "Expected Joining Date",
+      "required": false,
+      "type": "date",
+      "placeholder": "mm/dd/yyyy"
+    },
+    {
+      "name": "job_description",
+      "label": "Job Description",
+      "required": false,
+      "type": "textarea",
+      "placeholder": "Summarize key responsibilities, deliverables, or team structure..."
+    },
+    {
+      "name": "additional_requirements",
+      "label": "Additional Requirements",
+      "required": false,
+      "type": "textarea",
+      "placeholder": "Specific licences, software proficiency, immediate mobilisation, etc."
+    }
+  ],
+  "candidate": [
+    {
+      "name": "name",
+      "label": "Full Name",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. Mohammed Ahmed"
+    },
+    {
+      "name": "phone",
+      "label": "Phone / WhatsApp",
+      "required": true,
+      "type": "tel",
+      "placeholder": "e.g. +91 98765 43210"
+    },
+    {
+      "name": "email",
+      "label": "Email",
+      "required": true,
+      "type": "email",
+      "placeholder": ""
+    },
+    {
+      "name": "current_location",
+      "label": "Current Location",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. Mumbai, India"
+    },
+    {
+      "name": "country",
+      "label": "Preferred Country",
+      "required": true,
+      "type": "select",
+      "placeholder": "Select Country"
+    },
+    {
+      "name": "job_category",
+      "label": "Job Category",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. Mechanical Engineer / Welder / Accounts"
+    },
+    {
+      "name": "current_most_recent_designation",
+      "label": "Current / Most Recent Designation",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. Site Supervisor"
+    },
+    {
+      "name": "total_experience",
+      "label": "Total Experience",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. 6 Years (3 yrs Gulf)"
+    },
+    {
+      "name": "highest_qualification",
+      "label": "Highest Qualification",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. Bachelor of Engineering"
+    },
+    {
+      "name": "passport_status",
+      "label": "Passport Status",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. Valid until 2029 (ECNR)"
+    },
+    {
+      "name": "availability_notice_period",
+      "label": "Availability / Notice Period",
+      "required": false,
+      "type": "text",
+      "placeholder": "e.g. Immediate / 30 Days"
+    },
+    {
+      "name": "attachment",
+      "label": "CV PDF/DOC Upload",
+      "required": false,
+      "type": "file",
+      "placeholder": "Choose File; No file chosen"
+    },
+    {
+      "name": "key_skills",
+      "label": "Key Skills",
+      "required": false,
+      "type": "textarea",
+      "placeholder": "Key competencies, certifications, software tools, machine operations..."
+    },
+    {
+      "name": "additional_information",
+      "label": "Additional Information",
+      "required": false,
+      "type": "textarea",
+      "placeholder": "Any specific preferences or requirements..."
+    }
+  ],
+  "general": [
+    {
+      "name": "name",
+      "label": "Name",
+      "required": true,
+      "type": "text",
+      "placeholder": "Your full name"
+    },
+    {
+      "name": "company",
+      "label": "Company Name",
+      "required": false,
+      "type": "text",
+      "placeholder": "Organization (if applicable)"
+    },
+    {
+      "name": "email",
+      "label": "Email",
+      "required": true,
+      "type": "email",
+      "placeholder": "your.email@example.com"
+    },
+    {
+      "name": "phone",
+      "label": "Phone / WhatsApp",
+      "required": true,
+      "type": "tel",
+      "placeholder": "+91 / +971 ..."
+    },
+    {
+      "name": "country",
+      "label": "Country",
+      "required": true,
+      "type": "text",
+      "placeholder": "e.g. UAE / Saudi Arabia / India"
+    },
+    {
+      "name": "enquiry_type",
+      "label": "Enquiry Type",
+      "required": true,
+      "type": "select",
+      "placeholder": "Select Enquiry Type"
+    },
+    {
+      "name": "subject",
+      "label": "Subject",
+      "required": false,
+      "type": "text",
+      "placeholder": "Brief topic of your message"
+    },
+    {
+      "name": "message",
+      "label": "Message",
+      "required": true,
+      "type": "textarea",
+      "placeholder": "Please provide specifics regarding your requirement, timeline, or enquiry..."
+    },
+    {
+      "name": "attachment",
+      "label": "Attachment (Optional)",
+      "required": false,
+      "type": "file",
+      "placeholder": "Choose File; No file chosen"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+---
+import EnquiryForm from './EnquiryForm.astro';
+interface Props {showHeading?:boolean;}
+const {showHeading=true}=Astro.props;
+---
+<section id="contact" class="section contact-section"><div class="container">{showHeading&&<div class="client-contact-heading"><div class="eyebrow light">CONTACT US</div><h2>Let’s Start a Conversation.</h2><p>Whether you are looking for the right people for your business or exploring your next career opportunity, our team is ready to hear from you.</p></div>}
+<div class="client-contact-paths"><a href="/employers/#requirement"><h3>For Employers</h3><p>Have a manpower requirement? Send us the details of your vacancy, workforce size and expected timeline.</p><span>Submit Your Requirement →</span></a><a href="/candidates/#registration"><h3>For Candidates</h3><p>Looking for an opportunity? Submit your CV and profile details for consideration against suitable vacancies.</p><span>Submit Your CV →</span></a><a href="#general-enquiry"><h3>General Enquiries</h3><p>Tell us what you need, and we will direct your enquiry to the appropriate recruitment team.</p><span>Write to Us →</span></a></div>
+<div class="contact-wrap"><div class="contact-intro"><div class="eyebrow light">GET IN TOUCH</div><h2>Tell us what you need.</h2><p>For faster recruitment discussions, employers should include the job title, number of vacancies, required experience, location and expected joining date.</p><div class="contact-prep"><h3>Ready when you are.</h3><a href="mailto:info@adhunihr.com">info@adhunihr.com</a></div></div><div id="general-enquiry" class="contact-workspace"><EnquiryForm type="general"/></div></div></div></section>
+{import.meta.env.PUBLIC_CONTACT_ENABLED==='true'&&import.meta.env.PUBLIC_TURNSTILE_SITE_KEY&&<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}

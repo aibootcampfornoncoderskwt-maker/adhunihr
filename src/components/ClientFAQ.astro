@@ -1,0 +1,6 @@
+---
+interface Props { questions: string[]; }
+const {questions}=Astro.props;
+// Answers are deliberately not invented from closed screenshot accordions.
+---
+<div class="client-questions"><ul>{questions.map(question=><li><span>{question}</span><a href="/contact/">Ask our team <span aria-hidden="true">↗</span></a></li>)}</ul></div>

@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import ts from 'typescript';
+const fields=JSON.parse(readFileSync('src/data/enquiry-fields.json','utf8'));
+let source=readFileSync('src/pages/api/contact.ts','utf8').replace("import fields from '../../data/enquiry-fields.json';",`const fields=${JSON.stringify(fields)};`).replace("import { countries } from '../../data/site';","const countries=[{name:'Kuwait'}];").replaceAll('import.meta.env','({})');
+const code=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
+const {POST}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+Object.assign(process.env,{PUBLIC_CONTACT_ENABLED:'true',RESEND_API_KEY:'test-key',CONTACT_FROM:'test@example.com',CONTACT_TO:'recipient@example.com',TURNSTILE_SECRET_KEY:'test-secret'});
+let calls=[];let captchaOK=true;let deliveryOK=true;
+globalThis.fetch=async(url,options)=>{calls.push({url,options});return url.includes('siteverify')?Response.json({success:captchaOK,hostname:'localhost'}):Response.json({}, {status:deliveryOK?200:502});};
+const make=type=>{const form=new FormData();form.set('type',type);form.set('consent','on');form.set('cf-turnstile-response','test-token');for(const f of fields[type])if(f.type!=='file')form.set(f.name,f.name==='email'?'test@example.com':f.name==='country'?'Kuwait':f.type==='number'?'3':f.type==='date'?'2026-11-01':f.type==='select'?'General enquiry':'Test details');return form;};
+const send=(form,origin='http://localhost')=>POST({request:new Request('http://localhost/api/contact',{method:'POST',headers:{Origin:origin},body:form})});
+for(const type of Object.keys(fields)){
+ calls=[];assert.equal((await send(make(type))).status,200);assert.equal(calls.length,2);
+ const delivered=JSON.parse(calls[1].options.body);
+ for(const f of fields[type])if(f.type!=='file')assert.ok(delivered.text.includes(f.label+':'),'Field missing from email: '+f.label);
+}
+let form=make('candidate');form.delete('current_location');assert.equal((await send(form)).status,400);
+form=make('general');form.delete('consent');assert.equal((await send(form)).status,400);
+assert.equal((await send(make('general'),'https://other.example')).status,403);
+form=make('employer');form.set('number_of_vacancies','-1');assert.equal((await send(form)).status,400);
+form=make('employer');form.set('country','Unknown country');assert.equal((await send(form)).status,400);
+form=make('general');form.set('email','broken-address');assert.equal((await send(form)).status,400);
+form=make('general');form.set('message','x'.repeat(4001));assert.equal((await send(form)).status,400);
+form=make('candidate');form.set('attachment',new File(['not a PDF'],'cv.pdf'));assert.equal((await send(form)).status,400);
+form=make('candidate');form.set('attachment',new File(['%PDF-1.4\nTest fixture'],'cv.pdf'));calls=[];assert.equal((await send(form)).status,200);assert.equal(JSON.parse(calls[1].options.body).attachments[0].filename,'candidate-attachment.pdf');
+form=make('general');form.set('attachment',new File([new Uint8Array(2*1024*1024+1)],'large.pdf'));assert.equal((await send(form)).status,413);
+captchaOK=false;calls=[];assert.equal((await send(make('general'))).status,400);assert.equal(calls.length,1);captchaOK=true;
+deliveryOK=false;assert.equal((await send(make('general'))).status,502);deliveryOK=true;
+process.env.PUBLIC_CONTACT_ENABLED='false';calls=[];assert.equal((await send(make('candidate'))).status,503);assert.equal(calls.length,0);
+console.log('PASS: all three forms deliver every field; consent, origin, required fields, email, country, length, vacancy count, uploads, captcha, delivery failure and disabled mode checked. No external messages sent.');
