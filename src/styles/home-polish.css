@@ -377,14 +377,14 @@ html[dir=rtl] .svc-all:hover svg{transform:rotate(180deg) translateX(4px)}
 .svc-list li{border-bottom:1px solid var(--line)}
 .svc-row{--sx:4px;display:grid;grid-template-columns:64px minmax(0,1fr) 32px;align-items:center;gap:8px;padding:28px 16px;border-radius:12px;transition:background-color .2s ease}
 html[dir=rtl] .svc-row{--sx:-4px}
-.svc-num{font-size:15px;font-weight:600;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:rgba(165,117,17,.62);transition:color .2s ease}
+.svc-num{font-size:15px;font-weight:600;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:#8f650d;transition:color .2s ease}
 .svc-body{display:block;transition:transform .2s ease}
 .svc-body h3{margin:0;font-size:22px;font-weight:600;line-height:1.3;letter-spacing:-.012em;color:var(--navy-ink)}
 .svc-body p{margin:6px 0 0;font-size:16px;line-height:1.55;color:#4b5a6e}
 .svc-arrow{display:grid;place-items:center;justify-self:end;color:var(--gold-ink);transition:transform .2s ease}
 html[dir=rtl] .svc-arrow svg{transform:rotate(180deg)}
 .svc-row:hover,.svc-row:focus-visible{background:#f3f6fa}
-.svc-row:hover .svc-num,.svc-row:focus-visible .svc-num{color:#a57511}
+.svc-row:hover .svc-num,.svc-row:focus-visible .svc-num{color:var(--gold-ink)}
 .svc-row:hover .svc-body,.svc-row:focus-visible .svc-body{transform:translateX(var(--sx))}
 .svc-row:hover .svc-arrow,.svc-row:focus-visible .svc-arrow{transform:translateX(calc(var(--sx) * 1.5))}
 .svc-row:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
@@ -612,9 +612,9 @@ html[dir=rtl] .ind-all:hover svg{transform:rotate(180deg) translateX(3px)}
 .mk-head>p{max-width:none;font-size:clamp(16px,1.22vw,18px);line-height:1.75}
 
 /* Services: quiet help card under "Explore all services" */
-.svc-help{display:grid;gap:10px;margin-top:32px;max-width:360px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--cool-surface)}
-.svc-help p{margin:0;font-size:15px;line-height:1.55;color:var(--text-2)}
-.svc-help-link{display:inline-flex;align-items:center;gap:8px;justify-self:start;font-size:15px;font-weight:600;color:var(--navy);border-radius:4px;transition:color .2s ease}
+.svc-help{display:grid;gap:10px;margin-top:32px;max-width:none;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--cool-surface)}
+.svc-help p{margin:0;font-size:16px;line-height:1.55;color:var(--text-2)}
+.svc-help-link{display:inline-flex;align-items:center;gap:8px;justify-self:start;font-size:16px;font-weight:600;color:var(--navy);border-radius:4px;transition:color .2s ease}
 .svc-help-link svg{transition:transform .2s ease}
 .svc-help-link:hover{color:var(--gold-ink)}
 .svc-help-link:hover svg{transform:translateX(4px)}
