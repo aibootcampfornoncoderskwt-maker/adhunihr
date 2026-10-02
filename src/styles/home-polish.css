@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Homepage polish: tokens, typography, rhythm, surfaces, motion.
+   Visual-only layer on top of global.css; markup, content and section order
+   are unchanged. Imported after global.css so it wins the cascade.
+   ========================================================================== */
+:root{
+ --gold-ink:#7a560c;--navy-ink:#0f2d4d;--text-2:#43526a;--cool-surface:#f3f6fa;
+ --radius-card:14px;--ease-out:cubic-bezier(.22,1,.36,1);
+ --shadow-sm:0 2px 3px -1px rgba(0,0,0,.1),0 1px 0 0 rgba(25,28,33,.02),0 0 0 1px rgba(25,28,33,.08);
+ --shadow-md:0 0 0 1px rgba(0,0,0,.06),0 1px 1px -.5px rgba(0,0,0,.06),0 3px 3px -1.5px rgba(0,0,0,.06),0 6px 6px -3px rgba(0,0,0,.06),0 12px 12px -6px rgba(0,0,0,.06),0 24px 24px -12px rgba(0,0,0,.06);
+ --shadow-lg:0 2.8px 2.2px rgba(0,0,0,.034),0 6.7px 5.3px rgba(0,0,0,.048),0 12.5px 10px rgba(0,0,0,.06),0 22.3px 17.9px rgba(0,0,0,.072),0 41.8px 33.4px rgba(0,0,0,.086);
+}
+
+/* Buttons: one interaction language for every button */
+.button{transition:background-color .2s var(--ease-out),color .2s var(--ease-out),border-color .2s var(--ease-out),box-shadow .25s var(--ease-out),transform .2s var(--ease-out)}
+.button:hover{transform:translateY(-2px);box-shadow:0 10px 22px -10px rgba(9,27,49,.45)}
+.button:active{transform:translateY(0) scale(.96);box-shadow:none}
+.button:focus-visible,.text-link:focus-visible,.home-service:focus-visible,.home-sector:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.button.white{background:#fff;color:var(--navy-ink);border-color:#fff}
+.button.white:hover{background:#eef3f8}
+.text-link{transition:color .2s var(--ease-out)}
+.text-link svg,.home-service>svg,.home-sector svg{transition:translate .25s var(--ease-out)}
+.text-link:hover svg,.home-service:hover>svg,.home-sector:hover svg{translate:4px 0}
+html[dir=rtl] .text-link:hover svg,html[dir=rtl] .home-service:hover>svg,html[dir=rtl] .home-sector:hover svg{translate:-4px 0}
+
+/* Section rhythm */
+:is(#about,#services,#industries,#approach,#markets,.home-next){padding-block:clamp(64px,8vw,104px)}
+:is(#about,#industries).surface{background:var(--cool-surface)}
+.section-heading{margin-bottom:clamp(32px,4vw,48px);align-items:end}
+.catalog-overview-link{margin-top:clamp(28px,3.5vw,40px)}
+
+/* Typography */
+:is(#about,#services,#industries,#approach,#markets,.home-next) h2{font-size:clamp(30px,3.3vw,44px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance}
+:is(#about,#services,#industries,#approach) h2{color:var(--navy-ink)}
+:is(#about,#services,#industries,#approach) .eyebrow:not(.light){font-size:12px;color:var(--gold-ink)}
+:is(#about,#services,#industries,#approach) .section-heading>p{font-size:15px;line-height:1.7;max-width:360px;color:var(--text-2);text-wrap:pretty}
+#about .about-copy>p:not(.lead){font-size:16px;line-height:1.75;color:var(--text-2);max-width:56ch;margin-top:18px}
+#markets .container>div>p{font-size:16px;line-height:1.75;max-width:52ch}
+.home-service h3,.home-sector h3,.home-process h3{color:var(--navy-ink);letter-spacing:-.012em}
+.home-service p,.home-process p{color:var(--text-2)}
+.home-process p{font-size:16px;line-height:1.7}
+.home-process h3{font-size:clamp(21px,2vw,24px);line-height:1.25}
+
+/* Hero: balanced, equal-weight primary paths */
+.hero h1{font-size:clamp(42px,4.4vw,74px);line-height:1.1;letter-spacing:-.032em;text-wrap:balance}
+.hero-description{font-size:clamp(17px,1.5vw,20px);line-height:1.65;color:#e8eef4;max-width:60ch;text-wrap:pretty}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:34px}
+.hero-actions .button{flex:1 1 280px;max-width:320px;min-height:58px;padding:14px 28px;font-size:15px;justify-content:space-between}
+.hero-actions .amber{background:#f5b51d;color:var(--deep)}
+.hero-actions .amber:hover{background:#ffc83d}
+.hero-actions .outline-light{background:#fff;color:var(--navy-ink);border-color:#fff}
+.hero-actions .outline-light:hover{background:#eef3f8}
+.country-ribbon{border-top-color:rgba(217,165,32,.4)}
+
+/* About */
+#about .about-visual{border-radius:var(--radius-card);box-shadow:var(--shadow-lg)}
+#about .about-image{outline:1px solid rgba(0,0,0,.1);outline-offset:-1px;border-radius:0}
+
+/* Services */
+.home-service-grid{border-top:0;gap:16px 20px}
+.home-service{background:#fff;border:0;border-radius:var(--radius-card);box-shadow:var(--shadow-sm);padding:22px 24px;transition:box-shadow .25s var(--ease-out),transform .25s var(--ease-out),background-color .2s}
+.home-service:hover,.home-service:focus-visible{background:#fff;box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.home-service-icon{background:var(--cool-surface);border:0;border-radius:10px;color:var(--navy);transition:background-color .2s,color .2s}
+.home-service:hover .home-service-icon{background:#fbf1d6;color:var(--gold-ink);border:0}
+.home-service>svg,.home-sector svg{color:var(--gold-ink)}
+
+/* Industries: uniform crops, soft depth */
+.home-sector-grid{gap:20px}
+.home-sector{border:0;border-radius:var(--radius-card);background:#fff;box-shadow:var(--shadow-md);transition:box-shadow .25s var(--ease-out),transform .25s var(--ease-out)}
+.home-sector:hover{border:0;transform:translateY(-3px)}
+.home-sector>img{aspect-ratio:3/2;object-fit:cover;transition:transform .6s var(--ease-out)}
+.home-sector:hover>img{transform:scale(1.04)}
+.home-sector>div{padding:18px 22px}
+.home-sector h3{font-size:18px}
+
+/* Process */
+.home-process li>span{background:#fff8e4;border-color:#d6ae48;color:var(--gold-ink)}
+.home-process li:before{background:linear-gradient(90deg,#d6ae48,rgba(214,174,72,.25))}
+
+/* Markets */
+.market-links a{font-size:14px;padding:12px 0;transition:color .2s,border-color .2s}
+.market-links a:hover{color:#f5c04a;border-bottom-color:rgba(245,192,74,.6)}
+.map-caption{font-size:11px;letter-spacing:.16em;color:#d3deea;margin-top:12px}
+
+/* For Employers / For Candidates: two equally strong panels */
+.home-next-grid{grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.home-employer,.home-candidate{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(28px,4vw,48px);border:0;border-radius:var(--radius-card);color:#cfdbe6;box-shadow:var(--shadow-md)}
+.home-employer{background:linear-gradient(135deg,#0a2a47,#163f5d)}
+.home-candidate{background:linear-gradient(135deg,#0e3355,#1c4b75)}
+.home-employer .eyebrow,.home-candidate .eyebrow{color:#f0c050}
+.home-employer h2,.home-candidate h3{font-size:clamp(28px,2.8vw,38px);line-height:1.15;letter-spacing:-.028em;font-weight:700;color:#fff;max-width:14em;margin:0;text-wrap:balance}
+.home-employer p,.home-candidate p{font-size:16px;line-height:1.7;color:#cfdbe6;max-width:46ch;margin:18px 0 28px;text-wrap:pretty}
+.home-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:auto}
+.home-actions .button{min-height:54px;padding:13px 26px;font-size:15px}
+.home-employer .text-link{color:#e7eff5;margin:0;font-size:14px}
+.home-employer .text-link:hover{color:#f5c04a}
+/* Subgrid lines headings, copy and buttons up across both panels. */
+@media(min-width:761px){@supports(grid-template-rows:subgrid){
+ .home-next-grid{grid-template-rows:auto auto 1fr auto;row-gap:0}
+ .home-employer,.home-candidate{display:grid;grid-row:span 4;grid-template-rows:subgrid;justify-items:start}
+ .home-employer p,.home-candidate p{align-self:start}
+ .home-actions{align-self:start;margin-top:0}
+}}
+@media(max-width:760px){.home-next-grid{grid-template-columns:1fr;gap:20px}}
+@media(max-width:600px){
+ .hero-actions{flex-direction:column;align-items:stretch;gap:12px}
+ .hero-actions .button{flex:none;max-width:none;width:100%}
+ .home-service{padding:18px 16px}
+ .home-actions{width:100%;flex-direction:column;align-items:stretch}
+ .home-actions .button{width:100%;justify-content:space-between}
+ .home-employer .text-link{align-self:center}
+ #about .about-copy>p:not(.lead){font-size:15px}
+}
+
+/* Scroll reveal (enabled by JS only; skipped for reduced motion) */
+@keyframes reveal-up{from{opacity:0;translate:0 20px}to{opacity:1;translate:0 0}}
+.js-reveal [data-reveal]{opacity:0}
+.js-reveal [data-reveal].is-visible{opacity:1;animation:reveal-up .7s var(--ease-out) backwards;animation-delay:calc(var(--i,0)*80ms)}
+@media(prefers-reduced-motion:reduce){
+ .js-reveal [data-reveal]{opacity:1}
+ .js-reveal [data-reveal].is-visible{animation:none}
+ .button,.home-service,.home-sector,.home-sector>img{transition:none}
+ .button:hover,.home-service:hover,.home-sector:hover,.home-sector:hover>img{transform:none}
+}
