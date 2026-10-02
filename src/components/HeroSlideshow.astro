@@ -1,0 +1,29 @@
+---
+const slides = [
+  ['hero-1-oil-gas', 'Illustrative scene of two technicians inspecting pipelines at a GCC oil and gas facility.'],
+  ['hero-2-construction', 'Illustrative scene of an engineer and foreman reviewing drawings at a GCC construction site.'],
+  ['hero-3-healthcare', 'Illustrative scene of a nurse and doctor reviewing a tablet in a GCC hospital corridor.'],
+  ['hero-4-logistics', 'Illustrative scene of a warehouse supervisor scanning a pallet in Dubai.'],
+  ['hero-5-corporate', 'Illustrative scene of a recruitment consultant meeting two managers in a Kuwait City office.'],
+];
+const captions = ['Oil & Gas', 'Construction', 'Healthcare', 'Logistics', 'Corporate'];
+---
+<div class="hero-slideshow">
+  {slides.map(([name, alt], index) => <img
+    class="hero-slide" src={index === 0 ? `/hero/${name}.webp` : undefined}
+    srcset={index === 0 ? `/hero/${name}-mobile.webp 900w, /hero/${name}.webp 1920w` : undefined}
+    data-src={`/hero/${name}.webp`} data-srcset={`/hero/${name}-mobile.webp 900w, /hero/${name}.webp 1920w`}
+    sizes="100vw" width="1920" height="1080" alt={alt}
+    aria-hidden={index === 0 ? undefined : 'true'}
+    fetchpriority={index === 0 ? 'high' : 'low'} decoding="async"
+  />)}
+</div>
+<p class="hero-caption">{captions.map((label, index) => <span class:list={['hero-caption-item', { 'is-active': index === 0 }]}>{label}</span>)}</p>
+<script>import '../scripts/hero-slideshow';</script>
+<style is:global>
+  .hero-slideshow{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+  .hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:75% center;opacity:0;transform-origin:75% center}
+  .hero-slide:first-child{opacity:1}
+  @media(max-width:850px){.hero-slide{object-position:80% center}}
+  @media(prefers-reduced-motion:reduce){.hero-slide{transform:none!important}.hero-slide:not(:first-child){display:none}}
+</style>

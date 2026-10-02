@@ -52,5 +52,15 @@ Desktop sector grid, enquiry section and Kuwait photo panel visually reviewed in
 ## Ticker, footer and social update
 Astro check: 21 files, zero errors/warnings/hints. Desktop browser: new flag ticker and footer visually reviewed; ticker pause state and WhatsApp panel open/close verified. Responsive CSS and reduced-motion handling included. Actual outbound WhatsApp/social destinations remain unconfigured until client details are supplied; no message sent.
 
+## Homepage hero slideshow — 2 October 2026
+- Astro check: zero errors/warnings; production build and all three repository check scripts passed.
+- Playwright: 1440px desktop, 390px mobile, English and Arabic. Screenshots visually reviewed in `tmp/hero-qa/`; no horizontal overflow or browser errors. Existing Arabic hero copy has untranslated English phrases; preserved per request.
+- Verified all five slides in order and return to the first, six-second cadence, 1.5-second fade, keyboard Space/Enter pause/resume, and frozen zoom while paused. Incoming images decode before display; later slides load on demand. Mobile requests use 900px assets.
+- Reduced-motion verification: only first hero image requested, no slideshow control or image animation. RTL uses the existing mirrored gradient; subjects remain in the mobile crop.
+- Original hero asset, hero content, ribbon and splash implementation preserved. Existing user edits in `src/styles/home-polish.css` left untouched. Existing dev server is available at http://localhost:4321. No commit created.
+- Image sizes: desktop 66,896–154,500 bytes; mobile 27,868–63,244 bytes. Sources came from `public/images/hero-generated/` because the requested PNG folder was absent.
+- Reusable browser check: `node scripts/check-hero-slideshow.mjs` with Playwright installed, or `PLAYWRIGHT_MODULE` pointing to an available module; optional `PLAYWRIGHT_CHROMIUM_PATH` selects an installed browser.
+
 ## Splash update
+
 Astro check: 22 files, zero errors/warnings. Build passed. Script lifecycle checks passed for load completion, skip, Escape, timeout, repeat session, hash navigation and reduced motion; verified release of inert content and scroll lock. Visual centring is implemented with viewport 50% positioning and responsive logo sizing.

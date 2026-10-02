@@ -10,6 +10,49 @@ window.addEventListener('scroll',()=>{if(window.matchMedia('(max-width:850px)').
 dropdowns.forEach(d=>d.addEventListener('toggle',()=>{if(d.open)dropdowns.forEach(other=>{if(other!==d)other.open=false;});}));
 document.addEventListener('click',e=>{if(!(e.target instanceof Node))return;dropdowns.forEach(d=>{if(!d.contains(e.target as Node))d.open=false;});if(nav?.classList.contains('is-open') && !nav.contains(e.target) && !toggle?.contains(e.target))closeMenu();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d=dropdowns.find(d=>d.open);if(d){d.open=false;d.querySelector('summary')?.focus();}if(nav?.classList.contains('is-open')){closeMenu();toggle?.focus();}}});
+// Desktop menus: open on hover with a short intent delay, close after a grace period so passing the pointer never flickers them.
+const desktopMenus=window.matchMedia('(min-width:851px) and (hover:hover)');
+dropdowns.forEach(d=>{
+  let openTimer=0,closeTimer=0;
+  const summary=d.querySelector('summary');
+  const links=[...d.querySelectorAll<HTMLAnchorElement>('.catalog-link')];
+  const slides=[...d.querySelectorAll<HTMLElement>('.catalog-feature-slide')];
+  const showSlide=(slug:string)=>slides.forEach(slide=>slide.classList.toggle('is-active',slide.dataset.slug===slug));
+  const defaultSlide='oil-gas-energy';
+  d.addEventListener('pointerenter',e=>{
+    if(e.pointerType!=='mouse'||!desktopMenus.matches)return;
+    clearTimeout(closeTimer);
+    if(!d.open)openTimer=window.setTimeout(()=>{d.open=true;d.dataset.hover='1';},120);
+  });
+  d.addEventListener('pointerleave',e=>{
+    if(e.pointerType!=='mouse'||!desktopMenus.matches)return;
+    clearTimeout(openTimer);
+    if(d.open&&!d.contains(document.activeElement as Node))closeTimer=window.setTimeout(()=>{d.open=false;},220);
+  });
+  // A click on a menu the pointer already opened keeps it open instead of toggling it shut.
+  summary?.addEventListener('click',e=>{if(d.dataset.hover==='1'&&desktopMenus.matches){e.preventDefault();delete d.dataset.hover;}else delete d.dataset.hover;});
+  d.addEventListener('toggle',()=>{if(!d.open){delete d.dataset.hover;showSlide(defaultSlide);}});
+  // Keyboard: Down from the heading enters the menu; arrows move between links; leaving the menu with Tab closes it.
+  summary?.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();e.stopPropagation();d.open=true;links[0]?.focus();}});
+  d.addEventListener('keydown',e=>{
+    if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;
+    const index=links.indexOf(document.activeElement as HTMLAnchorElement);
+    if(index<0)return;
+    e.preventDefault();
+    if(e.key==='ArrowDown')links[(index+1)%links.length].focus();
+    else if(index===0)summary?.focus();
+    else links[index-1].focus();
+  });
+  d.addEventListener('focusout',e=>{if(desktopMenus.matches&&d.open&&e.relatedTarget instanceof Node&&!d.contains(e.relatedTarget))d.open=false;});
+  if(slides.length){
+    links.forEach(link=>{
+      const slug=link.dataset.feature||defaultSlide;
+      link.addEventListener('pointerenter',()=>showSlide(slug));
+      link.addEventListener('focus',()=>showSlide(slug));
+    });
+    d.querySelector('.catalog-menu-links')?.addEventListener('pointerleave',()=>showSlide(defaultSlide));
+  }
+});
 // Accessible tab groups, including arrow/Home/End navigation.
 function selectTab(button:HTMLButtonElement){const group=button.closest('[role=tablist]');if(!group)return;group.querySelectorAll<HTMLButtonElement>('[role=tab]').forEach(b=>{const selected=b===button;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;const p=document.getElementById(b.getAttribute('aria-controls')||'');if(p)p.hidden=!selected;});}
 document.querySelectorAll<HTMLButtonElement>('[role=tab]').forEach(b=>{b.addEventListener('click',()=>selectTab(b));b.addEventListener('keydown',e=>{const tabs=[...b.closest('[role=tablist]')!.querySelectorAll<HTMLButtonElement>('[role=tab]')];let index=tabs.indexOf(b);if(e.key===(document.documentElement.dir==='rtl'?'ArrowLeft':'ArrowRight'))index=(index+1)%tabs.length;else if(e.key===(document.documentElement.dir==='rtl'?'ArrowRight':'ArrowLeft'))index=(index-1+tabs.length)%tabs.length;else if(e.key==='Home')index=0;else if(e.key==='End')index=tabs.length-1;else return;e.preventDefault();selectTab(tabs[index]);tabs[index].focus();});});

@@ -47,7 +47,11 @@ All six country images are real photographs, not generated. Resized and converte
 
 - manufacturing.webp: Steve Jurvetson, https://commons.wikimedia.org/wiki/File:Tesla_Robot_Dance_(7408451314).jpg; CC BY 2.0, https://creativecommons.org/licenses/by/2.0/. Resized/WebP; manufacturing cropped to remove upper background. Adapted image retains source licence. Not an Adhuni project.
 
+## Homepage slideshow — 2 October 2026
+`public/hero/hero-{1-oil-gas,2-construction,3-healthcare,4-logistics,5-corporate}.webp` and corresponding `-mobile.webp` files are derived from the five built-in image_gen illustrations in `public/images/hero-generated/`. The user-named PNG files in `public/hero/` were absent; existing generated sources were used. Original images and prompts are retained. These scenes do not depict actual ADHUNI staff, clients, projects or facilities. Alt text identifies their illustrative role. Desktop variants are 1920px wide (upscaled from the generated originals); mobile variants are 900px wide. Each is below 250,000 bytes. Regenerate with `node scripts/prepare-hero-images.mjs`; this prefers the named PNG sources if supplied later. Existing `public/images/hero-gcc.webp` is retained.
+
 ## Brand icons
+
 WhatsApp, Instagram and LinkedIn-in glyphs extracted unchanged from @fortawesome/free-brands-svg-icons 7.3.1 (Font Awesome Free). Rendered with original viewBoxes and filled paths; full bundled licence in licenses/Font-Awesome-Brands-LICENSE.txt. Brand trademarks belong to their owners.
 
 ## Approved logo — 27 September 2026
