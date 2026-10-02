@@ -46,13 +46,6 @@ if (viewport && track && !reducedMotion) {
   const base = track.querySelector<HTMLElement>('.ribbon-group');
   if (base) {
     track.querySelectorAll('.ribbon-group').forEach(group => group !== base && group.remove());
-    const edges = 'IntersectionObserver' in window
-      // Items that are not fully inside the bar fade out whole, so a flag or name is never shown half-cut.
-      ? new IntersectionObserver(
-          entries => entries.forEach(entry => entry.target.classList.toggle('is-edge', entry.intersectionRatio < 0.99)),
-          { root: viewport, threshold: [0, 0.25, 0.5, 0.75, 0.99, 1] }
-        )
-      : null;
     let builtFor = 0;
     const build = () => {
       const width = viewport.clientWidth;
@@ -77,10 +70,6 @@ if (viewport && track && !reducedMotion) {
       }
       track.style.setProperty('--ticker-w', `${unit}px`);
       track.style.setProperty('--ticker-dur', `${unit / SPEED}s`);
-      if (edges) {
-        edges.disconnect();
-        track.querySelectorAll('.ribbon-market').forEach(item => edges.observe(item));
-      }
       viewport.classList.add('is-looping');
     };
     build();

@@ -15,7 +15,7 @@ const desktopMenus=window.matchMedia('(min-width:851px) and (hover:hover)');
 dropdowns.forEach(d=>{
   let openTimer=0,closeTimer=0;
   const summary=d.querySelector('summary');
-  const links=[...d.querySelectorAll<HTMLAnchorElement>('.catalog-link')];
+  const links=[...d.querySelectorAll<HTMLAnchorElement>('.catalog-link, .catalog-menu-links .catalog-viewall')];
   const slides=[...d.querySelectorAll<HTMLElement>('.catalog-feature-slide')];
   const showSlide=(slug:string)=>slides.forEach(slide=>slide.classList.toggle('is-active',slide.dataset.slug===slug));
   const defaultSlide='oil-gas-energy';

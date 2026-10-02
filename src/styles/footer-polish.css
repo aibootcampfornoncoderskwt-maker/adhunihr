@@ -28,3 +28,7 @@ html[dir=rtl] .site-footer.footer-refined .footer-markets-title{letter-spacing:0
 html[dir=rtl] .site-footer.footer-refined .footer-details small{letter-spacing:0;font-size:12px}
 .site-footer.footer-refined .footer-details a{display:inline;margin:0;font-size:14px;color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:4px;transition:text-decoration-color .2s ease}
 .site-footer.footer-refined .footer-details a:hover{color:#fff;text-decoration-color:var(--amber)}
+
+/* One solid navy across the whole footer: no gradient and no decorative shapes (also none on the left in RTL). The gold top line stays. */
+.site-footer.footer-refined{background:#092a40}
+.site-footer.footer-refined:before,.site-footer.footer-refined:after{content:none;display:none}

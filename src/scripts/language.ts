@@ -35,7 +35,7 @@ function renderLanguage(next:'en'|'ar'){
    const value=next==='ar'?translate(original):original;if(current!==value)el.setAttribute(name,value);
   }
  });
- document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===next)));
+ document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button=>{const active=button.dataset.language===next;button.setAttribute('aria-pressed',String(active));if(active)button.setAttribute('aria-current','true');else button.removeAttribute('aria-current');});
  observe();
 }
 const observer=new MutationObserver(()=>renderLanguage(language));
