@@ -1,0 +1,30 @@
+/* Footer polish. Imported by Footer.astro; selectors start with .site-footer.footer-refined so they win over global.css regardless of load order. */
+.site-footer.footer-refined>.container{width:var(--hero-w)}
+
+/* Columns: a slightly wider brand column, then three equal columns */
+.site-footer.footer-refined .footer-brand>p{max-width:34ch}
+@media(min-width:1001px){
+ .site-footer.footer-refined .footer-grid{grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:48px}
+}
+
+/* Markets: grouped from the start edge with equal spacing; each country is a link */
+.site-footer.footer-refined .footer-markets{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:12px 40px;padding:22px 0;border-top:1px solid rgba(255,255,255,.12)}
+.site-footer.footer-refined .footer-markets-title{flex:none;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+html[dir=rtl] .site-footer.footer-refined .footer-markets-title{letter-spacing:0;font-size:13px}
+.site-footer.footer-refined .footer-markets nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:10px 28px}
+.site-footer.footer-refined .footer-market{display:inline-flex!important;align-items:center;gap:10px;margin:0;color:rgba(255,255,255,.78);font-size:14px;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:2px;text-underline-offset:7px;transition:color .2s ease,text-decoration-color .2s ease}
+.site-footer.footer-refined .footer-market:hover,.site-footer.footer-refined .footer-market:focus-visible{color:#fff;text-decoration-color:var(--amber)}
+.site-footer.footer-refined .footer-market:focus-visible,.site-footer.footer-refined .footer-grid .footer-contact-link:focus-visible{outline:2px solid var(--amber);outline-offset:4px;border-radius:4px}
+
+/* Start a conversation: small gold outline button, fills gold on hover */
+.site-footer.footer-refined .footer-grid .footer-contact-link{display:inline-flex;align-items:center;min-height:40px;margin:6px 0 0;padding:0 18px;border:1px solid var(--amber);border-radius:999px;background:transparent;color:var(--amber);font-size:14px;font-weight:600;line-height:1;text-decoration:none;transition:background-color .2s ease,color .2s ease,transform .2s ease}
+.site-footer.footer-refined .footer-grid .footer-contact-link:hover{background:var(--amber);color:var(--deep);transform:translateY(-1px)}
+.site-footer.footer-refined .footer-grid .footer-contact-link:active{transform:scale(.96)}
+
+/* Trust details (address, phone/WhatsApp, CR, licence): rendered only when real values exist */
+.site-footer.footer-refined .footer-details{list-style:none;margin:24px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.12);display:grid;gap:14px}
+.site-footer.footer-refined .footer-details li{display:grid;gap:3px;font-size:14px;line-height:1.55;color:#c6d3e0}
+.site-footer.footer-refined .footer-details small{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+html[dir=rtl] .site-footer.footer-refined .footer-details small{letter-spacing:0;font-size:12px}
+.site-footer.footer-refined .footer-details a{display:inline;margin:0;font-size:14px;color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:4px;transition:text-decoration-color .2s ease}
+.site-footer.footer-refined .footer-details a:hover{color:#fff;text-decoration-color:var(--amber)}

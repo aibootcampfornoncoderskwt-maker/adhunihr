@@ -3,15 +3,27 @@ import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import SocialLinks from './SocialLinks.astro';
 import {services,countries} from '../data/site';
+import {companyDetails,phoneDisplay,whatsappUrl} from '../data/contact';
+import '../styles/footer-polish.css';
+// Footer links use sentence case (names such as 'About Adhuni' keep their capitals).
+const sentence=(text:string)=>text.charAt(0)+text.slice(1).toLowerCase();
+// Trust details: each one renders only when it has a real value (see src/data/contact.ts and .env.example).
+const details=[
+  companyDetails.address&&{label:'Office',value:companyDetails.address},
+  phoneDisplay&&{label:'Phone',value:phoneDisplay,href:`tel:${phoneDisplay.replace(/[^+\d]/g,'')}`,ltr:true},
+  whatsappUrl&&{label:'WhatsApp',value:'Message us on WhatsApp',href:whatsappUrl,external:true},
+  companyDetails.registration&&{label:'Commercial registration (CR)',value:companyDetails.registration,ltr:true},
+  companyDetails.licence&&{label:'Licence number',value:companyDetails.licence,ltr:true}
+].filter(Boolean) as {label:string;value:string;href?:string;ltr?:boolean;external?:boolean}[];
 ---
 <footer id="site-footer" class="site-footer footer-refined"><div class="container">
 {!['/','/employers/'].includes(Astro.url.pathname) && <div class="footer-invitation"><div><span class="eyebrow light">PEOPLE. POSSIBILITY. THE NEXT STEP.</span><h2>Your next hire starts<br/>with a conversation.</h2></div><a class="button amber" href="/contact/">Discuss your hiring needs</a></div>}
 <div class="footer-grid">
-<div class="footer-brand"><Logo footer/><p>Manpower sourcing and recruitment across industries, with a focus on the Middle East.</p><SocialLinks/></div>
-<div><h3>Explore</h3><a href="/">Home</a><a href="/about/">About Adhuni</a><a href="/industries/">Industries</a><a href="/our-approach/">Our approach</a><a href="/employers/">For employers</a><a href="/candidates/">For candidates</a><a href="/candidates/#how-it-works">Candidate Process</a><a href="/contact/">Contact</a></div>
-<div><h3>Recruitment</h3><a href="/services/">Our Services</a>{services.map(s=><a href={`/services/${s.slug}/`}>{s.title}</a>)}</div>
-<div class="footer-contact"><h3>Let’s connect</h3><a class="footer-email" href="mailto:info@adhunihr.com"><span class="footer-contact-icon"><Icon name="mail" size={20}/></span><span><small>Email our team</small><bdi dir="ltr">info@adhunihr.com</bdi></span></a><p>Tell us the role, the market and the timing.</p><a class="footer-contact-link" href="/contact/">Start a conversation</a></div>
+<div class="footer-brand"><Logo footer/><p>Manpower sourcing and recruitment for employers across the Middle East.</p><SocialLinks/></div>
+<div><h3>Explore</h3><a href="/">Home</a><a href="/about/">About Adhuni</a><a href="/industries/">Industries</a><a href="/our-approach/">Our approach</a><a href="/employers/">For employers</a><a href="/candidates/">For candidates</a><a href="/candidates/#how-it-works">Candidate process</a><a href="/contact/">Contact</a></div>
+<div><h3>Recruitment</h3><a href="/services/">Our services</a>{services.map(s=><a href={`/services/${s.slug}/`}>{sentence(s.title)}</a>)}</div>
+<div class="footer-contact"><h3>Let’s connect</h3><a class="footer-email" href="mailto:info@adhunihr.com"><span class="footer-contact-icon"><Icon name="mail" size={20}/></span><span><small>Email our team</small><bdi dir="ltr">info@adhunihr.com</bdi></span></a><p>Tell us the role, the market and the timing.</p><a class="footer-contact-link" href="/contact/">Start a conversation</a>{details.length>0&&<ul class="footer-details">{details.map(d=><li><small>{d.label}</small>{d.href?<a href={d.href} target={d.external?"_blank":undefined} rel={d.external?"noopener noreferrer":undefined}>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</a>:<span>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</span>}</li>)}</ul>}</div>
 </div>
-<div class="footer-markets"><span class="footer-markets-title">Our GCC markets</span><nav aria-label="GCC recruitment markets">{countries.map(c=><a class="footer-market" href={`/locations/${c.slug}/`}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</a>)}</nav></div>
+<div class="footer-markets"><span class="footer-markets-title">Our markets</span><nav aria-label="GCC recruitment markets">{countries.map(c=><a class="footer-market" href={`/locations/${c.slug}/`}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</a>)}</nav></div>
 <div class="footer-bottom"><span>© {new Date().getFullYear()} Adhuni HR Solutions.</span><a href="/privacy/">Privacy notice</a><a class="footer-top-link" href="#top">Back to top <span aria-hidden="true">↑</span></a><a href="https://www.ticodetech.com/" target="_blank" rel="noopener noreferrer">Developed by <strong>Ticode Technologies</strong></a></div>
 </div></footer>
