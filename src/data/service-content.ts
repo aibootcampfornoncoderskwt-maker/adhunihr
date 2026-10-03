@@ -45,7 +45,6 @@ export const serviceExtras:Record<string,ServiceExtra>={
   related:['professional-specialist-recruitment','executive-leadership-search']
  },
  'contract-project-staffing':{
-  hero:{image:'/hero/hero-2-construction.webp',alt:'Illustrative scene of two site professionals in safety gear reviewing project drawings on a construction site at sunset.',position:'72% 52%',zoom:1.3},
   heroText:'The right people for each project phase, for as long as the work runs.',
   bestFor:'Choose contract and project staffing when you need people for a fixed period: a construction phase, a shutdown, a seasonal peak or a defined assignment.',
   overviewText:'A project needs more than a headcount. Tell us the work packages, how long each assignment lasts and which roles are needed first. We plan the hiring around your project milestones, so people arrive when the work needs them.',
@@ -64,7 +63,6 @@ export const serviceExtras:Record<string,ServiceExtra>={
   related:['skilled-technical-manpower','high-volume-recruitment']
  },
  'skilled-technical-manpower':{
-  hero:{image:'/industries/industry-engineering.webp',alt:'Illustrative scene of an engineer in a hard hat and safety glasses inspecting an electrical control cabinet in an industrial plant.'},
   heroText:'Technicians, tradespeople and engineers, checked against the skills your site actually needs.',
   bestFor:'Choose this service when you need hands-on technical people: technicians, welders, fabricators, supervisors, inspectors or plant operators.',
   overviewText:'A job title doesn’t show whether someone has worked with your equipment. Tell us the discipline, tools, machinery and site conditions. If you need a trade test or practical assessment, we agree the format, who assesses, and the pass criteria with you first. List any required certifications or licences, and whether they must be valid in the destination country.',
@@ -104,7 +102,6 @@ export const serviceExtras:Record<string,ServiceExtra>={
   related:['permanent-recruitment','executive-leadership-search']
  },
  'high-volume-recruitment':{
-  hero:{image:'/industries/industry-logistics.webp',alt:'Illustrative scene of a forklift operator moving a wrapped pallet inside a warehouse.',position:'68% 58%',zoom:1.32},
   heroText:'Hiring 20, 50 or more people? One coordinated process, from brief to joining.',
   bestFor:'Choose high-volume recruitment when you need many people at once: a new project, a site opening, a seasonal peak or a workforce expansion.',
   overviewText:'Hiring at scale needs a plan, not just more CVs. Tell us how many people you need for each role, which positions are most urgent, and how quickly your team can interview. We then plan the search in phases, so priority roles are filled first.',

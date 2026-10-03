@@ -1,0 +1,14 @@
+import { chromium } from 'file:///C:/Users/ADMIN/AppData/Local/npm-cache/_npx/db89d7302a373f10/node_modules/playwright/index.mjs';
+const b=await chromium.launch({executablePath:'C:/Users/ADMIN/AppData/Local/ms-playwright/chromium-1243/chrome-win64/chrome.exe'});
+const p=await b.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
+await p.goto('http://localhost:4321/');await p.waitForTimeout(6000);
+console.log('whatsapp without number:',await p.locator('.whatsapp-widget').count());
+await p.locator('nav summary',{hasText:'Services'}).first().click();await p.waitForTimeout(500);
+await p.screenshot({path:'tmp/approach-qa/entry-menu.png',clip:{x:700,y:110,width:640,height:330}});
+await p.keyboard.press('Escape');
+await p.goto('http://localhost:4321/employers/');await p.waitForTimeout(2500);
+await p.locator('.employer-brief-cta').scrollIntoViewIfNeeded();await p.locator('.employer-brief-cta').screenshot({path:'tmp/approach-qa/entry-employers.png'});
+await p.goto('http://localhost:4321/');await p.waitForTimeout(3000);
+const cta=p.locator('.cta-employer');await cta.scrollIntoViewIfNeeded();await p.waitForTimeout(800);await cta.screenshot({path:'tmp/approach-qa/entry-cta.png'});
+console.log(await p.locator('.cta-brief').getAttribute('href'));
+await b.close();
