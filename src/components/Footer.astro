@@ -15,9 +15,11 @@ const details=[
   companyDetails.registration&&{label:'Commercial registration (CR)',value:companyDetails.registration,ltr:true},
   companyDetails.licence&&{label:'Licence number',value:companyDetails.licence,ltr:true}
 ].filter(Boolean) as {label:string;value:string;href?:string;ltr?:boolean;external?:boolean}[];
+// Pages that already end with the Employers/Candidates card component do not repeat the invitation band.
+const endsWithCtaCards=['/','/employers/','/contact/','/candidates/','/about/','/our-approach/','/services/','/hiring-brief-builder/'].includes(Astro.url.pathname)||/^\/(services|industries|locations)\/[^/]+\/$/.test(Astro.url.pathname);
 ---
 <footer id="site-footer" class="site-footer footer-refined"><div class="container">
-{!['/','/employers/'].includes(Astro.url.pathname) && <div class="footer-invitation"><div><span class="eyebrow light">PEOPLE. POSSIBILITY. THE NEXT STEP.</span><h2>Your next hire starts<br/>with a conversation.</h2></div><a class="button amber" href="/contact/">Discuss your hiring needs</a></div>}
+{!endsWithCtaCards && <div class="footer-invitation"><div><span class="eyebrow light">PEOPLE. POSSIBILITY. THE NEXT STEP.</span><h2>Your next hire starts<br/>with a conversation.</h2></div><a class="button amber" href="/contact/">Discuss your hiring needs</a></div>}
 <div class="footer-grid">
 <div class="footer-brand"><Logo footer/><p>Manpower sourcing and recruitment for employers across the Middle East.</p><SocialLinks/></div>
 <div><h3>Explore</h3><a href="/">Home</a><a href="/about/">About Adhuni</a><a href="/industries/">Industries</a><a href="/our-approach/">Our approach</a><a href="/employers/">For employers</a><a href="/candidates/">For candidates</a><a href="/candidates/#how-it-works">Candidate process</a><a href="/contact/">Contact</a></div>

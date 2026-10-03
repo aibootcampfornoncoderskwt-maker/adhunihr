@@ -1,7 +1,7 @@
 ---
-import CatalogDetail from '../../components/CatalogDetail.astro';
+import IndustryDetail from '../../components/IndustryDetail.astro';
 import {industries} from '../../data/site';
 export function getStaticPaths(){return industries.map(item=>({params:{slug:item.slug},props:{item}}));}
 const {item}=Astro.props;
 ---
-<CatalogDetail kind="industry" item={item}/>
+<IndustryDetail item={item}/>

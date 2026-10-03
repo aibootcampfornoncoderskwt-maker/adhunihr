@@ -2,31 +2,30 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import PageQuestions from '../components/PageQuestions.astro';
+import ApproachSteps from '../components/ApproachSteps.astro';
 import Icon from '../components/Icon.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
-const benefits=[
- ['briefcase','Requirement-led sourcing','Start with the role, work environment and experience you need. We shape sourcing around your brief, whether you are filling one position or several.'],
- ['search','Relevant candidate screening','Candidate profiles are reviewed against agreed criteria, with attention to role-specific experience, qualifications and your sector.'],
- ['workflow','Coordinated recruitment support','Keep interviews, feedback and joining discussions connected, with a clear scope and a focus on your Middle East recruitment requirements.']
+import {commitments} from '../data/commitments';
+import '../styles/service.css';
+import '../styles/employers.css';
+
+const questions:string[][]=[
+ ['How do we start a recruitment request?','Complete the request form with your company details, the role and the number of vacancies. Add qualifications, experience and timing if you have them. Our team reviews the brief and confirms the scope before the search starts.'],
+ ['Can you recruit multiple positions at once?','Yes. Enter the main role in the form and list the other positions, quantities and priorities under Additional Requirements. We plan the search around the full list.'],
+ ['How are candidates screened?','We check each profile against the criteria you set, including experience and qualifications. Include any mandatory licences, certifications or practical assessments in your brief. You make the final hiring decision.'],
+ ['Can you recruit urgently?',"Yes. Mark the request as urgent and tell us the start date, and we'll plan the search around it."]
 ];
-const steps=[
- ['Brief','Share the roles, number of vacancies, location and timeline. We clarify the requirement and agree the recruitment scope.'],
- ['Source & screen','We source candidates, review profiles against your criteria and share suitable shortlists.'],
- ['Interview & select','We coordinate interviews and feedback. Your team evaluates candidates and makes the hiring decision.'],
- ['Coordinate joining','We follow up on agreed documentation and joining steps, with responsibilities clarified for each engagement.']
-];
-const questions=[
- ['How do we start a recruitment request?','Complete the requirement form with your company details, the role and number of vacancies. Add qualifications, experience and timing if available. Our team reviews the brief and clarifies the scope before sourcing begins.'],
- ['Can you recruit multiple positions at once?','You can discuss several roles or a larger workforce requirement. Enter the main role in the form and list other positions, quantities and priorities in Additional Requirements so the recruitment plan can be discussed.'],
- ['How are candidates screened?','Profiles are reviewed against criteria agreed with the employer, including relevant experience and qualifications. Include any mandatory licences, certifications or practical assessments in your brief. The employer makes the final hiring decision.'],
- ['Can you recruit urgently?','Share your target joining date and identify which roles are most urgent. Feasibility depends on the requirement, candidate availability, interviews and applicable documentation. A fixed hiring deadline is not guaranteed.']
-];
+const nextSteps=['We review your request and assign one contact.','We reply within one business day.','We agree the brief and start the search.'];
+// FAQPage schema describes only the questions that are visible on the page.
+const faqSchema={'@context':'https://schema.org','@type':'FAQPage','@id':new URL(Astro.url.pathname,Astro.site).href+'#faq',mainEntity:questions.map(([name,text])=>({'@type':'Question',name,acceptedAnswer:{'@type':'Answer',text}}))};
 ---
-<Base title="Recruitment Support for Employers | Adhuni HR Solutions" description="Share your hiring requirements with Adhuni HR Solutions. Discuss candidate sourcing, screening and recruitment coordination for specialist roles and larger workforces." image="/images/meeting.webp" breadcrumbs={[{name:'For Employers',href:'/employers/'}]}>
-<PageHero eyebrow="For Employers" title="Build your team around the work ahead." description="Whether you need one specialist or a larger workforce, start with the roles, experience and timeline that matter to your business." image="meeting.webp" alt="Illustrative meeting between business and recruitment professionals" cta={{label:'Share Your Hiring Requirement',href:'#requirement'}}/>
-<section class="section"><div class="container"><div class="section-heading"><div><div class="eyebrow">WHY EMPLOYERS WORK WITH US</div><h2>Focused on your hiring requirements.</h2></div><p>Practical support across industries, from the first brief to the agreed next steps.</p></div><div class="employer-benefits">{benefits.map(([icon,title,body])=><article><span class="employer-benefit-icon"><Icon name={icon} size={26}/></span><h3>{title}</h3><p>{body}</p></article>)}</div></div></section>
-<section class="section surface"><div class="container"><div class="section-heading"><div><div class="eyebrow">HOW RECRUITMENT WORKS</div><h2>From your brief to joining.</h2></div><a class="text-link" href="/our-approach/">Explore our full approach <Icon name="arrow" size={18}/></a></div><ol class="home-process employer-process">{steps.map(([title,body],i)=><li><span>0{i+1}</span><h3>{title}</h3><p>{body}</p></li>)}</ol></div></section>
-<section id="requirement" class="section"><div class="container employer-registration"><aside class="employer-form-guide"><div class="eyebrow">SHARE YOUR REQUIREMENT</div><h2>Tell us who you need.</h2><p>Share the essentials now. Add more detail if you have a job description or a defined hiring plan.</p><div class="employer-guide-card"><h3>A useful hiring brief includes</h3><ul>{['Job titles and number of vacancies','Qualifications and relevant experience','Mandatory certifications or licences','Work location and expected joining date','Salary, compensation and benefits'].map(text=><li><Icon name="check" size={17}/><span>{text}</span></li>)}</ul></div><div class="employer-after"><h3>What happens next?</h3><p>Our team reviews your enquiry and contacts you to clarify the requirement, discuss recruitment support and agree the next steps.</p><a class="text-link" href="/contact/">Have a general enquiry? <Icon name="arrow" size={17}/></a></div></aside><div class="contact-workspace employer-form-wrap"><EnquiryForm type="employer"/></div></div></section>
+<Base title="Recruitment Support for Employers | Adhuni HR Solutions" description="Hire skilled people without running the search yourself. Share your roles and timeline with Adhuni HR Solutions and we handle the search, screening and coordination." image="/pages/employers-hero.webp" breadcrumbs={[{name:'For Employers',href:'/employers/'}]}>
+<PageHero variant="emp-hero" eyebrow="FOR EMPLOYERS" crumb="For employers" title="Hire skilled people without running the search yourself." description="Whether you need one specialist or a full team, share the roles and timeline. We'll handle the search, screening and coordination." image="/pages/employers-hero.webp" alt="Illustrative scene of an employer and a recruitment consultant shaking hands across a meeting-room table." caption="" cta={{label:'Request Candidates',href:'#request-form',arrow:'↓'}}/>
+<section class="section"><div class="container"><div class="section-heading"><div><div class="eyebrow">WHY EMPLOYERS WORK WITH US</div><h2>What you can count on.</h2></div></div><div class="employer-benefits">{commitments.map(item=><article><span class="employer-benefit-icon"><Icon name={item.icon} size={26}/></span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>
+<section id="how-it-works" class="section appr appr--compact"><div class="appr-inner"><div class="appr-head"><div class="eyebrow light">HOW IT WORKS</div><h2>From brief to joining in five steps.</h2></div><ApproachSteps/><a class="sv-approach-link" href="/our-approach/">See our full approach <Icon name="arrow" size={16}/></a></div></section>
+<section id="request-form" class="section"><span id="requirement" aria-hidden="true"></span><div class="container employer-registration"><aside class="employer-form-guide"><div class="eyebrow">SHARE YOUR REQUIREMENT</div><h2>Tell us who you need.</h2><p>Share the essentials now. Add more detail if you have a job description or a defined hiring plan.</p><div class="employer-brief-cta"><strong>Not sure what to include?</strong><span>Build a clear brief in four steps, then send it to us or download it as a PDF.</span><a class="text-link" href="/hiring-brief-builder/">Build your hiring brief <Icon name="arrow" size={16}/></a></div><div class="employer-guide-card"><h3>A useful hiring brief includes</h3><ul>{['Job titles and number of vacancies','Qualifications and relevant experience','Mandatory certifications or licences','Work location and expected joining date','Salary, compensation and benefits'].map(text=><li><Icon name="check" size={17}/><span>{text}</span></li>)}</ul></div><div class="employer-after"><h3>What happens next?</h3><ol class="emp-next">{nextSteps.map(step=><li>{step}</li>)}</ol><a class="text-link" href="/contact/">Have a general enquiry? <Icon name="arrow" size={17}/></a></div></aside><div class="contact-workspace employer-form-wrap"><EnquiryForm type="employer"/></div></div></section>
 <section class="section surface"><div class="container employer-faq"><div><div class="eyebrow">EMPLOYER FAQ</div><h2>Before you send your brief.</h2><p>Answers to common questions about starting a recruitment enquiry.</p></div><PageQuestions questions={questions}/></div></section>
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)}/>
 {import.meta.env.PUBLIC_CONTACT_ENABLED==='true'&&import.meta.env.PUBLIC_TURNSTILE_SITE_KEY&&<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+<script>import '../scripts/sticky-guide';</script>
 </Base>

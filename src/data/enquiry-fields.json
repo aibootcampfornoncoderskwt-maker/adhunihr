@@ -40,14 +40,39 @@
       "label": "Country",
       "required": true,
       "type": "select",
-      "placeholder": "Select Country"
+      "placeholder": "Select Country",
+      "options": [
+        "Kuwait",
+        "Saudi Arabia",
+        "UAE",
+        "Qatar",
+        "Bahrain",
+        "Oman",
+        "India",
+        "Other"
+      ]
     },
     {
       "name": "industry",
       "label": "Industry",
       "required": true,
-      "type": "text",
-      "placeholder": "e.g. Construction & Infrastructure"
+      "type": "select",
+      "placeholder": "Select industry",
+      "options": [
+        "Engineering & Technical",
+        "Construction & Infrastructure",
+        "Oil, Gas & Energy",
+        "Manufacturing",
+        "Hospitality",
+        "Healthcare",
+        "Logistics & Supply Chain",
+        "Information Technology",
+        "Retail & E-commerce",
+        "Banking, Finance & Corporate Services",
+        "Facilities Management",
+        "Education & Professional Services",
+        "Other"
+      ]
     },
     {
       "name": "position_job_title",
@@ -126,7 +151,7 @@
       "label": "Phone / WhatsApp",
       "required": true,
       "type": "tel",
-      "placeholder": "e.g. +91 98765 43210"
+      "placeholder": "+965 / +971 / +91 ..."
     },
     {
       "name": "email",
@@ -140,21 +165,46 @@
       "label": "Current Location",
       "required": true,
       "type": "text",
-      "placeholder": "e.g. Mumbai, India"
+      "placeholder": "City, Country"
     },
     {
       "name": "country",
       "label": "Preferred Country",
       "required": true,
       "type": "select",
-      "placeholder": "Select Country"
+      "placeholder": "Select Country",
+      "options": [
+        "Kuwait",
+        "Saudi Arabia",
+        "UAE",
+        "Qatar",
+        "Bahrain",
+        "Oman",
+        "India",
+        "Other"
+      ]
     },
     {
       "name": "job_category",
       "label": "Job Category",
       "required": true,
-      "type": "text",
-      "placeholder": "e.g. Mechanical Engineer / Welder / Accounts"
+      "type": "select",
+      "placeholder": "Select job category",
+      "options": [
+        "Engineering & Technical",
+        "Construction & Infrastructure",
+        "Oil, Gas & Energy",
+        "Manufacturing",
+        "Hospitality",
+        "Healthcare",
+        "Logistics & Supply Chain",
+        "Information Technology",
+        "Retail & E-commerce",
+        "Banking, Finance & Corporate Services",
+        "Facilities Management",
+        "Education & Professional Services",
+        "Other"
+      ]
     },
     {
       "name": "current_most_recent_designation",
@@ -182,7 +232,7 @@
       "label": "Passport Status",
       "required": false,
       "type": "text",
-      "placeholder": "e.g. Valid until 2029 (ECNR)"
+      "placeholder": "e.g. Valid until 2029"
     },
     {
       "name": "availability_notice_period",
@@ -240,21 +290,58 @@
       "label": "Phone / WhatsApp",
       "required": true,
       "type": "tel",
-      "placeholder": "+91 / +971 ..."
+      "placeholder": "+965 / +971 ..."
     },
     {
       "name": "country",
       "label": "Country",
       "required": true,
-      "type": "text",
-      "placeholder": "e.g. UAE / Saudi Arabia / India"
+      "type": "select",
+      "placeholder": "Select Country",
+      "options": [
+        "Kuwait",
+        "Saudi Arabia",
+        "UAE",
+        "Qatar",
+        "Bahrain",
+        "Oman",
+        "India",
+        "Other"
+      ]
     },
     {
       "name": "enquiry_type",
       "label": "Enquiry Type",
       "required": true,
       "type": "select",
-      "placeholder": "Select Enquiry Type"
+      "placeholder": "Select Enquiry Type",
+      "options": [
+        "Employer – hiring request",
+        "Candidate – job enquiry",
+        "General enquiry"
+      ]
+    },
+    {
+      "name": "number_of_vacancies",
+      "label": "Number of vacancies",
+      "required": false,
+      "type": "number",
+      "placeholder": "e.g. 5",
+      "showWhen": {
+        "field": "enquiry_type",
+        "value": "Employer – hiring request"
+      }
+    },
+    {
+      "name": "expected_joining_date",
+      "label": "Expected start date",
+      "required": false,
+      "type": "date",
+      "placeholder": "",
+      "showWhen": {
+        "field": "enquiry_type",
+        "value": "Employer – hiring request"
+      }
     },
     {
       "name": "subject",

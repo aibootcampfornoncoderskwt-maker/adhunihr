@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { Buffer } from 'node:buffer';
 import fields from '../../data/enquiry-fields.json';
-import { countries } from '../../data/site';
 export const prerender=false;
 const json=(body:object,status=200)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const MAX_FILE=2*1024*1024;
@@ -30,7 +29,7 @@ export const POST:APIRoute=async({request})=>{
    if((field.required&&!value)||value.length>limit)return json({error:`Please check ${field.label}.`},400);
    if(field.type==='number'&&value&&(!/^\d+$/.test(value)||Number(value)<1||Number(value)>100000))return json({error:'Please enter a valid number of vacancies.'},400);
    if(field.type==='date'&&value&&(!/^\d{4}-\d{2}-\d{2}$/.test(value)||Number.isNaN(Date.parse(value))||new Date(value).toISOString().slice(0,10)!==value))return json({error:'Please enter a valid joining date.'},400);
-   if(field.type==='select'&&value){const allowed=field.name==='country'?[...countries.map(c=>c.name),'India','Other']:['Employer requirement','Candidate enquiry','General enquiry','Request a call'];if(!allowed.includes(value))return json({error:`Please check ${field.label}.`},400);}
+   if(field.type==='select'&&value){const allowed=(field as {options?:string[]}).options??[];if(!allowed.includes(value))return json({error:`Please check ${field.label}.`},400);}
   }
   const email=text('email');if(!/^\S+@[^\s@]+\.[^\s@]+$/.test(email)||/[\r\n]/.test(email))return json({error:'Please enter a valid email address.'},400);
   const token=text('cf-turnstile-response');if(!token||token.length>2048)return json({error:'Please complete the security check.'},400);

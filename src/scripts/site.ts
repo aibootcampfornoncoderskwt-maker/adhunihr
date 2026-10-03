@@ -60,7 +60,7 @@ document.querySelectorAll('[data-candidate-link], a[href="#candidates"]').forEac
 document.querySelectorAll<HTMLAnchorElement>('[data-role]').forEach(a=>a.addEventListener('click',()=>{const b=document.querySelector<HTMLButtonElement>('#candidate-tab');if(b)selectTab(b);const message=document.querySelector<HTMLTextAreaElement>('#candidate-panel textarea');if(message)message.value=document.documentElement.lang==='ar'?`أود مناقشة الفرص المتعلقة بوظيفة ${translate(a.dataset.role||'')}. خبرتي ذات الصلة: `:`I would like to discuss opportunities related to ${a.dataset.role}. My relevant experience is: `;}));
 document.querySelectorAll<HTMLButtonElement>('[data-job-filter]').forEach(b=>b.addEventListener('click',()=>{const filter=b.dataset.jobFilter;let count=0;document.querySelectorAll<HTMLButtonElement>('[data-job-filter]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn===b)));document.querySelectorAll<HTMLTableRowElement>('[data-job-category]').forEach(row=>{row.hidden=filter!=='All roles'&&row.dataset.jobCategory!==filter;if(!row.hidden)count++;});const label=document.querySelector('#job-count');if(label)label.textContent=`Showing ${count} role example${count===1?'':'s'}`;}));
 const ribbonButton=document.querySelector<HTMLButtonElement>('.ribbon-control');ribbonButton?.addEventListener('click',()=>{const paused=document.querySelector('.country-ribbon')?.classList.toggle('paused');ribbonButton.setAttribute('aria-pressed',String(paused));ribbonButton.setAttribute('aria-label',paused?'Play country animation':'Pause country animation');ribbonButton.textContent=paused?'▶':'Ⅱ';});
-document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form=>form.addEventListener('submit',async e=>{e.preventDefault();const status=form.querySelector<HTMLElement>('.form-status')!;status.className='form-status';if(form.dataset.enabled!=='true'){status.textContent='This is a website preview. No information has been sent or stored.';return;}const submit=form.querySelector<HTMLButtonElement>('[type=submit]')!;submit.disabled=true;status.textContent='Sending your enquiry…';try{const data=new FormData(form);const upload=data.get('attachment');if(upload instanceof File&&upload.size>2*1024*1024)throw new Error('Attachment must be 2 MB or smaller.');const response=await fetch('/api/contact',{method:'POST',body:data});const result=await response.json();if(!response.ok)throw new Error(result.error||'Your enquiry could not be sent. Please try again.');status.classList.add('success');status.textContent='Thank you. Your enquiry has been sent to the Adhuni team.';form.reset();}catch(err){status.classList.add('error');status.textContent=err instanceof Error?err.message:'Unable to send. Please try again.';}finally{submit.disabled=false;const widget=(window as unknown as {turnstile?:{reset:(el:Element)=>void}}).turnstile;const element=form.querySelector('.cf-turnstile');if(widget&&element)widget.reset(element);}}));
+import './contact-form'; // enquiry forms, file drop zone and contact-page audience cards
 
 export {};
 
@@ -68,30 +68,23 @@ export {};
 const journeyParams = new URLSearchParams(window.location.search);
 const serviceParam = journeyParams.get('service') || '';
 const countryParam = journeyParams.get('country') || '';
+const industryParam=journeyParams.get('industry') || '';
 document.querySelectorAll<HTMLAnchorElement>('[data-market-enquiry]').forEach(link => {
  const target = new URL(link.href);
  if (/^[a-z-]{1,70}$/.test(serviceParam)) target.searchParams.set('service', serviceParam);
  link.href = target.pathname + target.search + target.hash;
 });
 const employerForm = document.querySelector<HTMLFormElement>('form:has(input[name=type][value=employer])');
-for (const [name, value] of [['service', serviceParam], ['country', countryParam]]) {
+for (const [name, value] of [['service', serviceParam], ['country', countryParam], ['industry', industryParam]]) {
  const field = employerForm?.querySelector<HTMLSelectElement>(`select[name="${name}"]`);
  if (field && Array.from(field.options).some(option => option.value === value)) field.value = value;
 }
 
-const waToggle=document.querySelector<HTMLButtonElement>('.whatsapp-toggle');
-const waPanel=document.querySelector<HTMLElement>('.whatsapp-panel');
-function closeWhatsApp(){if(waPanel)waPanel.hidden=true;waToggle?.setAttribute('aria-expanded','false');waToggle?.setAttribute('aria-label','Open WhatsApp contact');}
-waToggle?.addEventListener('click',()=>{if(!waPanel)return;const opening=waPanel.hidden;waPanel.hidden=!opening;waToggle.setAttribute('aria-expanded',String(opening));waToggle.setAttribute('aria-label',opening?'Close WhatsApp contact':'Open WhatsApp contact');});
-document.querySelector('.wa-close')?.addEventListener('click',()=>{closeWhatsApp();waToggle?.focus();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&waPanel&&!waPanel.hidden){closeWhatsApp();waToggle?.focus();}});
-document.addEventListener('click',e=>{if(e.target instanceof Node&&!document.querySelector('.whatsapp-widget')?.contains(e.target))closeWhatsApp();});
 
 const headerStack=document.querySelector<HTMLElement>('#header-stack');
 if(headerStack){const syncHeaderHeight=()=>document.documentElement.style.setProperty('--header-height',`${headerStack.getBoundingClientRect().height}px`);new ResizeObserver(syncHeaderHeight).observe(headerStack);syncHeaderHeight();}
 
 // Carry an industry brief through the dedicated sector page.
-const industryParam=journeyParams.get('industry') || '';
 const industryField=employerForm?.querySelector<HTMLInputElement>('input[name=industry]');
 if(industryField&&industryParam.length<=160)industryField.value=industryParam;
 

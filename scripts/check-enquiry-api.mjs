@@ -8,7 +8,7 @@ const {POST}=await import('data:text/javascript;base64,'+Buffer.from(code).toStr
 Object.assign(process.env,{PUBLIC_CONTACT_ENABLED:'true',RESEND_API_KEY:'test-key',CONTACT_FROM:'test@example.com',CONTACT_TO:'recipient@example.com',TURNSTILE_SECRET_KEY:'test-secret'});
 let calls=[];let captchaOK=true;let deliveryOK=true;
 globalThis.fetch=async(url,options)=>{calls.push({url,options});return url.includes('siteverify')?Response.json({success:captchaOK,hostname:'localhost'}):Response.json({}, {status:deliveryOK?200:502});};
-const make=type=>{const form=new FormData();form.set('type',type);form.set('consent','on');form.set('cf-turnstile-response','test-token');for(const f of fields[type])if(f.type!=='file')form.set(f.name,f.name==='email'?'test@example.com':f.name==='country'?'Kuwait':f.type==='number'?'3':f.type==='date'?'2026-11-01':f.type==='select'?'General enquiry':'Test details');return form;};
+const make=type=>{const form=new FormData();form.set('type',type);form.set('consent','on');form.set('cf-turnstile-response','test-token');for(const f of fields[type])if(f.type!=='file')form.set(f.name,f.name==='email'?'test@example.com':f.name==='country'?'Kuwait':f.type==='number'?'3':f.type==='date'?'2026-11-01':f.type==='select'?(f.options?f.options[0]:'General enquiry'):'Test details');return form;};
 const send=(form,origin='http://localhost')=>POST({request:new Request('http://localhost/api/contact',{method:'POST',headers:{Origin:origin},body:form})});
 for(const type of Object.keys(fields)){
  calls=[];assert.equal((await send(make(type))).status,200);assert.equal(calls.length,2);

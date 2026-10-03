@@ -1,0 +1,32 @@
+/* For candidates page */
+.sv-btn--down .btn-arrow svg{transform:rotate(90deg)}
+.sv-btn--down:hover .btn-arrow{transform:translateY(3px)}
+html[dir=rtl] .sv-btn--down:hover .btn-arrow{transform:translateY(3px)}
+html[dir=rtl] .sv-btn--down .btn-arrow svg{transform:rotate(90deg)}
+/* Four-step journey on the shared timeline */
+.appr--four .appr-steps{grid-template-columns:repeat(4,minmax(0,1fr))}
+.appr--four .appr-steps:before,.appr--four .appr-steps:after{inline-size:calc((100% + var(--gap)) * .75)}
+.appr--four .appr-steps p{max-width:30ch}
+@media(max-width:850px){.appr--four .appr-steps{grid-template-columns:minmax(0,1fr)}}
+/* Registration */
+.cd-register{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:start}
+.cd-register-intro h2{margin:0}
+.cd-register-intro>p{margin:16px 0 0;max-width:none;font-size:clamp(16px,1.2vw,18px);line-height:1.75;color:var(--text-2)}
+.cd-safety{display:grid;grid-template-columns:28px minmax(0,1fr);gap:14px;margin-top:28px;padding:20px 22px;border:1px solid #c9d7e3;border-inline-start:4px solid #f5b51d;border-radius:12px;background:#eef3f8;color:var(--navy-ink)}
+.cd-safety svg{color:#a57511;margin-top:2px}
+.cd-safety p{margin:0;font-size:15.5px;line-height:1.65;color:var(--navy-ink);max-width:none}
+.cd-safety a{font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.cd-safety a:focus-visible{outline:2px solid #ad7a13;outline-offset:2px;border-radius:3px}
+/* Tips */
+.cd-tips-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:start}
+.cd-tips-intro>p{margin:16px 0 0;font-size:clamp(16px,1.2vw,18px);line-height:1.75;color:var(--text-2);max-width:none}
+.cd-tips{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.cd-tips li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:14px;align-items:start;padding:16px 20px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:16px;line-height:1.55;color:var(--navy-ink)}
+.cd-tip-icon{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#fbf3de;color:#a57511}
+.cd-end{padding-block:28px 56px;text-align:center}
+.cd-end p{margin:0;font-size:17px;color:var(--text-2)}
+.cd-end a{font-weight:600;color:var(--navy);text-decoration:underline;text-underline-offset:3px}
+.cd-end a:hover{color:#8a6212}
+.cd-end a:focus-visible{outline:2px solid #ad7a13;outline-offset:3px;border-radius:3px}
+@media(max-width:850px){.cd-register,.cd-tips-grid{grid-template-columns:minmax(0,1fr);gap:32px}}
+#registration{scroll-margin-top:calc(var(--header-height,132px) + 8px)}

@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import {countries} from '../data/site';
+import {briefRoleGroups} from '../data/brief-roles';
+import '../styles/service.css';
+import '../styles/brief.css';
+const enabled=import.meta.env.PUBLIC_CONTACT_ENABLED==='true';
+const key=import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+const data={groups:briefRoleGroups,countries:countries.map(c=>({name:c.name,code:c.code})),enabled};
+const parent={name:'For Employers',href:'/employers/'};
+---
+<Base title="Hiring Brief Builder | Adhuni HR Solutions" description="Build a clear hiring brief in four steps: roles, numbers, location and requirements. Download it as a PDF or send it to Adhuni HR Solutions." breadcrumbs={[parent,{name:'Hiring Brief Builder',href:'/hiring-brief-builder/'}]}>
+<section class="sv-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={parent.href}>{parent.name}</a><span aria-hidden="true">/</span><span aria-current="page">Hiring Brief Builder</span></nav>
+<div class="sv-hero-grid"><div class="sv-hero-copy"><div class="eyebrow light">HIRING BRIEF BUILDER</div><h1>Build your hiring brief in four steps.</h1><p>Choose the roles, add numbers, location and requirements. Download a PDF or send it to us.</p></div></div></div></section>
+<section class="section bb-section"><div class="container"><div class="bb" id="bb" data-enabled={String(enabled)}>
+<noscript><p class="bb-noscript">The hiring brief builder needs JavaScript. You can <a href="/employers/#request-form">use the employer form</a> instead.</p></noscript>
+<div class="bb-mount"></div>
+<form id="bb-send" class="bb-send" hidden data-open="false" novalidate aria-labelledby="bb-send-title">
+<h3 id="bb-send-title">Send your brief to Adhuni</h3>
+<p class="bb-send-intro">Add your details and we will reply within one business day.</p>
+<div class="bb-grid2">
+<div class="field"><label for="bb-s-name">Name</label><input id="bb-s-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="bb-s-name-err"/><span class="field-error" id="bb-s-name-err"></span></div>
+<div class="field"><label for="bb-s-company">Company</label><input id="bb-s-company" name="company" type="text" autocomplete="organization" maxlength="160" required aria-describedby="bb-s-company-err"/><span class="field-error" id="bb-s-company-err"></span></div>
+<div class="field"><label for="bb-s-email">Email</label><input id="bb-s-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="bb-s-email-err"/><span class="field-error" id="bb-s-email-err"></span></div>
+<div class="field"><label for="bb-s-phone">Phone</label><input id="bb-s-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required aria-describedby="bb-s-phone-err"/><span class="field-error" id="bb-s-phone-err"></span></div>
+</div>
+<div class="field bb-consent"><label class="bb-check"><input id="bb-s-consent" type="checkbox" name="consent" required aria-describedby="bb-s-consent-err"/><span>I acknowledge that the information provided may be used to respond to my enquiry in accordance with privacy and recruitment practices. I have read the <a href="/privacy/">privacy notice</a>.</span></label><span class="field-error" id="bb-s-consent-err"></span></div>
+<div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"/></label></div>
+{enabled&&key&&<div class="cf-turnstile" data-sitekey={key}></div>}
+<button class="bb-btn bb-btn-gold" type="submit">Send to Adhuni <Icon name="arrow" size={16}/></button>
+<p class="bb-send-status" role="status" aria-live="polite"></p>
+{!enabled&&<p class="bb-send-note">Enquiries are not being collected on this preview. Sending will be available when the website launches. You can still download your brief as a PDF.</p>}
+</form>
+<p class="bb-sr" id="bb-live" aria-live="polite"></p>
+</div></div></section>
+<script type="application/json" id="bb-data" set:html={JSON.stringify(data).replace(/</g,'\u003c')}/>
+<script>import '../scripts/brief-builder';</script>
+{enabled&&key&&<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</Base>

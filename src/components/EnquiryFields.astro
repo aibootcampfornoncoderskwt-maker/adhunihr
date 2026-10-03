@@ -1,9 +1,28 @@
 ---
-import {countries} from '../data/site';
-interface Field {name:string;label:string;required:boolean;type:string;placeholder:string;}
-interface Props {items:Field[];}
-const {items}=Astro.props;
+interface Field {name:string;label:string;required:boolean;type:string;placeholder:string;options?:string[];showWhen?:{field:string;value:string};}
+interface Props {items:Field[];prefix?:string;}
+const {items,prefix='f'}=Astro.props;
 ---
-{items.map(field=><label class:list={[{full:field.type==='textarea'||field.type==='file'}]}>{field.label}{field.required&&<span aria-hidden="true"> *</span>}
-{field.type==='textarea'?<textarea name={field.name} required={field.required} rows="4" maxlength="4000" placeholder={field.placeholder}/>:field.type==='select'?<select name={field.name} required={field.required}><option value="">{field.placeholder}</option>{(field.name==='country'?[...countries.map(c=>c.name),'India','Other']:['Employer requirement','Candidate enquiry','General enquiry','Request a call']).map(option=><option value={option}>{option}</option>)}</select>:field.type==='file'?<><input name="attachment" type="file" accept=".pdf,.doc,.docx"/><span class="small-note">PDF, DOC or DOCX. Maximum 2 MB.</span></>:<input name={field.name} type={field.type as "text"|"email"|"tel"|"number"|"date"} required={field.required} placeholder={field.type==='date'?undefined:field.placeholder} min={field.type==='number'?1:undefined} max={field.type==='number'?100000:undefined} step={field.type==='number'?1:undefined} maxlength={field.type==='email'?254:500} autocomplete={field.name==='name'?'name':field.name==='email'?'email':field.name==='phone'?'tel':field.name==='company'?'organization':undefined}/>}
-</label>)}
+{items.map(field=>{
+ const id=`${prefix}-${field.name}`;
+ const describedBy=`${id}-error`;
+ return <div class:list={['field',{full:field.type==='textarea'||field.type==='file'||field.name==='subject'}]} data-show-field={field.showWhen?.field} data-show-value={field.showWhen?.value} hidden={field.showWhen?true:undefined}>
+ {field.type==='file'
+  ?<>
+   <span class="dz-title" id={`${id}-title`}>{field.label}</span>
+   <div class="dropzone" data-dropzone>
+    <input id={id} name="attachment" type="file" accept=".pdf,.doc,.docx" aria-labelledby={`${id}-title ${id}-text`} aria-describedby={describedBy}/>
+    <svg class="dz-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4m0 0 4 4m-4-4L8 8M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+    <span class="dz-text" id={`${id}-text`}><strong>Drag your file here or browse</strong><small>PDF, DOC or DOCX, max 2 MB</small></span>
+   </div>
+   <div class="dz-file" hidden><span class="dz-name"></span><button type="button" class="dz-remove">Remove file</button></div>
+  </>
+  :<label>{field.label}{field.required&&<span aria-hidden="true"> *</span>}
+   {field.type==='textarea'
+    ?<textarea id={id} name={field.name} required={field.required} rows="4" maxlength="4000" placeholder={field.placeholder} aria-describedby={describedBy}/>
+    :field.type==='select'
+    ?<select id={id} name={field.name} required={field.required} aria-describedby={describedBy}><option value="">{field.placeholder}</option>{(field.options??[]).map(option=><option value={option}>{option}</option>)}</select>
+    :<input id={id} name={field.name} type={field.type as "text"|"email"|"tel"|"number"|"date"} required={field.required} placeholder={field.type==='date'?undefined:field.placeholder} min={field.type==='number'?1:undefined} max={field.type==='number'?100000:undefined} step={field.type==='number'?1:undefined} maxlength={field.type==='email'?254:500} autocomplete={field.name==='name'?'name':field.name==='email'?'email':field.name==='phone'?'tel':field.name==='company'?'organization':undefined} aria-describedby={describedBy}/>}
+  </label>}
+ <span class="field-error" id={describedBy}></span>
+</div>})}

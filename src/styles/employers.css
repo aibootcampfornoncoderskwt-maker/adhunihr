@@ -1,0 +1,36 @@
+/* For Employers page. Uses the shared .container; the hero follows the compact pattern of the Services overview. */
+.emp-hero{padding:24px 0 clamp(32px,4vw,48px)}
+.emp-hero .page-breadcrumb{margin-bottom:24px}
+.emp-hero .page-hero-copy h1{font-size:clamp(34px,3.6vw,54px);max-width:18ch}
+.emp-hero .page-hero-copy>p{margin:18px 0 26px;max-width:54ch;font-size:clamp(16px,1.25vw,18px);line-height:1.7}
+.emp-hero .page-hero-visual img{aspect-ratio:16/10;object-position:60% 40%}
+.emp-hero .page-hero-arrow{display:inline-block;font-size:1.1em;line-height:1;transition:transform .2s ease}
+.emp-hero .button:hover .page-hero-arrow{transform:translateY(3px)}
+
+/* The form anchor lands below the sticky header with room to breathe. */
+#request-form{scroll-margin-top:24px}
+
+/* "What happens next?": three numbered steps */
+.emp-next{list-style:none;margin:16px 0 22px;padding:0;display:grid;gap:14px;counter-reset:next}
+.emp-next li{position:relative;padding-inline-start:44px;min-height:30px;display:flex;align-items:center;font-size:15px;line-height:1.5;color:var(--text-2);counter-increment:next}
+.emp-next li:before{content:counter(next);position:absolute;inset-inline-start:0;top:50%;translate:0 -50%;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fbf1d6;color:var(--gold-ink);font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){.emp-hero .page-hero-arrow{transition:none}}
+.employer-brief-cta{display:grid;gap:6px;margin:22px 0 0;padding:16px 18px;border:1px solid #efd9a1;border-radius:12px;background:#fff9ea}
+.employer-brief-cta strong{font-size:16px;color:var(--navy-ink)}
+.employer-brief-cta span{font-size:15px;line-height:1.55;color:var(--text-2)}
+.employer-brief-cta .text-link{justify-self:start;margin-top:4px}
+html[dir=rtl] .employer-brief-cta .text-link svg{transform:rotate(180deg)}
+
+/* Sticky left column on desktop: intro, brief builder callout, checklist and next steps stay in view while the form scrolls.
+   --guide-top is set by sticky-guide.ts so a column taller than the screen pins by its bottom edge and is never clipped. */
+@media(min-width:1001px){
+ .employer-form-guide{position:sticky;top:var(--guide-top,calc(var(--header-height,132px) + 24px));align-self:start}
+}
+
+/* Form: email takes a full row so Phone pairs with Designation (no empty cell). */
+.enquiry-group .field:has(#employer-email){grid-column:1/-1}
+
+/* Consent checkbox: 18px, aligned to the first line of its text, clear focus ring. */
+.consent{display:grid;grid-template-columns:18px minmax(0,1fr);column-gap:12px;align-items:start}
+.consent input[type=checkbox]{width:18px;height:18px;margin:2px 0 0;accent-color:var(--navy)}
+.consent input[type=checkbox]:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:3px}

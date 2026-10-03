@@ -1,0 +1,6 @@
+---
+import {homeApproachSteps} from '../data/approach-steps';
+interface Props {steps?:[string,string][];}
+const {steps=homeApproachSteps}=Astro.props;
+---
+<ol class="appr-steps">{steps.map(([title,copy],i)=><li style={`--i:${i}`}><span class="appr-num">{String(i+1).padStart(2,'0')}</span><span class="appr-node" aria-hidden="true"></span><h3>{title}</h3><p>{copy}</p></li>)}</ol>

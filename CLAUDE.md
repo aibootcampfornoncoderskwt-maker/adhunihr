@@ -45,3 +45,12 @@ See `.env.example`. The site ships in review mode: `PUBLIC_LAUNCH_READY=false` m
 - Do not invent office addresses, reviews, statistics, customer logos, licences, job postings, or social destinations. Country pages describe market focus, not offices. Role examples are illustrative; never add JobPosting schema to them.
 - People imagery is AI-generated and male-only by client direction, and must not be described as real staff; real photos are credited via `ImageCredit.astro` (see `ASSETS.md`). Fonts are Inter (headings and body) and Barlow Condensed, self-hosted via fontsource.
 - `tmp/` holds one-off migration scripts, backups and QA screenshots from past edits; it is not part of the build. `dist/` and `.vercel/` are gitignored build output. `docs/` records past implementation decisions (`dedicated-pages-and-search-handoff.md` is the current handoff; `client-content-implementation.md` is historical).
+
+## Image rules
+
+- **One image, one slot.** No image may appear in more than one page hero or main section image slot. Before adding or swapping an image, check where else it is used (search the filename in `src/`; the homepage, About, Contact, Approach, Employers, Candidates and Services overview pages each have their own file in `public/pages/`).
+- **Industry photos** (`public/industries/industry-*.webp`) may appear only on that industry's card (homepage, industries list, related-industries rows) and as that industry's page hero, which must use a tighter crop (`IndustryDetail.astro` zooms the card photo) so the two never look identical.
+- **Hero slideshow photos** (`public/hero/`) appear on the homepage only: not in menus, CTA bands or other pages.
+- **Service pages** each need their own unique hero image. A service without one gets a text-only hero until a new image exists (see `src/data/service-content.ts`); do not borrow another page's photo.
+- Navigation menu previews (the Services and Industries dropdowns) are the one exemption: they may show the matching industry photo or the Services overview image.
+- Every image needs descriptive alt text, with an Arabic version in `src/data/client-arabic.json` (alt attributes are translated by `src/scripts/language.ts`). Illustrative AI imagery is never described as real staff.

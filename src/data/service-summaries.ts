@@ -1,0 +1,2 @@
+// One-line descriptions for the seven services, in the same order as the services list. Shared by the homepage and the Services page.
+export const serviceSummaries:string[]=['Long-term hires, screened for skills and fit.','Staff for fixed-term projects and assignments.','Engineers, technicians and skilled trades.','Finance, HR, admin and specialist business roles.','Many vacancies, filled through one coordinated process.','Confidential search for senior and leadership roles.','Help at any stage, from job brief to joining.'];

@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "images": [
+    {
+      "name": "ABOUT HERO",
+      "file": "public/images/pages-generated/about-hero.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: ABOUT HERO for Adhuni recruitment website. Generate one photograph-style image, exactly 16:10 landscape, 1536x960. A small professional team of four adults, two men and two women in tailored business attire, walking together confidently and purposefully through a bright modern office corridor in Kuwait City. Glass walls, natural window light, elegant understated architecture. Candid mid-stride moment viewed obliquely, natural conversation with gazes toward each other or down the corridor, absolutely nobody looking at the camera. One woman wears a neat hijab with a business suit. Wide environmental composition with corridor perspective and full walking figures, not a posed group portrait. Match the existing website hero aesthetic visible in context: muted low-saturation colour grade, deep cool navy shadows, gentle warm cream and amber highlights, natural skin texture, subtle fine film grain, realistic editorial corporate photography. Bright soft daylight with dimensional shadows, restrained contrast. Unique corridor setting and walking composition: no office lounge, no blueprint table, no two men with tablet, no meeting-table scene. No readable text on any glass, screens, papers or signs; no logos, captions or watermark. This is an illustrative fictional team, not actual company employees."
+    }
+  ]
+}

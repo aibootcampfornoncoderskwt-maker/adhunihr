@@ -1,11 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHero from '../components/PageHero.astro';
 import Contact from '../components/Contact.astro';
-import ImageCredit from '../components/ImageCredit.astro';
+import Icon from '../components/Icon.astro';
+const paths=[
+ {type:'Employer – hiring request',title:'For Employers',text:'Need staff? Share the role, number of vacancies and start date.',cta:'Request Candidates',primary:true,href:'/employers/#request-form'},
+ {type:'Candidate – job enquiry',title:'For Candidates',text:'Looking for work? Send your CV and we’ll contact you when a role fits.',cta:'Submit Your CV'},
+ {type:'General enquiry',title:'General Enquiries',text:'Partnerships, media or any other questions.',cta:'Send a message'}
+];
 ---
-<Base title="Contact Adhuni HR Solutions | Recruitment Enquiries" description="Contact Adhuni HR Solutions for employer requirements, candidate enquiries and recruitment discussions across industries and GCC markets." image="/images/meeting.webp" pageType="ContactPage" breadcrumbs={[{name:'Contact',href:'/contact/'}]}>
-<PageHero eyebrow="Contact" title="Let’s Start a Conversation." description="Whether you are looking for the right people for your business or exploring your next career opportunity, our team is ready to hear from you." image="meeting.webp" alt="Professionals discussing a recruitment requirement" cta={{label:'Send an enquiry',href:'#general-enquiry'}}/>
+<Base title="Contact Adhuni HR Solutions | Recruitment Enquiries" description="Contact Adhuni HR Solutions for employer requirements, candidate enquiries and recruitment discussions across industries and GCC markets." image="/pages/contact-hero.webp" pageType="ContactPage" breadcrumbs={[{name:'Contact',href:'/contact/'}]}>
+<section class="ct-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Contact</span></nav>
+<div class="ct-hero-grid"><div class="ct-hero-copy"><div class="eyebrow light">CONTACT</div><h1>Talk to our recruitment team.</h1><p>Hiring, looking for work, or a general question? Choose your enquiry below and we’ll reply within one business day.</p><a class="button amber ct-hero-button" href="#general-enquiry" data-scroll-form>Send an enquiry <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a></div>
+<figure class="ct-hero-visual"><img src="/pages/contact-hero.webp" alt="Illustrative scene of a professional taking a phone call beside a laptop at a high-rise office desk, with a Gulf city skyline behind." width="1536" height="1024" fetchpriority="high"/><figcaption>Every brief starts with a conversation.</figcaption></figure></div></div></section>
+<section class="ct-paths" aria-label="Choose your enquiry"><div class="container"><ul class="ct-path-grid">{paths.map(path=><li><a class:list={['ct-path',{'is-primary':path.primary}]} href={path.href??'#general-enquiry'} data-enquiry-type={path.href?undefined:path.type}><h2>{path.title}</h2><p>{path.text}</p><span class="ct-path-cta">{path.cta} <Icon name="arrow" size={16}/></span></a></li>)}</ul></div></section>
 <Contact showHeading={false}/>
-<section class="section"><div class="container page-editorial"><div><div class="eyebrow">CONTACT DETAILS</div><h2>Ready when you are.</h2><a class="text-link" href="mailto:info@adhunihr.com">info@adhunihr.com</a></div><div class="page-prose"><p>For an employer requirement, share the job title, number of vacancies, required experience, work location and expected joining date. Candidates can use the dedicated registration page to submit a CV and career details.</p><div class="client-actions"><a href="/employers/#requirement" class="button navy">For Employers →</a><a href="/candidates/#registration" class="button amber">For Candidates →</a></div><ImageCredit image="meeting.webp"/></div></div></section>
 </Base>

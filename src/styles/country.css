@@ -1,0 +1,16 @@
+/* Country pages. Hero, sections and cards reuse the shared container and the service/home styles. */
+.co-hero .sv-hero-visual img{object-position:72% 50%}
+.co-office{margin:20px 0 0;font-size:14px;line-height:1.5;color:#d7e3eb}
+.co-office span{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f0c050}
+.sv-deliver.sv-deliver--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.co-markets-section{padding-block:40px}
+.co-markets{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px}
+.co-markets-label{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--text-2)}
+.co-markets ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.co-markets a{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:14px;font-weight:600;color:var(--navy-ink);transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.co-markets a:hover,.co-markets a:focus-visible{border-color:var(--navy);box-shadow:0 6px 16px -8px rgba(8,40,63,.4);transform:translateY(-1px)}
+.co-markets .flag{width:22px;height:16px;flex:none;border-radius:2px;border:1px solid rgba(0,0,0,.12)}
+@media(max-width:1000px){.sv-deliver.sv-deliver--3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.sv-deliver.sv-deliver--3{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.co-markets a{transition:none}.co-markets a:hover{transform:none}}
+.co-section-head+.ind-grid,h2+.ind-grid{margin-top:32px}

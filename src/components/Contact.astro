@@ -1,9 +1,24 @@
 ---
 import EnquiryForm from './EnquiryForm.astro';
+import Icon from './Icon.astro';
+import {phoneDisplay,whatsappNumber,officeHours} from '../data/contact';
 interface Props {showHeading?:boolean;}
 const {showHeading=true}=Astro.props;
+const phoneHref=phoneDisplay?`tel:${phoneDisplay.replace(/[^+\d]/g,'')}`:'';
+// Number shown for WhatsApp, e.g. 96541103254 -> +965 4110 3254 (other countries: +digits).
+const whatsappDisplay=whatsappNumber?(/^965\d{8}$/.test(whatsappNumber)?`+965 ${whatsappNumber.slice(3,7)} ${whatsappNumber.slice(7)}`:`+${whatsappNumber}`):'';
+const whatsappHref=whatsappNumber?`https://wa.me/${whatsappNumber}`:'';
+// Each row renders only when it has a real value (see src/data/contact.ts and .env.example).
+const ways=[
+ {icon:'mail',label:'Email',value:'info@adhunihr.com',href:'mailto:info@adhunihr.com',ltr:true},
+ ...(phoneDisplay||whatsappNumber?[{icon:phoneDisplay?'phone':'whatsapp',label:'Phone / WhatsApp',value:phoneDisplay||whatsappDisplay,href:phoneDisplay?phoneHref:whatsappHref,ltr:true,extra:phoneDisplay&&whatsappNumber?{text:'Message us on WhatsApp',href:whatsappHref}:undefined}]:[]),
+ {icon:'clock',label:'Response time',value:'We reply within one business day'},
+ ...(officeHours?[{icon:'calendar',label:'Office hours',value:officeHours}]:[])
+];
 ---
 <section id="contact" class="section contact-section"><div class="container">{showHeading&&<div class="client-contact-heading"><div class="eyebrow light">CONTACT US</div><h2>Let’s Start a Conversation.</h2><p>Whether you are looking for the right people for your business or exploring your next career opportunity, our team is ready to hear from you.</p></div>}
-<div class="client-contact-paths"><a href="/employers/#requirement"><h3>For Employers</h3><p>Have a manpower requirement? Send us the details of your vacancy, workforce size and expected timeline.</p><span>Submit Your Requirement →</span></a><a href="/candidates/#registration"><h3>For Candidates</h3><p>Looking for an opportunity? Submit your CV and profile details for consideration against suitable vacancies.</p><span>Submit Your CV →</span></a><a href="#general-enquiry"><h3>General Enquiries</h3><p>Tell us what you need, and we will direct your enquiry to the appropriate recruitment team.</p><span>Write to Us →</span></a></div>
-<div class="contact-wrap"><div class="contact-intro"><div class="eyebrow light">GET IN TOUCH</div><h2>Tell us what you need.</h2><p>For faster recruitment discussions, employers should include the job title, number of vacancies, required experience, location and expected joining date.</p><div class="contact-prep"><h3>Ready when you are.</h3><a href="mailto:info@adhunihr.com">info@adhunihr.com</a></div></div><div id="general-enquiry" class="contact-workspace"><EnquiryForm type="general"/></div></div></div></section>
+<div class="contact-wrap"><div class="contact-intro"><div class="contact-intro-sticky"><div class="eyebrow light">GET IN TOUCH</div><h2>Tell us what you need.</h2><p>For faster recruitment discussions, employers should include the job title, number of vacancies, required experience, location and expected joining date.</p>
+<div class="ct-next"><h3>What happens next</h3><ol class="ct-steps"><li><span class="ct-step-num" aria-hidden="true">1</span><span>We review your enquiry and assign one contact.</span></li><li><span class="ct-step-num" aria-hidden="true">2</span><span>We reply within one business day.</span></li><li><span class="ct-step-num" aria-hidden="true">3</span><span>For hiring requests, we agree the brief and start the search.</span></li></ol></div>
+<div class="ct-ways"><h3>Other ways to reach us</h3><ul>{ways.map(way=><li><span class="ct-way-icon" aria-hidden="true"><Icon name={way.icon} size={18}/></span><div class="ct-way-copy"><span class="ct-way-label">{way.label}</span>{way.href?<a href={way.href} rel={way.href.startsWith('https')?'noopener':undefined}>{way.ltr?<bdi dir="ltr">{way.value}</bdi>:way.value}</a>:<span class="ct-way-value">{way.value}</span>}{way.extra&&<a class="ct-way-extra" href={way.extra.href} rel="noopener">{way.extra.text}</a>}</div></li>)}</ul></div></div></div>
+<div id="general-enquiry" class="contact-workspace"><EnquiryForm type="general"/></div></div></div></section>
 {import.meta.env.PUBLIC_CONTACT_ENABLED==='true'&&import.meta.env.PUBLIC_TURNSTILE_SITE_KEY&&<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}

@@ -1,7 +1,42 @@
 ---
 import Base from '../../layouts/Base.astro';
-import {countries,services} from '../../data/site';
+import Icon from '../../components/Icon.astro';
+import PageQuestions from '../../components/PageQuestions.astro';
+import IndustryCards from '../../components/IndustryCards.astro';
+import ServiceList from '../../components/ServiceList.astro';
+import AudienceCta from '../../components/AudienceCta.astro';
+import {countries,industries} from '../../data/site';
+import {countryExtras,countryFaqs} from '../../data/country-content';
+import {countryOffices} from '../../data/contact';
+import '../../styles/service.css';
+import '../../styles/country.css';
 export function getStaticPaths(){return countries.map(country=>({params:{slug:country.slug},props:{country}}));}
 const {country}=Astro.props;
+const extra=countryExtras[country.slug];
+const office=countryOffices[country.slug];
+const questions=countryFaqs(country.slug,country.name,industries.length);
+const otherMarkets=countries.filter(c=>c.slug!==country.slug);
+const requestHref=`/employers/?country=${encodeURIComponent(country.name)}#request-form`;
+const checklist=['Role titles, responsibilities and required experience','Work location and working conditions','Proposed employment terms and number of positions','Interview availability and preferred joining dates'];
+const planning=[
+ {icon:'badge',title:'Work permits and visas',text:'Tell us who will sponsor the employee, so documentation can be planned from the start.'},
+ {icon:'users',title:'Localisation requirements',text:`Let us know about any ${extra.term} targets that apply to your roles.`},
+ {icon:'building',title:'Working conditions',text:'Share working hours, accommodation and transport details if they apply.'}
+];
+const heroImage=`/countries/${extra.image}`;
+const parent={name:'Markets',href:'/#markets'};
+// FAQPage schema describes only the questions that are visible on the page.
+const faqSchema={'@context':'https://schema.org','@type':'FAQPage','@id':new URL(Astro.url.pathname,Astro.site).href+'#faq',mainEntity:questions.map(([name,text])=>({'@type':'Question',name,acceptedAnswer:{'@type':'Answer',text}}))};
 ---
-<Base title={`Recruitment for ${country.name} | Adhuni HR Solutions`} description={`Discuss your ${country.name} hiring requirement with Adhuni HR Solutions. Recruitment conversations connecting employers with talent in India.`}><section class="detail-hero"><div class="container"><div class="breadcrumb"><a href="/">Home</a> / <a href="/#markets">Markets</a> / {country.name}</div><div class="eyebrow light">INDIA ↔ {country.name.toUpperCase()}</div><h1>{country.label}.</h1><p>{country.text}</p></div></section><section class="section"><div class="container detail-grid"><article class="detail-content"><h2>What does your team need?</h2><p>Adhuni’s recruitment focus includes employers hiring for {country.name}. Start with your requirement so we can discuss a suitable scope and selection process.</p><ul><li>Role titles, responsibilities and required experience</li><li>Work location and working conditions</li><li>Proposed employment terms and number of positions</li><li>Interview availability and preferred joining dates</li></ul><a href={`/employers/?country=${encodeURIComponent(country.name)}#requirement`} data-market-enquiry class="button navy">Discuss hiring in {country.name} ↗</a></article><aside class="detail-aside"><h3>Before recruitment begins</h3><p>Confirm the employing entity, selection criteria and responsibilities for documentation and joining. Requirements vary by role and engagement.</p><p class="small-note">This page describes a market focus, not a claim of a local office or regulatory authorisation. Confirm the applicable arrangement with the team.</p></aside></div></section><section class="section surface"><div class="container"><h2>Choose the conversation that fits.</h2><div class="detail-cards">{services.slice(0,3).map(s=><a href={`/services/${s.slug}/`}><h3>{s.title}</h3><p>{s.short}</p></a>)}</div></div></section></Base>
+<Base title={`Recruitment for ${country.name} | Adhuni HR Solutions`} description={`Recruitment for employers in ${extra.inName}. Tell Adhuni HR Solutions the roles, work location and start date, and we'll plan the search.`} image={heroImage} breadcrumbs={[parent,{name:country.name,href:Astro.url.pathname}]}>
+<section class="sv-hero co-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={parent.href}>{parent.name}</a><span aria-hidden="true">/</span><span aria-current="page">{country.name}</span></nav>
+<div class="sv-hero-grid has-image"><div class="sv-hero-copy"><div class="eyebrow light">RECRUITING FOR {country.name.toUpperCase()}</div><h1>Recruitment for employers in {extra.inName}.</h1><p>Candidates for your {country.name} operations, screened and supported through to joining.</p><a class="button amber sv-btn" href={requestHref} data-market-enquiry>Request Candidates <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a>{office&&<p class="co-office"><span>Our {country.name} office</span> {office}</p>}</div><figure class="sv-hero-visual"><img src={heroImage} alt={extra.alt} width="1200" height="675" fetchpriority="high"/></figure></div></div></section>
+<section class="section"><div class="container page-editorial"><div><div class="eyebrow">YOUR REQUIREMENT</div><h2>What does your team need?</h2><p class="section-intro">Start with your requirement and we'll plan the right search and selection process for your {country.name} operations.</p></div><ul class="page-role-list">{checklist.map((point,index)=><li><span aria-hidden="true">0{index+1}</span><strong>{point}</strong></li>)}</ul></div></section>
+<section class="section surface"><div class="container"><div class="eyebrow">WHAT TO TELL US</div><h2>Planning a hire in {extra.inName}.</h2><ul class="sv-deliver sv-deliver--3">{planning.map(item=><li><span class="sv-deliver-icon"><Icon name={item.icon} size={22}/></span><h3>{item.title}</h3><p>{item.text}</p></li>)}</ul></div></section>
+<section class="section"><div class="container"><div class="eyebrow">WHERE WE HIRE</div><h2>Industries we hire for.</h2><IndustryCards slugs={extra.industries}/><a class="ind-all" href="/industries/">View all industries <Icon name="arrow" size={16}/></a></div></section>
+<section class="section surface"><div class="container svc-layout"><div class="svc-intro"><div class="eyebrow">OUR SERVICES</div><h2>How we can help.</h2><p>Pick the service that fits your hiring plan. Not sure which? Tell us what you need and we'll recommend one.</p></div><ServiceList slugs={['permanent-recruitment','contract-project-staffing','skilled-technical-manpower']}/></div></section>
+<section class="section"><div class="container faq-wrap"><div><div class="eyebrow">QUESTIONS &amp; ANSWERS</div><h2>Common questions.</h2></div><PageQuestions questions={questions}/></div></section>
+<section class="section surface co-markets-section"><div class="container"><nav class="co-markets" aria-label="Other markets"><span class="co-markets-label">OTHER MARKETS</span><ul>{otherMarkets.map(c=><li><a href={`/locations/${c.slug}/`}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</a></li>)}</ul></nav></div></section>
+<AudienceCta/>
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g,'\u003c')}/>
+</Base>

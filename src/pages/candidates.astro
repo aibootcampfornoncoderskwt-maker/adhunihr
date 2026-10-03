@@ -1,15 +1,50 @@
 ---
 import Base from '../layouts/Base.astro';
-import ClientCopy from '../components/ClientCopy.astro';
-import ClientFAQ from '../components/ClientFAQ.astro';
+import Icon from '../components/Icon.astro';
+import ApproachSteps from '../components/ApproachSteps.astro';
+import PageQuestions from '../components/PageQuestions.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
-import client from '../data/client-content.json';
-const copy=client['For Candidates'];
+import {candidatesNeverCharged,candidateFeesAnswer,candidateFeesConfirmed} from '../data/candidate-config';
+import '../styles/service.css';
+import '../styles/candidates.css';
+const journey:[string,string][]=[
+ ['Submit',"Send your CV and career details using the form."],
+ ['Match',"When an employer's role fits your profile, we contact you."],
+ ['Interview',"We arrange your interview and keep you updated."],
+ ['Join',"If you're selected, we guide you through the offer, documents and joining."]
+];
+const tips=[
+ 'Keep your CV up to date, with your most recent role first',
+ 'List your certifications, licences and technical skills',
+ 'Keep your passport and key documents valid',
+ 'Only submit genuine documents and certificates',
+ 'Reply quickly when we contact you about a role'
+];
+// Owner-dependent question: hidden (and left out of the FAQPage schema) until its answer is confirmed in src/data/candidate-config.ts.
+const allQuestions:[string,string,boolean][]=[
+ ['Do I have to pay any fees?',candidateFeesAnswer,candidateFeesConfirmed],
+ ['Does submitting my CV guarantee a job?',"No. We contact you when your profile matches a role an employer has asked us to fill.",true],
+ ['What if there\'s no suitable role right now?',"We keep your profile on file and contact you when a matching role comes up.",true],
+ ['Which countries do you recruit for?','Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman.',true],
+ ['Can I apply from any country?','Yes. Tell us your current location and availability in the form.',true],
+ ['Will my CV be shared with employers?','Only with employers hiring for a role that matches your profile.',true]
+];
+const questions:string[][]=allQuestions.filter(q=>q[2]).map(([q,a])=>[q,a]);
+// FAQPage schema describes only the questions that are visible on the page.
+const faqSchema={'@context':'https://schema.org','@type':'FAQPage','@id':new URL(Astro.url.pathname,Astro.site).href+'#faq',mainEntity:questions.map(([name,text])=>({'@type':'Question',name,acceptedAnswer:{'@type':'Answer',text}}))};
+const heroAlt='Illustrative scene of a young professional waiting calmly in a modern office lounge chair with a folder on his lap.';
 ---
-<Base title="For Candidates | Adhuni HR Solutions" description="Submit your CV and profile details for suitable recruitment opportunities."><section class="detail-hero"><div class="container"><div class="eyebrow light">FOR CANDIDATES</div><h1>Your Next Opportunity Could Start Here.</h1><p>Submit your CV and profile details so our recruitment team can consider your experience for suitable opportunities.</p><a href="#registration" class="button amber">Submit Your CV →</a></div></section>
-<section id="how-it-works" class="section"><div class="container"><div class="eyebrow">HOW IT WORKS</div><ClientCopy text={copy['How it works']}/></div></section>
-<section id="registration" class="section surface"><div class="container client-registration"><div><div class="eyebrow">CANDIDATE REGISTRATION</div><h2>Put your profile forward.</h2><p>Keep your information accurate and your CV updated. Include relevant technical skills, certifications and licences.</p><p class="client-notice">Submitting your CV does not guarantee employment. Selection depends on employer requirements and the recruitment process.</p></div><div class="contact-workspace"><EnquiryForm type="candidate"/></div></div></section>
-<section class="section"><div class="container"><div class="eyebrow">CANDIDATE GUIDELINES</div><ClientCopy text={copy['Candidate guidelines']}/></div></section>
-<section class="section surface"><div class="container"><div class="eyebrow">CANDIDATE TRUST &amp; SAFETY</div><h2>Recruitment should be built on trust.</h2><p class="section-intro">Adhuni HR Solutions aims to maintain a professional and transparent recruitment experience. Candidates should receive clear information about the opportunity, employer process and relevant next steps.</p><ClientFAQ questions={copy['Candidate trust & safety'].split('\n').filter(line=>line.startsWith('- ')).map(line=>line.slice(2))}/></div></section>
+<Base title="For Candidates | Adhuni HR Solutions" description="Send your CV once. When an employer's role matches your skills and experience, Adhuni HR Solutions will contact you." image="/pages/candidates-hero.webp" pageType="WebPage" breadcrumbs={[{name:'For Candidates',href:'/candidates/'}]}>
+<section class="sv-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">For Candidates</span></nav>
+<div class="sv-hero-grid has-image"><div class="sv-hero-copy"><div class="eyebrow light">FOR CANDIDATES</div><h1>Find your next role in the Middle East.</h1><p>Send your CV once. When an employer's role matches your skills and experience, we'll contact you.</p><a class="button amber sv-btn sv-btn--down" href="#registration" data-scroll-to>Submit Your CV <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a></div>
+<figure class="sv-hero-visual"><img src="/pages/candidates-hero.webp" alt={heroAlt} width="1200" height="751" fetchpriority="high"/></figure></div></div></section>
+<section id="how-it-works" class="section appr appr--compact appr--four"><div class="appr-inner"><div class="appr-head"><div class="eyebrow light">HOW IT WORKS</div><h2>A straightforward candidate journey.</h2></div><ApproachSteps steps={journey}/></div></section>
+<section id="registration" class="section surface"><div class="container cd-register"><div class="cd-register-intro"><div class="eyebrow">CANDIDATE REGISTRATION</div><h2>Put your profile forward.</h2><p>Keep your information accurate and your CV updated. Include relevant technical skills, certifications and licences.</p>
+{candidatesNeverCharged&&<aside class="cd-safety" aria-label="Fees notice"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.4 7.5 9.5 4.4-1.1 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m9 12 2.2 2.2L15.2 10"/></svg><p>Adhuni never asks candidates for money to apply, get a job or process documents. If anyone asks you for payment using our name, don't pay. Contact us at <a href="mailto:info@adhunihr.com"><bdi dir="ltr">info@adhunihr.com</bdi></a>.</p></aside>}</div>
+<div id="candidate-form" class="contact-workspace"><EnquiryForm type="candidate"/></div></div></section>
+<section class="section"><div class="container cd-tips-grid"><div class="cd-tips-intro"><div class="eyebrow">CANDIDATE GUIDELINES</div><h2>Tips for a strong profile</h2><p>Employers evaluate candidates based on clarity, authenticity, and verified qualifications.</p></div><ul class="cd-tips">{tips.map(tip=><li><span class="cd-tip-icon" aria-hidden="true"><Icon name="check" size={18}/></span><span>{tip}</span></li>)}</ul></div></section>
+<section id="questions" class="section surface"><div class="container faq-wrap"><div><div class="eyebrow">CANDIDATE TRUST &amp; SAFETY</div><h2>Recruitment should be built on trust.</h2><p class="section-intro">Adhuni HR Solutions aims to maintain a professional and transparent recruitment experience. Candidates should receive clear information about the opportunity, employer process and relevant next steps.</p></div><PageQuestions questions={questions}/></div></section>
+<section class="cd-end"><div class="container"><p>Questions about your application? Email <a href="mailto:info@adhunihr.com"><bdi dir="ltr">info@adhunihr.com</bdi></a></p></div></section>
 {import.meta.env.PUBLIC_CONTACT_ENABLED==='true'&&import.meta.env.PUBLIC_TURNSTILE_SITE_KEY&&<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)}/>
 </Base>

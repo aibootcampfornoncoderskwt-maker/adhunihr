@@ -8,7 +8,7 @@ Brand: ADHUNI HR SOLUTIONS
 
 Navigation: Home; About Us; Services; For Employers; For Candidates; Contact Us.
 
-Primary button: Submit Your Requirement.
+Primary button: Request Candidates.
 
 ## 1. Home
 
@@ -83,7 +83,7 @@ Heading: Need the Right People for Your Business?
 
 Tell us what you are looking for and let our recruitment team understand your workforce requirements.
 
-Button: Submit Your Requirement.
+Button: Request Candidates.
 
 ### Middle East focus
 
@@ -231,7 +231,7 @@ Heading: Ready to Build Your Team?
 
 Share your workforce requirements with our recruitment specialists.
 
-Button: Submit Your Requirement.
+Button: Request Candidates.
 
 ## 4. For Employers
 
@@ -245,7 +245,7 @@ Heading: Need People? Tell Us What You Need.
 
 Whether you are hiring one specialist, expanding a team or mobilising a larger workforce, we can help you source suitable candidates according to your requirements.
 
-Button: Submit Your Requirement.
+Button: Request Candidates.
 
 ### Why employers work with us
 
@@ -423,7 +423,7 @@ Whether you are looking for the right people for your business or exploring your
 
 Have a manpower requirement? Send us the details of your vacancy, workforce size and expected timeline.
 
-Button: Submit Your Requirement.
+Button: Request Candidates.
 
 **For Candidates**
 

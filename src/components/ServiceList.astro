@@ -1,0 +1,10 @@
+---
+import Icon from './Icon.astro';
+import {services} from '../data/site';
+import {serviceSummaries} from '../data/service-summaries';
+interface Props {slugs?:string[];}
+const {slugs}=Astro.props;
+// Numbers and descriptions follow the full services list; a slugs list shows only those services, renumbered.
+const shown=services.map((s,i)=>({s,summary:serviceSummaries[i]})).filter(({s})=>!slugs||slugs.includes(s.slug));
+---
+<ol class="svc-list">{shown.map(({s,summary},i)=><li><a class="svc-row" href={'/services/'+s.slug+'/'}><span class="svc-num" aria-hidden="true">{String(i+1).padStart(2,'0')}</span><span class="svc-body"><h3>{s.title}</h3><p>{summary}</p></span><span class="svc-arrow" aria-hidden="true"><Icon name="arrow" size={20}/></span></a></li>)}</ol>

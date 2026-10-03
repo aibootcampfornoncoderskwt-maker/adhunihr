@@ -25,10 +25,10 @@ function renderLanguage(next:'en'|'ar'){
   const updated=next==='ar'?translate(original):original;
   if(value!==updated)text.nodeValue=updated;
  }
- document.querySelectorAll('[aria-label],[placeholder],[title],[data-label]').forEach(el=>{
+ document.querySelectorAll('[aria-label],[placeholder],[title],[data-label],img[alt]').forEach(el=>{
   if(el.closest('[data-language]'))return;
   let saved=attributes.get(el);if(!saved){saved=new Map();attributes.set(el,saved);}
-  for(const name of ['aria-label','placeholder','title','data-label']){
+  for(const name of ['aria-label','placeholder','title','data-label','alt']){
    const current=el.getAttribute(name);if(current===null)continue;
    let original=saved.get(name);
    if(!original || (current!==original&&current!==translate(original))){original=current;saved.set(name,current);}
@@ -39,7 +39,7 @@ function renderLanguage(next:'en'|'ar'){
  observe();
 }
 const observer=new MutationObserver(()=>renderLanguage(language));
-function observe(){observer.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['aria-label','placeholder','title','data-label']});}
+function observe(){observer.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['aria-label','placeholder','title','data-label','alt']});}
 let saved:string|null=null;
 try{saved=localStorage.getItem('adhuni-language');}catch{}
 const requested=new URLSearchParams(location.search).get('lang');

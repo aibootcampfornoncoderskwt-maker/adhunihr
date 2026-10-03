@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+import {countries} from '../data/site';
+import mapRaw from '../../public/images/recruitment-map.svg?raw';
+interface Props {eyebrow?:string;heading?:string;text?:string;}
+const {eyebrow='WHERE WE RECRUIT',heading='One partner across six Middle East markets.',text="Hiring in more than one country? Tell us where, and we'll plan the search around that country's requirements."}=Astro.props;
+// The corridor map is the existing recruitment-map.svg, inlined so pins and labels can react to the country cards.
+const mapStart = mapRaw.indexOf('<g clip-path="url(#clip)">') + '<g clip-path="url(#clip)">'.length;
+const mapLand = mapRaw.slice(mapStart, mapRaw.search(/<path d="[^"]+" fill="none"/));
+const mapLines = [...mapRaw.matchAll(/<path d="([^"]+)" fill="none"[^>]*stroke-dasharray/g)].map(m => m[1]);
+const mapPins = [...mapRaw.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)" r="3"[^>]*\/><text x="([\d.]+)" y="([\d.]+)"/g)].map(m => ({cx: +m[1], cy: +m[2], tx: +m[3], ty: +m[4]}));
+const indiaMatch = mapRaw.match(/<circle cx="([\d.]+)" cy="([\d.]+)" r="7"/)!;
+const mapIndia = {cx: +indiaMatch[1], cy: +indiaMatch[2]};
+const mapArabic: Record<string, string> = {kuwait: 'الكويت', 'saudi-arabia': 'السعودية', uae: 'الإمارات', qatar: 'قطر', oman: 'عُمان', bahrain: 'البحرين'};
+---
+<section id="markets" class="section surface mk"><div class="mk-layout"><div class="mk-head"><div class="eyebrow">{eyebrow}</div><h2>{heading}</h2><p>{text}</p></div><div class="mk-cards">{countries.map(c=><a class="mk-card" href={'/locations/'+c.slug+'/'} data-country={c.slug}><span class={'flag flag-'+c.code} aria-hidden="true"></span><span class="mk-card-name">{c.name}</span><span class="mk-card-arrow" aria-hidden="true"><Icon name="arrow" size={18}/></span></a>)}</div><div class="mk-map"><svg class="map-svg" viewBox="0 0 760 480" role="img" aria-label="Recruitment connections between India and Kuwait, Saudi Arabia, UAE, Qatar, Oman and Bahrain" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="map-clip"><rect width="760" height="480"/></clipPath></defs><g clip-path="url(#map-clip)"><g set:html={mapLand}/><g class="map-lines">{mapPins.map((pin,i)=><path class="map-line" d={mapLines[i]} data-country={countries[i].slug} style={`--i:${i}`}/>)}</g>{mapPins.map((pin,i)=><a class="map-pin" href={'/locations/'+countries[i].slug+'/'} data-country={countries[i].slug} tabindex="-1" aria-hidden="true" style={`--i:${i}`}><circle class="map-hit" cx={pin.cx} cy={pin.cy} r="16"/><circle class="map-pulse" cx={pin.cx} cy={pin.cy} r="3"/><circle class="map-dot" cx={pin.cx} cy={pin.cy} r="3"/><text class="map-label" x={pin.tx} y={pin.ty} data-en={countries[i].name} data-ar={mapArabic[countries[i].slug]}>{countries[i].name}</text></a>)}<circle class="map-india-dot" cx={mapIndia.cx} cy={mapIndia.cy} r="7"/><circle class="map-india-ring" cx={mapIndia.cx} cy={mapIndia.cy} r="13"/><text class="map-india-label" x={mapIndia.cx+17} y={mapIndia.cy+5} data-en="India" data-ar="الهند">India</text></g></svg><span class="map-caption">INDIA ↔ GCC RECRUITMENT CORRIDOR</span></div></div><script>import '../scripts/markets';</script></section>

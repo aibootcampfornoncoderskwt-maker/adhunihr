@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import {industries,countries} from '../data/site';
+import '../styles/quick-match.css';
+// Quick match lead assistant: a compact card (a slim bar on phones). It is not rendered on the pages that already are the enquiry forms.
+const skip=['/contact/','/employers/','/candidates/'].includes(Astro.url.pathname);
+const markets=['Kuwait','Saudi Arabia','UAE','Qatar','Bahrain','Oman'].map(name=>countries.find(c=>c.name===name)).filter((c):c is NonNullable<typeof c>=>!!c);
+const enabled=import.meta.env.PUBLIC_CONTACT_ENABLED==='true';
+const siteKey=import.meta.env.PUBLIC_TURNSTILE_SITE_KEY||'';
+const roleChips=['Technical','Professional','Leadership','Many roles'];
+const countChips=['1','2–10','11–50','50+'];
+---
+{!skip&&<>
+<div class="qm-bar" hidden><button type="button" class="qm-bar-open"><span>Hiring or job hunting? <strong>Quick match</strong></span><span class="qm-bar-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></button><button type="button" class="qm-bar-close" aria-label="Dismiss quick match"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<section class="qm" id="quick-match" role="dialog" aria-modal="false" aria-labelledby="qm-title" hidden data-enabled={String(enabled)} data-sitekey={siteKey}>
+ <header class="qm-head"><button type="button" class="qm-back" aria-label="Back" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><h2 id="qm-title">Quick match</h2><button type="button" class="qm-close" aria-label="Close quick match"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+ <div class="qm-dots" hidden aria-hidden="true"></div>
+ <div class="qm-body">
+  <div class="qm-step" data-step="choose"><h3 class="qm-q" tabindex="-1">Are you hiring, or looking for a job?</h3><div class="qm-choices"><button type="button" class="qm-btn qm-btn--gold" data-path="employer">I'm hiring</button><button type="button" class="qm-btn qm-btn--outline" data-path="candidate">I'm looking for a job</button></div></div>
+
+  <div class="qm-step" data-step="e-roles" hidden><h3 class="qm-q" id="qm-q-roles" tabindex="-1">What roles do you need?</h3><div class="qm-chips" role="group" aria-labelledby="qm-q-roles" data-field="roles" data-multi>{roleChips.map(label=><button type="button" class="qm-chip" aria-pressed="false" data-value={label}>{label}</button>)}</div><button type="button" class="qm-btn qm-btn--gold qm-next" disabled>Next <Icon name="arrow" size={16}/></button></div>
+
+  <div class="qm-step" data-step="e-count" hidden><h3 class="qm-q" id="qm-q-count" tabindex="-1">How many people?</h3><div class="qm-chips" role="group" aria-labelledby="qm-q-count" data-field="count">{countChips.map(label=><button type="button" class="qm-chip" aria-pressed="false" data-value={label}>{label}</button>)}</div><button type="button" class="qm-btn qm-btn--gold qm-next" disabled>Next <Icon name="arrow" size={16}/></button></div>
+
+  <div class="qm-step" data-step="e-where" hidden><h3 class="qm-q" id="qm-q-where" tabindex="-1">Where?</h3><div class="qm-chips qm-chips--flags" role="group" aria-labelledby="qm-q-where" data-field="countries" data-multi>{markets.map(c=><button type="button" class="qm-chip" aria-pressed="false" data-value={c.name}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</button>)}</div><button type="button" class="qm-btn qm-btn--gold qm-next" disabled>Next <Icon name="arrow" size={16}/></button></div>
+
+  <div class="qm-step" data-step="e-contact" hidden><h3 class="qm-q" tabindex="-1">How can we reach you?</h3>
+   <form class="qm-form" novalidate>
+    <div class="qm-field"><label for="qm-name">Name <span aria-hidden="true">*</span></label><input id="qm-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="qm-name-err"/><span class="qm-err" id="qm-name-err"></span></div>
+    <div class="qm-field"><label for="qm-company">Company</label><input id="qm-company" name="company" type="text" autocomplete="organization" maxlength="160"/></div>
+    <div class="qm-field"><label for="qm-email">Email <span aria-hidden="true">*</span></label><input id="qm-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="qm-email-err"/><span class="qm-err" id="qm-email-err"></span></div>
+    <div class="qm-field"><label for="qm-phone">Phone / WhatsApp <span aria-hidden="true">*</span></label><input id="qm-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required aria-describedby="qm-phone-err"/><span class="qm-err" id="qm-phone-err"></span></div>
+    <div class="qm-field qm-consent"><label><input type="checkbox" name="consent" required aria-describedby="qm-consent-err"/><span>I agree that Adhuni may contact me about this enquiry. <a href="/privacy/" target="_blank" rel="noopener">Privacy notice</a></span></label><span class="qm-err" id="qm-consent-err"></span></div>
+    <div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"/></label></div>
+    <div class="qm-turnstile"></div>
+    <p class="qm-status" role="status" aria-live="polite"></p>
+    <button type="submit" class="qm-btn qm-btn--gold qm-send">Send <Icon name="arrow" size={16}/></button>
+   </form></div>
+
+  <div class="qm-step qm-done" data-step="e-done" hidden><span class="qm-check" aria-hidden="true"><Icon name="check" size={24}/></span><h3 class="qm-q" tabindex="-1" data-live>Thanks! We'll reply within one business day.</h3><button type="button" class="qm-btn qm-btn--outline qm-finish">Close</button></div>
+
+  <div class="qm-step" data-step="c-field" hidden><h3 class="qm-q" id="qm-q-field" tabindex="-1">What's your field?</h3><div class="qm-chips qm-chips--scroll" role="group" aria-labelledby="qm-q-field" data-field="field">{industries.map(item=><button type="button" class="qm-chip" aria-pressed="false" data-value={item.title}>{item.title}</button>)}</div><button type="button" class="qm-btn qm-btn--gold qm-next" disabled>Next <Icon name="arrow" size={16}/></button></div>
+
+  <div class="qm-step" data-step="c-where" hidden><h3 class="qm-q" id="qm-q-cwhere" tabindex="-1">Preferred country?</h3><div class="qm-chips qm-chips--flags" role="group" aria-labelledby="qm-q-cwhere" data-field="cCountries" data-multi>{markets.map(c=><button type="button" class="qm-chip" aria-pressed="false" data-value={c.name}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</button>)}</div><button type="button" class="qm-btn qm-btn--gold qm-next" disabled>Next <Icon name="arrow" size={16}/></button></div>
+
+  <div class="qm-step" data-step="c-upload" hidden><span class="qm-check" aria-hidden="true"><Icon name="check" size={24}/></span><h3 class="qm-q" tabindex="-1">Great, upload your CV to finish.</h3><a class="qm-btn qm-btn--gold qm-upload" href="/candidates/#registration">Upload your CV <Icon name="arrow" size={16}/></a></div>
+ </div>
+</section>
+<script>import '../scripts/quick-match';</script>
+</>}

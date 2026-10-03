@@ -45,7 +45,8 @@ All six country images are real photographs, not generated. Resized and converte
 
 - oil-refinery.webp: Dirk Ingo Franke, https://commons.wikimedia.org/wiki/File:Hemmingstedt_raffinerie_nacht_uebersichtlich.JPG; CC BY-SA 2.0 DE, https://creativecommons.org/licenses/by-sa/2.0/de/. Resized/WebP; manufacturing cropped to remove upper background. Adapted image retains source licence. Not an Adhuni project.
 
-- manufacturing.webp: Steve Jurvetson, https://commons.wikimedia.org/wiki/File:Tesla_Robot_Dance_(7408451314).jpg; CC BY 2.0, https://creativecommons.org/licenses/by/2.0/. Resized/WebP; manufacturing cropped to remove upper background. Adapted image retains source licence. Not an Adhuni project.
+
+`public/industries/industry-manufacturing.webp` (and `-640`) is a temporary stand-in cropped from `industrial.webp` (AI-generated, illustrative). Replace it with the final manufacturing illustration. The earlier Wikimedia car-factory photo was removed from the project.
 
 ## Homepage slideshow â€” 2 October 2026
 `public/hero/hero-{1-oil-gas,2-construction,3-healthcare,4-logistics,5-corporate}.webp` and corresponding `-mobile.webp` files are derived from the five built-in image_gen illustrations in `public/images/hero-generated/`. The user-named PNG files in `public/hero/` were absent; existing generated sources were used. Original images and prompts are retained. These scenes do not depict actual ADHUNI staff, clients, projects or facilities. Alt text identifies their illustrative role. Desktop variants are 1920px wide (upscaled from the generated originals); mobile variants are 900px wide. Each is below 250,000 bytes. Regenerate with `node scripts/prepare-hero-images.mjs`; this prefers the named PNG sources if supplied later. Existing `public/images/hero-gcc.webp` is retained.
@@ -61,3 +62,32 @@ Client-approved handshake logo supplied as fdc0e801-f232-4a26-bc2b-c4a2aac91eb7.
 Five new photorealistic workplace illustrations created with the built-in image_gen tool: sector-healthcare.webp, sector-education.webp, sector-technology.webp, sector-retail.webp, sector-facilities.webp. These do not depict real Adhuni staff or projects. Generated originals retained; WebP copies saved in public/images. Full prompts and paths: docs/sector-image-prompts.json.
 
 - sector-oil-gas.webp: Generated with built-in image_gen. Daylight refinery technicians in PPE; illustrative scene, not actual Adhuni staff or projects. Replaces the night refinery image in the sector catalog. Prompt and original file recorded in docs/sector-image-prompts.json.
+
+## Generated country hero illustrations — 3 October 2026
+
+Six AI-generated illustrative cityscapes created sequentially using the built-in image_gen tool, saved in public/images/countries-generated/: country-kuwait.png, country-saudi-arabia.png, country-uae.png, country-qatar.png, country-bahrain.png and country-oman.png. Styled to match the existing website heroes. These are illustrative skylines, not documentary photographs or evidence of Adhuni offices. Full prompts: docs/country-image-prompts.json. Existing licensed country photographs are retained.
+
+
+## Generated page illustrations - 3 October 2026
+
+- public/images/pages-generated/about-hero.png: AI-generated illustrative mixed-gender team walking through a Kuwait City office corridor, created with built-in image_gen. Not actual Adhuni staff or premises. Prompt retained in docs/page-image-prompts.json.
+
+- public/images/pages-generated/about-hero-v2.png: Revised About hero using built-in image_gen, depicting an illustrative South Asian team of two men and two women in business suits. Not actual Adhuni staff or premises. Supersedes the first generated version for selection.
+
+- public/images/pages-generated/about-story.png: AI-generated illustrative close-up of consultant hands reviewing CVs, created with built-in image_gen. Not actual Adhuni records or staff. Prompt: docs/about-story-prompt.txt.
+
+- public/images/pages-generated/contact-hero.png: AI-generated illustrative South Asian consultant on a phone call at a standing desk, created with built-in image_gen. Not actual Adhuni staff or premises. Prompt: docs/contact-hero-prompt.txt.
+
+- public/images/pages-generated/employers-hero.png: AI-generated illustrative South Asian female HR manager and male recruitment consultant shaking hands in a boardroom, created with built-in image_gen. Not actual Adhuni staff, clients or premises. Prompt: docs/employers-hero-prompt.txt.
+
+- public/images/pages-generated/candidates-hero.png: AI-generated illustrative young South Asian professional holding a folder while waiting for an interview, created with built-in image_gen. Not an actual Adhuni applicant or premises. Prompt: docs/candidates-hero-prompt.txt.
+
+- public/images/pages-generated/approach-hero.png: AI-generated illustrative South Asian female consultant drawing a wordless process flow while two colleagues watch, created with built-in image_gen. Not actual Adhuni staff or premises. Prompt: docs/approach-hero-prompt.txt.
+
+- public/images/pages-generated/services-hero.png: AI-generated illustrative open-plan office with South Asian men and women working and a small meeting behind glass, created with built-in image_gen. Not actual Adhuni staff or premises. Prompt: docs/services-hero-prompt.txt.
+
+## Page image delivery paths - 3 October 2026
+
+The seven generated page illustrations are also saved in public/pages/: about-hero.png (the revised South Asian team from about-hero-v2.png), about-story.png, contact-hero.png, employers-hero.png, candidates-hero.png, approach-hero.png and services-hero.png. These are unchanged copies of the generated assets documented above; their illustrative status and prompt records still apply.
+
+- public/images/pages-generated/approach-hero.png: AI-generated illustrative South Asian female consultant drawing a process flow while two colleagues watch, created with built-in image_gen. Not actual Adhuni staff or premises. Prompt: docs/approach-hero-prompt.txt.
