@@ -793,3 +793,8 @@ html.hero-title-pending .hero h1 .hero-title-visual{opacity:0;transform:translat
 /* Site-wide text wrapping: balanced headings, no one-word last lines in paragraphs. */
 h1,h2,h3,h4{text-wrap:balance}
 p,li,dd,figcaption,blockquote{text-wrap:pretty}
+
+/* Industries grid: keep faces and key subjects in frame. The featured Healthcare card is a wide, short crop, so anchor it near the top where the face sits. */
+.ind-card--featured>img{object-position:30% 9%}
+@media(max-width:1000px){.ind-card--featured>img{object-position:30% 12%}}
+@media(max-width:600px){.ind-card--featured>img{object-position:50% 30%}}
