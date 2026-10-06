@@ -789,3 +789,7 @@ html.hero-title-pending .hero h1 .hero-title-visual{opacity:0;transform:translat
  .hero h1 .hero-title-visual{transition:none}
 }
 @media(max-width:600px){html[dir=rtl] .hero h1{font-size:clamp(24px,6.9vw,27px);line-height:1.42}}
+
+/* Site-wide text wrapping: balanced headings, no one-word last lines in paragraphs. */
+h1,h2,h3,h4{text-wrap:balance}
+p,li,dd,figcaption,blockquote{text-wrap:pretty}

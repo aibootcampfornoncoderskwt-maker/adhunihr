@@ -34,6 +34,7 @@ const HOME_SPECS = [
   ['Hero', '.hero-inner', 'both'],
   ['Facts row', '.hero-facts', 'start'],
   ['Ticker', '.country-ribbon .ribbon-label', 'start'],
+  ['Healthcare', '#healthcare', 'content'],
   ['About', '#about', 'content'],
   ['Services', '#services', 'content'],
   ['Industries', '#industries', 'content'],
