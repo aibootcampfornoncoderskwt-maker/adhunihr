@@ -1,15 +1,10 @@
 ---
-const slides = [
-  ['hero-1-oil-gas', 'Illustrative scene of two technicians inspecting pipelines at a GCC oil and gas facility.'],
-  ['hero-2-construction', 'Illustrative scene of an engineer and foreman reviewing drawings at a GCC construction site.'],
-  ['hero-3-healthcare', 'Illustrative scene of a nurse and doctor reviewing a tablet in a GCC hospital corridor.'],
-  ['hero-4-logistics', 'Illustrative scene of a warehouse supervisor scanning a pallet in Dubai.'],
-  ['hero-5-corporate', 'Illustrative scene of a recruitment consultant meeting two managers in a Kuwait City office.'],
-];
-const captions = ['Oil & Gas', 'Construction', 'Healthcare', 'Logistics', 'Corporate'];
+import {heroSlides,captionLabels} from '../data/hero-slides';
+const slides = heroSlides.map(slide => [slide.file, slide.alt, slide.caption]);
+const captions = captionLabels;
 ---
 <div class="hero-slideshow">
-  {slides.map(([name, alt], index) => <img
+  {slides.map(([name, alt, caption], index) => <img data-caption={caption}
     class="hero-slide" src={index === 0 ? `/hero/${name}.webp` : undefined}
     srcset={index === 0 ? `/hero/${name}-mobile.webp 900w, /hero/${name}.webp 1920w` : undefined}
     data-src={`/hero/${name}.webp`} data-srcset={`/hero/${name}-mobile.webp 900w, /hero/${name}.webp 1920w`}
@@ -18,7 +13,7 @@ const captions = ['Oil & Gas', 'Construction', 'Healthcare', 'Logistics', 'Corpo
     fetchpriority={index === 0 ? 'high' : 'low'} decoding="async"
   />)}
 </div>
-<p class="hero-caption">{captions.map((label, index) => <span class:list={['hero-caption-item', { 'is-active': index === 0 }]}>{label}</span>)}</p>
+<p class="hero-caption">{captions.map((label, index) => <span data-key={label} class:list={['hero-caption-item', { 'is-active': index === 0 }]}>{label}</span>)}</p>
 <script>import '../scripts/hero-slideshow';</script>
 <style is:global>
   .hero-slideshow{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none}

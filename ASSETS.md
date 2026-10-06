@@ -91,3 +91,25 @@ Six AI-generated illustrative cityscapes created sequentially using the built-in
 The seven generated page illustrations are also saved in public/pages/: about-hero.png (the revised South Asian team from about-hero-v2.png), about-story.png, contact-hero.png, employers-hero.png, candidates-hero.png, approach-hero.png and services-hero.png. These are unchanged copies of the generated assets documented above; their illustrative status and prompt records still apply.
 
 - public/images/pages-generated/approach-hero.png: AI-generated illustrative South Asian female consultant drawing a process flow while two colleagues watch, created with built-in image_gen. Not actual Adhuni staff or premises. Prompt: docs/approach-hero-prompt.txt.
+
+## Healthcare nursing hero - 7 October 2026
+public/hero/healthcare-nursing-team.png: AI-generated illustrative nursing scene created with the built-in image_gen tool to match existing hero imagery. Does not depict actual Adhuni personnel or facilities. Prompt: docs/healthcare-nursing-image-prompt.txt. Additional asset; not yet wired into the website.
+
+public/hero/healthcare-nursing-team-gcc.png: GCC-focused revision created with built-in image_gen, featuring Arab and South Asian nursing colleagues. AI-generated illustration, not actual Adhuni staff or facilities. Prompt: docs/healthcare-nursing-gcc-image-prompt.txt.
+
+public/hero/healthcare-doctors-gcc.png: GCC healthcare recruitment hero created with built-in image_gen on 7 October 2026, featuring three doctors walking through a modern hospital corridor. AI-generated illustration, not actual Adhuni staff or facilities. Prompt: docs/healthcare-doctors-gcc-image-prompt.txt. Additional asset; not yet wired into the website.
+
+public/hero/healthcare-doctors-arab.png: Built-in image_gen revision on 7 October 2026, requested to depict three Arab doctors. AI-generated illustrative scene, not actual Adhuni personnel or facilities. Prompt: docs/healthcare-doctors-arab-image-prompt.txt.
+
+public/hero/healthcare-doctors-south-asian.png: Built-in image_gen revision on 7 October 2026 depicting South Asian doctors in a GCC hospital. AI-generated illustrative scene, not actual Adhuni personnel or facilities. Prompt: docs/healthcare-doctors-south-asian-image-prompt.txt.
+
+## Hospital nurses documentary-style image
+hospital-nurses-documentary.png: AI-generated with the built-in image-generation tool on October 7, 2026. Illustrative hospital scene; does not depict an actual hospital, staff, or Adhuni placement. Generation prompt: docs/hospital-image-prompt.txt.
+
+public/hero/healthcare-nursing-team-gcc-v2.png: Photorealistic nursing hero revision generated with built-in image_gen using user-supplied composition and photographic references. AI-generated illustrative scene, not actual Adhuni personnel or facilities. Prompt: docs/healthcare-nursing-gcc-v2-prompt.txt.
+
+public/hero/healthcare-doctors-gcc.png: GCC doctors corridor hero generated with built-in image_gen. AI-generated illustrative scene, not actual Adhuni personnel or facilities. Prompt: docs/healthcare-doctors-gcc-prompt.txt. Not yet wired into the website.
+
+public/hero/healthcare-nursing-team-gcc-v3.png: Nursing team scene generated with built-in image_gen using the liked doctors hero as a photographic style reference. AI-generated illustration, not actual Adhuni staff or facilities. Prompt: docs/healthcare-nursing-gcc-v3-prompt.txt. Not yet wired into the website.
+
+Requested hero filenames: public/hero/hero-0a-nurses.png is an unchanged copy of healthcare-nursing-team-gcc-v3.png; public/hero/hero-0b-doctors.png is an unchanged copy of healthcare-doctors-gcc.png. Both are AI-generated illustrative scenes; source prompts and attribution are recorded above.

@@ -18,7 +18,7 @@ dropdowns.forEach(d=>{
   const links=[...d.querySelectorAll<HTMLAnchorElement>('.catalog-link, .catalog-menu-links .catalog-viewall')];
   const slides=[...d.querySelectorAll<HTMLElement>('.catalog-feature-slide')];
   const showSlide=(slug:string)=>slides.forEach(slide=>slide.classList.toggle('is-active',slide.dataset.slug===slug));
-  const defaultSlide='oil-gas-energy';
+  const defaultSlide='healthcare';
   d.addEventListener('pointerenter',e=>{
     if(e.pointerType!=='mouse'||!desktopMenus.matches)return;
     clearTimeout(closeTimer);

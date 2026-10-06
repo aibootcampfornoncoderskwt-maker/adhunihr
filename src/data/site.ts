@@ -1,5 +1,9 @@
 export const brand = { name: 'Adhuni HR Solutions', short: 'ADHUNI', tagline: 'The right people. For the work ahead.' };
-export {services,industries} from './catalog';
+import {services,industries as catalogIndustries} from './catalog';
+export {services};
+// Focus order: Healthcare first, Oil, Gas & Energy second, then the rest in catalogue order. Every list, menu and dropdown reads this.
+const focusOrder=['healthcare','oil-gas-energy'];
+export const industries=[...focusOrder.map(slug=>catalogIndustries.find(i=>i.slug===slug)!).filter(Boolean),...catalogIndustries.filter(i=>!focusOrder.includes(i.slug))];
 export const countries = [
  {slug:'kuwait',name:'Kuwait',code:'KW',label:'Hiring for your Kuwait operations',text:'Tell us where your team will work, which skills are essential and when you need people to join. We will use that brief to shape the recruitment discussion.'},
  {slug:'saudi-arabia',name:'Saudi Arabia',code:'SA',label:'Build around your Saudi requirement',text:'For project and operational hiring, start with the work location, role mix and planned mobilisation. Agree the scope and employer responsibilities before selection.'},

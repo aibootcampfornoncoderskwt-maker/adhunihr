@@ -74,3 +74,8 @@ html[dir=rtl] .sv-related a svg{transform:rotate(180deg)}
 @media(prefers-reduced-motion:reduce){.sv-btn,.sv-btn .btn-arrow,.sv-approach-link,.sv-approach-link svg,.page-section-nav a{transition:none}}
 /* Two white sections in a row (industry pages with a "What we check" block) get a hairline between them. */
 .sv-divided{border-top:1px solid var(--line)}
+/* Role lists with a small group label (Healthcare). */
+.page-role-list .role-group{display:block;margin-bottom:2px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink)}
+html[dir=rtl] .page-role-list .role-group{letter-spacing:0;font-size:13px}
+.page-role-list li.has-group{align-items:center}
+.page-role-list li.has-group>span{min-width:26px}

@@ -1,10 +1,22 @@
 // Per-industry content for the industry page template (src/components/IndustryDetail.astro).
 // An industry without an entry here (or without a given block) shows its original catalogue text for that block.
 
-export interface IndustryFaq {q:string;a:string;}
+// Answers the owner still has to supply. While a value is empty or still holds the placeholder, its question stays off the page and out of the FAQPage schema.
+export const ownerAnswers:Record<string,string>={
+ 'healthcare-licence-check':'[OWNER TO CONFIRM]'
+};
+const confirmed=(value:string|undefined)=>!!value&&value.trim()!==''&&!/OWNER TO CONFIRM/i.test(value);
+export function visibleIndustryFaqs(faqs:IndustryFaq[]|undefined):string[][]{
+  return (faqs??[]).flatMap(faq=>{const answer=faq.ownerKey?ownerAnswers[faq.ownerKey]:faq.a;return confirmed(answer)?[[faq.q,answer!.trim()]]:[];});
+}
+
+export interface IndustryFaq {q:string;a?:string;ownerKey?:string;}
 export interface IndustryExtra {
   hero?:{image:string;alt:string;position?:string;zoom?:number};   // a leading / means a path from public/
   heroText?:string;
+  seoTitle?:string;                                                // <title> without the brand suffix
+  seoDescription?:string;                                          // meta description (about 150 to 160 characters)
+  roleGroups?:{group:string;role:string}[];                        // roles shown with a small group label above each
   overviewText?:string;
   checks?:{icon:string;title:string;text:string}[];                // "What we check" (4 items)
   faqs?:IndustryFaq[];
@@ -12,6 +24,31 @@ export interface IndustryExtra {
 }
 
 export const industryExtras:Record<string,IndustryExtra>={
+ 'healthcare':{
+  seoTitle:'Healthcare Recruitment in the Middle East',
+  seoDescription:'Recruit nurses, doctors and allied health staff for hospitals and clinics across Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman. Screened for licence, experience and specialty.',
+  hero:{image:'/hero/hero-0a-nurses.webp',alt:'Illustrative close-up of two nurses in navy scrubs reviewing a patient chart on a hospital ward.',position:'68% 38%',zoom:1.2},
+  heroText:'Nurses, doctors and allied health professionals, screened for licence, experience and specialty.',
+  overviewText:"Healthcare hiring depends on the right licence, the right specialty and the right experience. Tell us the department, the roles, shift patterns and the start date, and we'll screen candidates against them before you see anyone.",
+  roleGroups:[
+   {group:'Nursing',role:'Registered nurses (ICU, ER, OT, ward)'},
+   {group:'Physicians',role:'Doctors and specialists'},
+   {group:'Allied health',role:'Allied health (lab, radiology, pharmacy, physiotherapy)'},
+   {group:'Support & administration',role:'Healthcare support and administration'}
+  ],
+  checks:[
+   {icon:'badge',title:'Licence and registration',text:'Registration status reviewed before shortlisting.'},
+   {icon:'health',title:'Clinical experience',text:'Specialty, department and years of experience.'},
+   {icon:'book',title:'Qualifications',text:'Degrees and certifications relevant to the role.'},
+   {icon:'calendar',title:'Availability and language',text:'Notice period, start date and language skills.'}
+  ],
+  faqs:[
+   {q:'Which healthcare roles do you recruit?',a:'Nurses, doctors and specialists, allied health professionals, and healthcare support and administration staff.'},
+   {q:'Do you check licences and registration?',ownerKey:'healthcare-licence-check'},
+   {q:'Can you hire for a new hospital or clinic opening?',a:"Yes. Tell us the departments, roles and opening date, and we'll plan the hiring in phases."}
+  ],
+  services:['permanent-recruitment','high-volume-recruitment','contract-project-staffing']
+ },
  'construction-infrastructure':{
   hero:{image:'/industries/industry-construction.webp',alt:'Illustrative scene of a site supervisor directing workers laying reinforcement steel at a Gulf construction site at sunset.',position:'50% 42%'},
   heroText:'Site teams, engineers and skilled trades, planned around your project phases.',
@@ -30,6 +67,8 @@ export const industryExtras:Record<string,IndustryExtra>={
   services:['contract-project-staffing','skilled-technical-manpower','high-volume-recruitment']
  },
  'oil-gas-energy':{
+  seoTitle:'Oil, Gas and Energy Recruitment in the Middle East',
+  seoDescription:'Recruit technicians, inspectors, HSE and operations staff for oil, gas and energy facilities across Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman, screened for safety and experience.',
   hero:{image:'/industries/industry-oil-gas.webp',alt:'Illustrative scene of an operator in coveralls and a hard hat walking along a pipe-rack walkway at a refinery at dusk.',position:'36% 42%',zoom:1.25},
   heroText:"Technicians, inspectors and HSE professionals for facilities where safety and experience can't be compromised.",
   overviewText:"Experience in construction, operations, maintenance or inspection is not interchangeable. Tell us the facility type, the discipline, the equipment involved and the operating conditions. List any mandatory safety training, qualifications and rotation schedule, and we'll screen against them before you see anyone.",

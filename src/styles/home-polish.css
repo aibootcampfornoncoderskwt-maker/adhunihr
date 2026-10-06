@@ -754,3 +754,38 @@ html[dir=rtl] .form-grid select{background-position:left 14px center}
 /* Page hero without a photo (until a unique image exists for that page) */
 .page-hero-grid.no-image{grid-template-columns:minmax(0,1fr)}
 .page-hero-grid.no-image .page-hero-copy{max-width:760px}
+
+/* Homepage industries: four columns, Healthcare is a double-width featured card. Other pages keep the three-column grid. */
+@media(min-width:1001px){
+ #industries .ind-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+.ind-card--featured{grid-column:span 2;aspect-ratio:auto;min-height:100%}
+.ind-card--featured .ind-title h3{font-size:clamp(24px,2.2vw,30px)}
+.ind-card--featured .ind-roles li{font-size:16px}
+.ind-card--featured .ind-overlay{padding:28px 32px}
+.ind-card--featured:after{content:'FOCUS';position:absolute;z-index:2;inset-block-start:18px;inset-inline-start:20px;padding:5px 11px;border-radius:999px;background:var(--amber);color:var(--deep);font-size:11px;font-weight:700;letter-spacing:.14em}
+html[dir=rtl] .ind-card--featured:after{content:'محور تركيزنا';letter-spacing:0;font-size:12px}
+@media(max-width:1000px){.ind-card--featured{aspect-ratio:16/9}}
+@media(max-width:600px){.ind-card--featured{grid-column:auto;aspect-ratio:4/3}}
+/* Industries menu: four groups, with "Our focus" first. */
+@media(min-width:1101px){.catalog-menu--industries .catalog-menu-links{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* Rotating headline: gold phrase (swaps with each slide) + fixed white line. The real H1 text is the visually hidden span. */
+.hero h1 .hero-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;color:inherit}
+.hero h1>.hero-title-visual{display:block;white-space:normal;color:#fff}
+.hero h1 .hero-phrases{display:grid;align-items:end;color:var(--amber)}
+.hero h1 .hero-phrase{grid-area:1/1;color:#f8b51b;opacity:0;transform:translateY(14px);filter:blur(3px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),filter .6s var(--ease-out);pointer-events:none}
+.hero h1 .hero-phrase.is-active{opacity:1;transform:none;filter:none}
+.hero h1 .hero-phrase.is-leaving{opacity:0;transform:translateY(-14px);filter:blur(3px)}
+.hero h1 .hero-phrase-static{display:none}
+.hero h1 .hero-fixed{display:block;color:#fff}
+/* First appearance after the splash */
+.hero h1 .hero-title-visual{transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+html.hero-title-pending .hero h1 .hero-title-visual{opacity:0;transform:translateY(16px)}
+/* Reduced motion: one slide, one static phrase, nothing moves */
+@media(prefers-reduced-motion:reduce){
+ .hero h1 .hero-phrase:not(.hero-phrase-static){display:none}
+ .hero h1 .hero-phrase-static{display:block;opacity:1;transform:none;filter:none;transition:none}
+ .hero h1 .hero-title-visual{transition:none}
+}
+@media(max-width:600px){html[dir=rtl] .hero h1{font-size:clamp(24px,6.9vw,27px);line-height:1.42}}

@@ -1,8 +1,9 @@
 // The three industry groups used by the Industries menu and the Services page. Any industry not named here is appended to the last group so no link is dropped.
 export const industryGroups=[
-  {heading:'Energy & Industrial',slugs:['engineering-technical','construction-infrastructure','oil-gas-energy','manufacturing']},
+  {heading:'Our focus',slugs:['healthcare','oil-gas-energy']},
+  {heading:'Energy & Industrial',slugs:['engineering-technical','construction-infrastructure','manufacturing']},
   {heading:'Operations & Services',slugs:['logistics-supply-chain','facilities-management','hospitality','retail-ecommerce']},
-  {heading:'Professional & Care',slugs:['healthcare','information-technology','banking-finance-corporate-services','education-professional-services']}
+  {heading:'Professional & Care',slugs:['information-technology','banking-finance-corporate-services','education-professional-services']}
 ];
 export function groupIndustries<T extends {slug:string}>(industries:T[]){
   const grouped=new Set(industryGroups.flatMap(g=>g.slugs));

@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+import {healthcareTiles,healthcareBadges,healthcareFacilities,licensingSupport} from '../data/healthcare';
+import '../styles/healthcare.css';
+const requestHref='/employers/?industry=Healthcare#request-form';
+const pageHref='/industries/healthcare/';
+---
+<section id="healthcare" class="section hc" aria-labelledby="hc-title"><div class="container">
+  <div class="hc-top">
+    <div class="hc-copy">
+      <div class="eyebrow">HEALTHCARE RECRUITMENT</div>
+      <h2 id="hc-title">The right clinicians for every shift, department and specialty.</h2>
+      <p class="hc-intro">From ICU nurses to radiographers, we recruit clinical and support staff for hospitals, clinics and medical centres across the Middle East.</p>
+      <div class="hc-actions"><a class="button amber" href={requestHref}>Request healthcare staff <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a><a class="text-link" href={pageHref}>Explore healthcare recruitment <Icon name="arrow" size={16}/></a></div>
+    </div>
+    <figure class="hc-media"><img src="/hero/hero-3-healthcare.webp" srcset="/hero/hero-3-healthcare-mobile.webp 900w, /hero/hero-3-healthcare.webp 1920w" sizes="(max-width:1000px) 100vw, 50vw" width="1920" height="1081" alt="Illustrative close-up of a nurse and a doctor reviewing a tablet in a hospital corridor." loading="lazy" decoding="async"/></figure>
+  </div>
+  <ul class="hc-tiles">{healthcareTiles.map(tile=><li><a class="hc-tile" href={`${pageHref}#roles`}><span class="hc-tile-icon" aria-hidden="true"><Icon name={tile.icon} size={26}/></span><strong>{tile.title}</strong><span class="hc-tile-text">{tile.text}</span><span class="hc-tile-arrow" aria-hidden="true"><Icon name="arrow" size={20}/></span></a></li>)}</ul>
+  <div class="hc-strip">
+    <div class="hc-strip-row"><h3>What we check</h3><ul class="hc-badges">{healthcareBadges.map(badge=><li><Icon name="check" size={18}/><span>{badge}</span></li>)}</ul></div>
+    {licensingSupport&&<p class="hc-licensing"><strong>Licensing support</strong><span>{licensingSupport}</span></p>}
+    <div class="hc-strip-row hc-strip-row--facilities"><h3>We recruit for:</h3><p class="hc-facilities">{healthcareFacilities.map((name,index)=><><span>{name}</span>{index<healthcareFacilities.length-1&&<span class="hc-dot" aria-hidden="true">·</span>}</>)}</p></div>
+  </div>
+</div></section>
