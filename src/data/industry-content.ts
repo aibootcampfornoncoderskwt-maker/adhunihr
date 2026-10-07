@@ -26,7 +26,7 @@ export interface IndustryExtra {
 export const industryExtras:Record<string,IndustryExtra>={
  'healthcare':{
   seoTitle:'Healthcare Recruitment in the Middle East',
-  seoDescription:'Recruit nurses, doctors and allied health staff for hospitals and clinics across Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman. Screened for licence, experience and specialty.',
+  seoDescription:'Recruit nurses, doctors and allied health staff for hospitals and clinics in Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman, screened for licence and specialty.',
   hero:{image:'/hero/hero-0a-nurses.webp',alt:'Illustrative close-up of two nurses in navy scrubs reviewing a patient chart on a hospital ward.',position:'68% 38%',zoom:1.2},
   heroText:'Nurses, doctors and allied health professionals, screened for licence, experience and specialty.',
   overviewText:"Healthcare hiring depends on the right licence, the right specialty and the right experience. Tell us the department, the roles, shift patterns and the start date, and we'll screen candidates against them before you see anyone.",
@@ -68,7 +68,7 @@ export const industryExtras:Record<string,IndustryExtra>={
  },
  'oil-gas-energy':{
   seoTitle:'Oil, Gas and Energy Recruitment in the Middle East',
-  seoDescription:'Recruit technicians, inspectors, HSE and operations staff for oil, gas and energy facilities across Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman, screened for safety and experience.',
+  seoDescription:'Recruit technicians, inspectors, HSE and operations staff for oil, gas and energy sites in Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman.',
   hero:{image:'/industries/industry-oil-gas.webp',alt:'Illustrative scene of an operator in coveralls and a hard hat walking along a pipe-rack walkway at a refinery at dusk.',position:'36% 42%',zoom:1.25},
   heroText:"Technicians, inspectors and HSE professionals for facilities where safety and experience can't be compromised.",
   overviewText:"Experience in construction, operations, maintenance or inspection is not interchangeable. Tell us the facility type, the discipline, the equipment involved and the operating conditions. List any mandatory safety training, qualifications and rotation schedule, and we'll screen against them before you see anyone.",

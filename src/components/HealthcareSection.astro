@@ -1,24 +1,59 @@
 ---
 import Icon from './Icon.astro';
-import {healthcareTiles,healthcareBadges,healthcareFacilities,licensingSupport} from '../data/healthcare';
+import {healthcareTiles,healthcareBadges,healthcareFacilities,professionalHelp,showLicensingGuidance,licensingSupport} from '../data/healthcare';
 import '../styles/healthcare.css';
-const requestHref='/employers/?industry=Healthcare#request-form';
 const pageHref='/industries/healthcare/';
+const requestHref='/employers/?industry=Healthcare#request-form';
+const cvHref='/candidates/?field=Healthcare#registration';
+const journeyHref='/candidates/#how-it-works';
+const tileHref=(audience:string,key:string)=>audience==='employer'?`${pageHref}#roles`:`/candidates/?field=Healthcare&specialty=${encodeURIComponent(key)}#registration`;
+const help=[...professionalHelp,...(showLicensingGuidance?['Licensing guidance']:[])];
+// Small icon for each facility type in the strip.
+const facilityIcons:Record<string,string>={Hospitals:'hospital','Clinics':'health','Medical centres':'building','Diagnostic labs':'microscope',Pharmacies:'pill'};
+// Both tabs list the same roles; only the links, call to action and strip change.
+const audiences=[
+  {id:'employer',icon:'hospital',title:"I'm hiring",sub:'For hospitals & clinics'},
+  {id:'candidate',icon:'stethoscope',title:'I work in healthcare',sub:'For nurses, doctors & allied health'}
+];
+const images:Record<string,{file:string;alt:string}>={
+  employer:{file:'healthcare-employer',alt:'Illustrative scene of a nurse, a doctor and a hospital manager reviewing patient notes and a tablet at a nurses station.'},
+  candidate:{file:'healthcare-professional',alt:'Illustrative portrait of a smiling nurse in navy scrubs walking along a bright hospital corridor.'}
+};
 ---
-<section id="healthcare" class="section hc" aria-labelledby="hc-title"><div class="container">
-  <div class="hc-top">
-    <div class="hc-copy">
-      <div class="eyebrow">HEALTHCARE RECRUITMENT</div>
-      <h2 id="hc-title">The right clinicians for every shift, department and specialty.</h2>
-      <p class="hc-intro">From ICU nurses to radiographers, we recruit clinical and support staff for hospitals, clinics and medical centres across the Middle East.</p>
-      <div class="hc-actions"><a class="button amber" href={requestHref}>Request healthcare staff <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a><a class="text-link" href={pageHref}>Explore healthcare recruitment <Icon name="arrow" size={16}/></a></div>
+<section id="healthcare" class="section hc" aria-labelledby="hc-title" data-healthcare-tabs data-audience="employer"><div class="container">
+  <div class="hc-label eyebrow">HEALTHCARE RECRUITMENT</div>
+  <div class="hc-select" role="tablist" aria-label="Healthcare recruitment audience">{audiences.map((a,i)=><button type="button" role="tab" class="hc-card" id={`hc-tab-${a.id}`} aria-selected={i===0?'true':'false'} tabindex={i===0?0:-1} data-audience={a.id}><span class="hc-card-icon" aria-hidden="true"><Icon name={a.icon} size={26}/></span><span class="hc-card-text"><strong>{a.title}</strong><span>{a.sub}</span></span><span class="hc-card-check" aria-hidden="true"><Icon name="check" size={14}/></span></button>)}</div>
+
+  <div class="hc-stage">
+    <div class="hc-left hc-stack">
+      <div class="hc-pane is-active" role="tabpanel" id="hc-panel-employer" aria-labelledby="hc-tab-employer" data-audience="employer">
+        <div class="hc-copy">
+          <h2 id="hc-title">The right clinicians for every shift, department and specialty.</h2>
+          <p class="hc-intro">From ICU nurses to radiographers, we recruit clinical and support staff for hospitals, clinics and medical centres across the Middle East.</p>
+          <div class="hc-actions"><a class="button amber" href={requestHref} data-hc-track="request_staff">Request healthcare staff <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a><a class="button secondary" href={pageHref} data-hc-track="explore_healthcare">Explore healthcare recruitment <Icon name="arrow" size={16}/></a></div>
+        </div>
+        <ul class="hc-tiles">{healthcareTiles.map(tile=><li><a class="hc-tile" href={tileHref('employer',tile.key)} data-hc-track="tile" data-hc-tile={tile.key}><span class="hc-tile-icon" aria-hidden="true"><Icon name={tile.icon} size={22}/></span><span class="hc-tile-body"><strong>{tile.title}</strong><span class="hc-tile-text">{tile.text}</span><span class="hc-tile-more"><span>{tile.more}</span></span></span><span class="hc-tile-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a></li>)}</ul>
+      </div>
+      <div class="hc-pane" role="tabpanel" id="hc-panel-candidate" aria-labelledby="hc-tab-candidate" data-audience="candidate" inert>
+        <div class="hc-copy">
+          <h2>Take the next step in your healthcare career.</h2>
+          <p class="hc-intro">Nurses, doctors and allied health professionals: send your CV once, and we'll contact you when a hospital or clinic role matches your specialty and experience.</p>
+          <div class="hc-actions"><a class="button amber" href={cvHref} data-hc-track="submit_cv">Submit your CV <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a><a class="button secondary" href={journeyHref} data-hc-track="candidate_journey">How the candidate journey works <Icon name="arrow" size={16}/></a></div>
+        </div>
+        <ul class="hc-tiles">{healthcareTiles.map(tile=><li><a class="hc-tile" href={tileHref('candidate',tile.key)} data-hc-track="tile" data-hc-tile={tile.key}><span class="hc-tile-icon" aria-hidden="true"><Icon name={tile.icon} size={22}/></span><span class="hc-tile-body"><strong>{tile.title}</strong><span class="hc-tile-text">{tile.text}</span><span class="hc-tile-more"><span>{tile.more}</span></span></span><span class="hc-tile-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a></li>)}</ul>
+      </div>
     </div>
-    <figure class="hc-media"><img src="/hero/hero-3-healthcare.webp" srcset="/hero/hero-3-healthcare-mobile.webp 900w, /hero/hero-3-healthcare.webp 1920w" sizes="(max-width:1000px) 100vw, 50vw" width="1920" height="1081" alt="Illustrative close-up of a nurse and a doctor reviewing a tablet in a hospital corridor." loading="lazy" decoding="async"/></figure>
+    <figure class="hc-media">{audiences.map((a,i)=><img data-for={a.id} src={`/pages/${images[a.id].file}-640.webp`} srcset={`/pages/${images[a.id].file}-640.webp 640w, /pages/${images[a.id].file}.webp 1000w`} sizes="(max-width:1000px) 100vw, 42vw" width="1000" height="1250" alt={images[a.id].alt} loading="lazy" decoding="async" aria-hidden={i===0?undefined:'true'}/>)}{audiences.map(a=><figcaption class="hc-media-badge" data-for={a.id} aria-hidden="true">{a.sub}</figcaption>)}</figure>
   </div>
-  <ul class="hc-tiles">{healthcareTiles.map(tile=><li><a class="hc-tile" href={`${pageHref}#roles`}><span class="hc-tile-icon" aria-hidden="true"><Icon name={tile.icon} size={26}/></span><strong>{tile.title}</strong><span class="hc-tile-text">{tile.text}</span><span class="hc-tile-arrow" aria-hidden="true"><Icon name="arrow" size={20}/></span></a></li>)}</ul>
-  <div class="hc-strip">
-    <div class="hc-strip-row"><h3>What we check</h3><ul class="hc-badges">{healthcareBadges.map(badge=><li><Icon name="check" size={18}/><span>{badge}</span></li>)}</ul></div>
-    {licensingSupport&&<p class="hc-licensing"><strong>Licensing support</strong><span>{licensingSupport}</span></p>}
-    <div class="hc-strip-row hc-strip-row--facilities"><h3>We recruit for:</h3><p class="hc-facilities">{healthcareFacilities.map((name,index)=><><span>{name}</span>{index<healthcareFacilities.length-1&&<span class="hc-dot" aria-hidden="true">·</span>}</>)}</p></div>
+
+  <div class="hc-strips hc-stack">
+    <div class="hc-pane hc-strip is-active" role="group" aria-labelledby="hc-tab-employer" data-audience="employer">
+      <div class="hc-group"><h3>What we check</h3><ul class="hc-items hc-items--checks">{healthcareBadges.map(badge=><li><Icon name="check" size={18}/><span>{badge}</span></li>)}</ul>{licensingSupport&&<p class="hc-licensing"><strong>Licensing support</strong><span>{licensingSupport}</span></p>}</div>
+      <div class="hc-group"><h3>We recruit for</h3><ul class="hc-chips">{healthcareFacilities.map(name=><li><Icon name={facilityIcons[name]||'building'} size={16}/><span>{name}</span></li>)}</ul></div>
+    </div>
+    <div class="hc-pane hc-strip" role="group" aria-labelledby="hc-tab-candidate" data-audience="candidate" inert>
+      <div class="hc-group"><h3>How we help</h3><ul class="hc-items hc-items--checks">{help.map(item=><li><Icon name="check" size={18}/><span>{item}</span></li>)}</ul></div>
+      <div class="hc-group"><h3>We place in</h3><ul class="hc-chips">{healthcareFacilities.map(name=><li><Icon name={facilityIcons[name]||'building'} size={16}/><span>{name}</span></li>)}</ul></div>
+    </div>
   </div>
-</div></section>
+</div><script>import '../scripts/healthcare-tabs';</script></section>

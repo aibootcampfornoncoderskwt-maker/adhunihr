@@ -1,0 +1,31 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Icon from '../../../components/Icon.astro';
+import PageQuestions from '../../../components/PageQuestions.astro';
+import AudienceCta from '../../../components/AudienceCta.astro';
+import {marketPaths,marketPage,marketCountries,marketIndustries,marketIndustryTitles} from '../../../data/market-pages.mjs';
+import '../../../styles/service.css';
+import '../../../styles/country.css';
+export function getStaticPaths(){return marketPaths().map(({industry,country})=>({params:{slug:industry,country}}));}
+const {slug,country}=Astro.params as {slug:string;country:string};
+const page=marketPage(slug,country).en;
+const countryName=marketCountries.find(c=>c.slug===country)!.en;
+const industryTitle=marketIndustryTitles[slug].en;
+const live=import.meta.env.PUBLIC_MARKET_PAGES_LIVE==='true';
+const requestHref=`/employers/?country=${encodeURIComponent(countryName)}&industry=${encodeURIComponent(industryTitle)}#request-form`;
+const parent={name:'Industries',href:'/industries/'};
+const industryCrumb={name:industryTitle,href:`/industries/${slug}/`};
+const faqSchema={'@context':'https://schema.org','@type':'FAQPage','@id':new URL(Astro.url.pathname,Astro.site).href+'#faq',mainEntity:page.faq.map(([name,text])=>({'@type':'Question',name,acceptedAnswer:{'@type':'Answer',text}}))};
+const otherCountries=marketCountries.filter(c=>c.slug!==country);
+const otherIndustry=marketIndustries.find(i=>i!==slug)!;
+---
+<Base title={page.seoTitle} description={page.description} noindex={!live} breadcrumbs={[parent,industryCrumb,{name:countryName,href:Astro.url.pathname}]}>
+<section class="sv-hero co-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={parent.href}>{parent.name}</a><span aria-hidden="true">/</span><a href={industryCrumb.href}>{industryTitle}</a><span aria-hidden="true">/</span><span aria-current="page">{countryName}</span></nav>
+<div class="sv-hero-grid"><div class="sv-hero-copy"><div class="eyebrow light">{page.eyebrow}</div><h1>{page.h1}</h1><p>{page.intro}</p><a class="button amber sv-btn" href={requestHref} data-market-enquiry>{page.cta} <span class="btn-arrow" aria-hidden="true"><Icon name="arrow" size={16}/></span></a></div></div></div></section>
+<section class="section"><div class="container page-editorial"><div><div class="eyebrow">{page.countryLabel}</div><h2>{page.localHeading}</h2><p class="section-intro">{page.local}</p><p class="section-intro">{page.verify}</p></div><div><h3>{page.rolesHeading}</h3><ul class="page-role-list">{page.roles.map((role:string,index:number)=><li><span aria-hidden="true">0{index+1}</span>{role}</li>)}</ul><p class="section-intro">{page.rolesNote}</p></div></div></section>
+<section class="section surface"><div class="container page-editorial"><div><div class="eyebrow">{page.briefEyebrow}</div><h2>{page.briefHeading}</h2></div><ul class="page-role-list">{page.brief.map((item:string,index:number)=><li><span aria-hidden="true">0{index+1}</span>{item}</li>)}</ul></div></section>
+<section class="section"><div class="container faq-wrap"><div><div class="eyebrow">{page.faqEyebrow}</div><h2>{page.faqHeading}</h2></div><PageQuestions questions={page.faq}/></div></section>
+<section class="section surface co-markets-section"><div class="container"><nav class="co-markets" aria-label={page.relatedPages}><span class="co-markets-label">{page.otherCountries}</span><ul>{otherCountries.map(c=><li><a href={`/industries/${slug}/${c.slug}/`}>{c.en}</a></li>)}</ul></nav><nav class="co-markets" aria-label={page.relatedIndustry}><span class="co-markets-label">{page.otherIndustry}</span><ul><li><a href={`/industries/${otherIndustry}/${country}/`}>{marketIndustryTitles[otherIndustry].en}</a></li><li><a href={`/locations/${country}/`}>{countryName}</a></li></ul></nav></div></section>
+<AudienceCta/>
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g,'\u003c')}/>
+</Base>

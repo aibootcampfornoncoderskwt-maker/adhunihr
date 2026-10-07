@@ -40,12 +40,12 @@ function renderLanguage(next:'en'|'ar'){
 }
 const observer=new MutationObserver(()=>renderLanguage(language));
 function observe(){observer.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['aria-label','placeholder','title','data-label','alt']});}
-let saved:string|null=null;
-try{saved=localStorage.getItem('adhuni-language');}catch{}
-const requested=new URLSearchParams(location.search).get('lang');
-renderLanguage((requested||saved)==='ar'?'ar':'en');
-document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button=>button.addEventListener('click',()=>{
- const next=button.dataset.language==='ar'?'ar':'en';renderLanguage(next);
- try{localStorage.setItem('adhuni-language',next);}catch{}
- const url=new URL(location.href);url.searchParams.set('lang',next);history.replaceState(null,'',url);
-}));
+// Language is the URL: /ar/... is the static Arabic page, everything else is English. Arabic pages are pre-translated at build time (scripts/generate-arabic.mjs); the engine above only translates text that scripts add later.
+const onArabic=/^\/ar(\/|$)/.test(location.pathname);
+const swap=(next:'en'|'ar')=>{const path=location.pathname.replace(/^\/ar(?=\/|$)/,'')||'/';return(next==='ar'?'/ar'+(path==='/'?'/':path):path)+location.search.replace(/[?&]lang=(en|ar)/,'').replace(/^&/,'?')+location.hash;};
+if(new URLSearchParams(location.search).get('lang')==='ar'&&!onArabic)location.replace(swap('ar'));
+else{
+ if(onArabic){language='ar';observe();}
+ document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button=>{const active=button.dataset.language===(onArabic?'ar':'en');button.setAttribute('aria-pressed',String(active));if(active)button.setAttribute('aria-current','true');else button.removeAttribute('aria-current');
+  button.addEventListener('click',()=>{const next=button.dataset.language==='ar'?'ar':'en';if((next==='ar')!==onArabic)location.href=swap(next);});});
+}

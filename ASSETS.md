@@ -113,3 +113,11 @@ public/hero/healthcare-doctors-gcc.png: GCC doctors corridor hero generated with
 public/hero/healthcare-nursing-team-gcc-v3.png: Nursing team scene generated with built-in image_gen using the liked doctors hero as a photographic style reference. AI-generated illustration, not actual Adhuni staff or facilities. Prompt: docs/healthcare-nursing-gcc-v3-prompt.txt. Not yet wired into the website.
 
 Requested hero filenames: public/hero/hero-0a-nurses.png is an unchanged copy of healthcare-nursing-team-gcc-v3.png; public/hero/hero-0b-doctors.png is an unchanged copy of healthcare-doctors-gcc.png. Both are AI-generated illustrative scenes; source prompts and attribution are recorded above.
+
+public/images/employer-tab-healthcare.png: Portrait employer tab hospital handover scene, generated with built-in image_gen. AI-generated illustration, not actual Adhuni staff or facilities. Prompt: docs/employer-tab-healthcare-prompt.txt. Not yet wired into the website.
+
+public/images/professional-tab-healthcare.png: Portrait professional tab nurse walking in a GCC hospital corridor, generated with built-in image_gen. AI-generated illustration, not actual Adhuni staff or facilities. Prompt: docs/professional-tab-healthcare-prompt.txt. Not yet wired into the website.
+
+public/images/professional-tab-healthcare-v2.png: Professional tab portrait edited with built-in image_gen to remove the stethoscope. AI-generated illustration, not actual Adhuni staff or facilities. Original retained. Prompt: docs/professional-tab-healthcare-v2-prompt.txt.
+
+Requested healthcare tab filenames: public/healthcare-employer.png is an unchanged copy of public/images/employer-tab-healthcare.png; public/healthcare-professional.png is an unchanged copy of public/images/professional-tab-healthcare-v2.png (without stethoscope). Both are AI-generated illustrative scenes; prompts and attribution are recorded above.

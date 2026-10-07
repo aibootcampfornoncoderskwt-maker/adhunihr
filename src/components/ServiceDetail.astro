@@ -23,6 +23,9 @@ const parent={name:'Services',href:'/services/'};
 const mainEntity={'@type':'Service',name:item.title,serviceType:item.title,description:item.description};
 // FAQPage schema describes only the questions that are visible on the page.
 const faqSchema={'@context':'https://schema.org','@type':'FAQPage','@id':new URL(Astro.url.pathname,Astro.site).href+'#faq',mainEntity:questions.map(([name,text])=>({'@type':'Question',name,acceptedAnswer:{'@type':'Answer',text}}))};
+import {guide,guideLabels} from '../data/guides.mjs';
+import '../styles/country.css';
+const guidesLive=import.meta.env.PUBLIC_GUIDES_LIVE==='true';
 ---
 <Base title={`${item.title} | Adhuni HR Solutions`} description={item.description} image={heroSrc||'/images/hero-gcc.webp'} breadcrumbs={[parent,{name:item.title,href:Astro.url.pathname}]} mainEntity={mainEntity}>
 <section class="sv-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={parent.href}>{parent.name}</a><span aria-hidden="true">/</span><span aria-current="page">{item.title}</span></nav>
@@ -34,6 +37,7 @@ const faqSchema={'@context':'https://schema.org','@type':'FAQPage','@id':new URL
 <section id="how-it-works" class="section appr appr--compact"><div class="appr-inner"><div class="appr-head"><div class="eyebrow light">HOW IT WORKS</div><h2>From brief to joining in five steps.</h2></div><ApproachSteps/><a class="sv-approach-link" href="/our-approach/">See our full approach <Icon name="arrow" size={16}/></a></div></section>
 <section id="questions" class="section"><div class="container faq-wrap"><div><div class="eyebrow">PRACTICAL ANSWERS</div><h2>Before you start.</h2><p class="section-intro">A clearer brief starts with the right questions.</p><a class="text-link" href="/contact/">Ask our team →</a></div><PageQuestions questions={questions}/></div></section>
 <section id="related" class="section surface"><div class="container"><div class="eyebrow">WHERE THIS SERVICE FITS</div><h2>Industries we hire for.</h2><IndustryCards slugs={extra.industries}/>{relatedServices.length>0&&<nav class="sv-related" aria-label="Related services"><span class="sv-related-label">Related services</span><ul>{relatedServices.map(entry=><li><a href={`/services/${entry.slug}/`}>{entry.title} <Icon name="arrow" size={16}/></a></li>)}</ul></nav>}</div></section>
+{guidesLive&&<section class="section co-markets-section"><div class="container"><nav class="co-markets" aria-label={guideLabels.en.relatedGuides}><span class="co-markets-label">{guideLabels.en.relatedGuides}</span><ul>{['recruitment-process-brief-to-joining','questions-to-ask-a-recruitment-agency'].map(slug=><li><a href={`/guides/${slug}/`}>{guide(slug).en.title}</a></li>)}</ul></nav></div></section>}
 <AudienceCta/>
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}/>
 <script>import '../scripts/section-nav';</script>

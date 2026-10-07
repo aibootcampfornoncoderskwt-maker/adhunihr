@@ -1,0 +1,59 @@
+/* Site-wide button system. Loaded last (Base.astro); !important is used on purpose so it also replaces the older per-page button rules.
+   Primary  = .button.amber                         (gold, navy label, navy arrow circle)
+   Secondary = .button.secondary (light backgrounds) and .button.outline-light / .button.cta-outline (dark backgrounds)
+   The navy .button.navy and the header button are separate and untouched. */
+:root{--btn-gold:#f7bb1f;--btn-gold-deep:#e6a30c;--btn-navy:#0f2d4d;--btn-ease:cubic-bezier(.22,1,.36,1)}
+
+/* ---- Shared shape */
+html .button:is(.amber,.secondary,.outline-light,.cta-outline){box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:14px!important;height:52px!important;min-height:52px!important;padding:0 24px!important;border:1.5px solid transparent!important;border-radius:999px!important;font-family:var(--font-body)!important;font-size:15px!important;font-weight:600!important;line-height:1!important;letter-spacing:-.01em!important;text-decoration:none!important;white-space:nowrap;transition:background-color .2s ease-out,border-color .2s ease-out,color .2s ease-out,box-shadow .2s ease-out,transform .15s ease-out!important}
+html .button:is(.amber,.secondary,.outline-light,.cta-outline):active{transform:scale(.97)!important}
+html .button:is(.amber,.secondary,.outline-light,.cta-outline):focus-visible{outline:2px solid var(--btn-navy)!important;outline-offset:3px!important}
+/* On dark backgrounds the focus ring is white */
+html :is(.hero,.page-hero,.sv-hero,.ct-hero,.ap-hero,.emp-hero,.cta-candidate,.appr,.hc-strip,.site-footer,.brand-splash) .button:is(.amber,.secondary,.outline-light,.cta-outline):focus-visible{outline-color:#fff!important}
+
+/* ---- Primary (gold) */
+html .button.amber{background:var(--btn-gold)!important;border-color:var(--btn-gold)!important;color:var(--btn-navy)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 1px 2px rgba(15,35,65,.08),0 6px 16px -6px rgba(200,150,30,.45)!important}
+html .button.amber:hover{background:var(--btn-gold-deep)!important;border-color:var(--btn-gold-deep)!important;transform:none!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 2px rgba(15,35,65,.1),0 8px 18px -6px rgba(200,150,30,.5)!important}
+html .button.amber:active{transform:scale(.97)!important}
+/* Navy arrow circle: 40px in a 52px button leaves 6px all round */
+html .button.amber:has(.btn-arrow){padding:0 6px 0 24px!important}
+html[dir=rtl] .button.amber:has(.btn-arrow){padding:0 24px 0 6px!important}
+html .button.amber .btn-arrow{display:grid!important;place-items:center!important;flex:none!important;width:40px!important;height:40px!important;border:0!important;border-radius:50%!important;background:var(--btn-navy)!important;color:#fff!important;transform:none!important}
+
+/* ---- Arrows (every button): the arrow moves 3px inside its circle; RTL flips and moves left */
+html .button .btn-arrow svg,html .button.secondary>svg,html .button.outline-light>svg,html .button.cta-outline>svg{display:block;width:16px;height:16px;transition:translate .2s var(--btn-ease)}
+html .button:hover .btn-arrow svg,html .button:hover.secondary>svg,html .button:hover.outline-light>svg,html .button:hover.cta-outline>svg{translate:3px 0}
+html[dir=rtl] .button .btn-arrow svg,html[dir=rtl] .button.secondary>svg,html[dir=rtl] .button.outline-light>svg,html[dir=rtl] .button.cta-outline>svg{transform:rotate(180deg)}
+html[dir=rtl] .button:hover .btn-arrow svg,html[dir=rtl] .button:hover.secondary>svg,html[dir=rtl] .button:hover.outline-light>svg,html[dir=rtl] .button:hover.cta-outline>svg{translate:-3px 0}
+/* Down arrows (candidates and contact heroes) keep pointing down and move down */
+html .button:is(.sv-btn--down,.ct-hero-button) .btn-arrow svg,html[dir=rtl] .button:is(.sv-btn--down,.ct-hero-button) .btn-arrow svg{transform:rotate(90deg)}
+html .button:hover:is(.sv-btn--down,.ct-hero-button) .btn-arrow svg,html[dir=rtl] .button:hover:is(.sv-btn--down,.ct-hero-button) .btn-arrow svg{translate:0 3px}
+
+/* ---- Secondary on light backgrounds */
+html .button.secondary{gap:8px!important;background:transparent!important;border-color:rgba(15,45,77,.2)!important;color:var(--btn-navy)!important;box-shadow:none!important}
+html .button.secondary:hover{background:rgba(15,45,77,.05)!important;border-color:var(--btn-navy)!important;transform:none!important;box-shadow:none!important}
+/* Secondary on dark/navy backgrounds: outline-light (hero), cta-outline (CTA band) and any .secondary inside a dark section */
+html .button:is(.outline-light,.cta-outline),html :is(.hero,.page-hero,.sv-hero,.ct-hero,.ap-hero,.emp-hero,.cta-candidate,.appr,.hc-strip,.site-footer) .button.secondary{gap:8px!important;background:transparent!important;border-color:rgba(255,255,255,.3)!important;color:#fff!important;box-shadow:none!important}
+html .button:is(.outline-light,.cta-outline):hover,html :is(.hero,.page-hero,.sv-hero,.ct-hero,.ap-hero,.emp-hero,.cta-candidate,.appr,.hc-strip,.site-footer) .button.secondary:hover{background:rgba(255,255,255,.08)!important;border-color:#fff!important;color:#fff!important;transform:none!important;box-shadow:none!important}
+/* Secondary buttons use a plain 16px arrow, not a circle */
+html .button:is(.outline-light,.cta-outline) .btn-arrow{display:inline-flex!important;width:16px!important;height:16px!important;border:0!important;background:none!important;color:currentColor!important;transform:none!important}
+
+/* ---- Rows: primary and secondary on one centre line, 12px apart */
+html :is(.hero-actions,.hc-actions,.cta-actions,.svc-actions,.home-actions){display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+
+/* ---- Mobile: 48px buttons (36px circle keeps the 6px ring), stacked full width with the primary first */
+@media(max-width:600px){
+ html .button:is(.amber,.secondary,.outline-light,.cta-outline){height:48px!important;min-height:48px!important}
+ html .button.amber .btn-arrow{width:36px!important;height:36px!important}
+ html :is(.hero-actions,.hc-actions,.cta-actions,.svc-actions,.home-actions){flex-direction:column;align-items:stretch;gap:12px}
+ html :is(.hero-actions,.hc-actions,.cta-actions,.svc-actions,.home-actions)>.button{width:100%;flex:none;justify-content:space-between!important}
+ html :is(.hero-actions,.hc-actions,.cta-actions,.svc-actions,.home-actions)>.button.secondary,html :is(.hero-actions,.cta-actions)>.button:is(.outline-light,.cta-outline){justify-content:center!important}
+}
+
+/* ---- Reduced motion: colour changes only, no movement */
+@media(prefers-reduced-motion:reduce){
+ html .button:is(.amber,.secondary,.outline-light,.cta-outline){transition:background-color .2s ease-out,border-color .2s ease-out,color .2s ease-out!important}
+ html .button:active{transform:none!important}
+ html .button .btn-arrow svg,html .button.secondary>svg,html .button.outline-light>svg,html .button.cta-outline>svg{transition:none}
+ html .button:hover .btn-arrow svg,html .button:hover.secondary>svg,html .button:hover.outline-light>svg,html .button:hover.cta-outline>svg,html[dir=rtl] .button:hover .btn-arrow svg,html[dir=rtl] .button:hover.secondary>svg,html[dir=rtl] .button:hover.outline-light>svg,html[dir=rtl] .button:hover.cta-outline>svg,html .button:hover:is(.sv-btn--down,.ct-hero-button) .btn-arrow svg{translate:none}
+}

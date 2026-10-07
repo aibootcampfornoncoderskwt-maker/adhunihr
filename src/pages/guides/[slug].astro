@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import AudienceCta from '../../components/AudienceCta.astro';
+import {guideSlugs,guide,guideList,guidesIndex,guideLabels} from '../../data/guides.mjs';
+import '../../styles/service.css';
+import '../../styles/country.css';
+export function getStaticPaths(){return guideSlugs.map(slug=>({params:{slug}}));}
+const {slug}=Astro.params as {slug:string};
+const page=guide(slug).en;
+const labels=guideLabels.en;
+const live=import.meta.env.PUBLIC_GUIDES_LIVE==='true';
+const others=guideList().filter(g=>g.slug!==slug);
+const parent={name:guidesIndex.en.home,href:'/guides/'};
+---
+<Base title={page.seoTitle} description={page.description} noindex={!live} pageType="Article" breadcrumbs={[parent,{name:page.title,href:Astro.url.pathname}]}>
+<section class="sv-hero co-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={parent.href}>{parent.name}</a><span aria-hidden="true">/</span><span aria-current="page">{page.title}</span></nav>
+<div class="sv-hero-grid"><div class="sv-hero-copy"><div class="eyebrow light">{guidesIndex.en.eyebrow}</div><h1>{page.title}.</h1><p>{page.answer}</p></div></div></div></section>
+{page.sections.map((section:any,index:number)=><section class={`section${index%2?' surface':''}`}><div class="container page-editorial"><div><h2>{section.h}.</h2></div><div>{section.p&&section.p.map((text:string)=><p class="section-intro">{text}</p>)}{section.list&&<ul class="page-role-list">{section.list.map((item:string,i:number)=><li><span aria-hidden="true">0{i+1}</span>{item}</li>)}</ul>}</div></div></section>)}
+<section class="section surface co-markets-section"><div class="container"><nav class="co-markets" aria-label={labels.related}><span class="co-markets-label">{labels.related}</span><ul>{others.map(g=><li><a href={`/guides/${g.slug}/`}>{g.en.title}</a></li>)}</ul></nav></div></section>
+<AudienceCta/>
+</Base>

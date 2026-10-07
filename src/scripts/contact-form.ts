@@ -1,4 +1,5 @@
 // Enquiry forms: inline validation, conditional fields, file drop zone, audience cards and the submit flow.
+import { track } from './analytics';
 const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MAX_FILE = 2 * 1024 * 1024;
 const MESSAGES = {
@@ -127,6 +128,7 @@ function initForm(form: HTMLFormElement) {
       const response = await fetch('/api/contact', { method: 'POST', body: data });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Your enquiry could not be sent. Please try again.');
+      track('enquiry_sent',{form:form.dataset.audience||form.id||'enquiry',page:location.pathname.replace(/^\/ar(?=\/)/,'')});
       status.classList.add('success');
       status.textContent = form.dataset.success || 'Thank you. Your enquiry is on its way.';
       form.reset();
@@ -207,6 +209,10 @@ document.querySelectorAll<HTMLAnchorElement>('[data-scroll-to]').forEach(link =>
   };
   if (candidateForm) {
     if (field) setSelect('job_category', field);
+    // ?specialty=Nursing (from the homepage healthcare tiles): noted in key skills so the recruiter sees it.
+    const specialty = params.get('specialty');
+    const skills = candidateForm.querySelector<HTMLTextAreaElement>('textarea[name=key_skills]');
+    if (specialty && ['Nursing', 'Physicians', 'Allied health', 'Support & admin'].includes(specialty) && skills && !skills.value) skills.value = `Healthcare specialty: ${specialty}`;
     if (countries[0]) setSelect('country', countries[0]);
     // Further preferred countries go into the notes so nothing the visitor chose is lost.
     const extra = countries.slice(1).filter(value => /^[A-Za-z ]{2,30}$/.test(value));

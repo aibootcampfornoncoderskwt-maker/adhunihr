@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import AudienceCta from '../../components/AudienceCta.astro';
+import {guideList,guidesIndex} from '../../data/guides.mjs';
+import '../../styles/service.css';
+import '../../styles/country.css';
+const page=guidesIndex.en;
+const live=import.meta.env.PUBLIC_GUIDES_LIVE==='true';
+---
+<Base title={page.seoTitle} description={page.description} noindex={!live} breadcrumbs={[{name:page.home,href:'/guides/'}]}>
+<section class="sv-hero co-hero"><div class="container"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">{page.home}</span></nav>
+<div class="sv-hero-grid"><div class="sv-hero-copy"><div class="eyebrow light">{page.eyebrow}</div><h1>{page.title}</h1><p>{page.intro}</p></div></div></div></section>
+<section class="section"><div class="container"><ul class="sv-deliver sv-deliver--2">{guideList().map(g=><li><h3>{g.en.title}</h3><p>{g.en.description}</p><a class="ind-all" href={`/guides/${g.slug}/`}>{page.read} <Icon name="arrow" size={16}/></a></li>)}</ul></div></section>
+<AudienceCta/>
+</Base>

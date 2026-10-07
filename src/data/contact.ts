@@ -18,3 +18,6 @@ export const companyDetails={
 export const countryOffices:Record<string,string>={kuwait:clean(import.meta.env.PUBLIC_OFFICE_ADDRESS_KUWAIT),'saudi-arabia':clean(import.meta.env.PUBLIC_OFFICE_ADDRESS_SAUDI_ARABIA),uae:clean(import.meta.env.PUBLIC_OFFICE_ADDRESS_UAE),qatar:clean(import.meta.env.PUBLIC_OFFICE_ADDRESS_QATAR),oman:clean(import.meta.env.PUBLIC_OFFICE_ADDRESS_OMAN),bahrain:clean(import.meta.env.PUBLIC_OFFICE_ADDRESS_BAHRAIN)};
 // Office hours for the Contact page. Hidden until confirmed (PUBLIC_OFFICE_HOURS, e.g. 'Sunday to Thursday, 9:00 to 17:00').
 export const officeHours=clean(import.meta.env.PUBLIC_OFFICE_HOURS);
+
+// Optional booking link (Calendly, Cal.com, Microsoft Bookings...). The 'Book a call' link stays hidden until PUBLIC_BOOKING_URL is a valid https URL.
+export const bookingUrl=(()=>{try{const url=new URL(clean(import.meta.env.PUBLIC_BOOKING_URL));return url.protocol==='https:'?url.href:'';}catch{return '';}})();

@@ -124,7 +124,7 @@ try {
       const context = await browser.newContext({ viewport: { width, height: 1000 }, deviceScaleFactor: 1 });
       for (const path of pages) {
         const page = await context.newPage();
-        await page.goto(`${base}${path}${path.includes('?') ? '&' : '?'}lang=${lang}`, { waitUntil: 'load' });
+        await page.goto(`${base}${lang === 'ar' ? '/ar' : ''}${path}`, { waitUntil: 'load' });
         await page.waitForFunction(() => !document.documentElement.dataset.intro, null, { timeout: 20000 }); // splash finished
         await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; document.querySelectorAll('[data-reveal]').forEach(e => e.classList.add('is-visible')); return document.fonts.ready; });
         await page.waitForTimeout(700);

@@ -1,65 +1,125 @@
-/* Homepage healthcare section: text left, image right, then role tiles, check badges and facility types, all on the shared container. */
-.hc{background:#fff}
-.hc-top{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;align-items:center}
-.hc-copy h2{max-width:20ch;font-size:clamp(32px,3.2vw,44px);line-height:1.12}
-.hc-intro{margin:20px 0 0;max-width:52ch;font-size:18px;line-height:1.7;color:var(--text-2)}
-.hc-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:clamp(24px,2.6vw,34px)}
+/* Homepage healthcare section. Shared container, audience switch, a 7/12 + 5/12 stage (copy and 2x2 tiles left, image right), then a navy strip.
+   Both tabs stay in the layout (stacked), so the section keeps the height of the taller tab and nothing jumps when switching. */
+.hc{background:#edf4fb;padding-block:clamp(72px,8vw,112px)}
+.hc-label{margin:0 0 24px}
+.hc-stack{display:grid}
+.hc-stack>.hc-pane{grid-area:1/1;min-width:0}
+/* Tab content: 200ms fade and slide */
+.hc-pane{opacity:0;visibility:hidden;translate:0 8px;transition:opacity .2s var(--ease-out),translate .2s var(--ease-out),visibility 0s linear .2s}
+.hc-pane.is-active{opacity:1;visibility:visible;translate:0 0;transition:opacity .2s var(--ease-out),translate .2s var(--ease-out),visibility 0s}
+
+/* Audience switch: two equal cards, max 720px, left-aligned */
+.hc-select{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:900px;margin-bottom:48px}
+.hc-card{position:relative;display:flex;align-items:center;gap:14px;min-height:84px;padding:12px 48px 12px 18px;border:1.5px solid #d4e0ed;border-radius:16px;background:#fff;color:var(--navy-ink);text-align:start;cursor:pointer;transition:background-color .15s var(--ease-out),color .15s var(--ease-out),border-color .15s var(--ease-out),transform .15s var(--ease-out),box-shadow .15s var(--ease-out)}
+.hc-card-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:12px;background:#eef4fa;color:var(--navy);transition:background-color .15s var(--ease-out),color .15s var(--ease-out)}
+.hc-card-text{display:grid;gap:2px;min-width:0}
+.hc-card strong{font-size:17px;font-weight:700;line-height:1.25;letter-spacing:-.01em}
+.hc-card-text>span{font-size:14.5px;line-height:1.35;color:var(--text-2);transition:color .15s var(--ease-out)}
+/* Wide screens: fixed height, subtitles on one line. Narrower: cards stay equal (grid stretch) and subtitles may wrap. */
+@media(min-width:1101px){.hc-card{height:84px;padding-block:0}.hc-card-text>span{white-space:nowrap}}
+.hc-card-check{position:absolute;top:10px;inset-inline-end:10px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f5b51d;color:var(--deep);opacity:0;scale:.6;transition:opacity .15s var(--ease-out),scale .15s var(--ease-out)}
+.hc-card-check svg{stroke-width:3}
+.hc-card:hover{border-color:#f5b51d;transform:translateY(-2px)}
+.hc-card[aria-selected=true]{background:var(--navy);color:#fff;border-color:#f5b51d;box-shadow:0 8px 18px -10px rgba(9,27,49,.35)}
+.hc-card[aria-selected=true] .hc-card-icon{background:rgba(245,181,29,.16);color:#f5b51d}
+.hc-card[aria-selected=true] .hc-card-text>span{color:rgba(255,255,255,.82)}
+.hc-card[aria-selected=true] .hc-card-check{opacity:1;scale:1}
+.hc-card[aria-selected=true]:hover{transform:none}
+.hc-card:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+/* Stage: text 7/12, image 5/12 */
+.hc-stage{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(40px,5vw,80px);align-items:stretch}
+.hc-left{align-content:start}
+.hc-copy h2{max-width:16ch;font-size:clamp(40px,3.9vw,56px);line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
+.hc-intro{margin:20px 0 0;max-width:60ch;font-size:18px;line-height:1.7;color:var(--text-2)}
+.hc-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:28px}
 .hc-actions .button{min-height:54px;padding:0 10px 0 26px;gap:16px}
 .hc-actions .btn-arrow{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;transition:transform .2s ease}
 .hc-actions .button:hover .btn-arrow{transform:translateX(3px)}
-.hc-media{margin:0;position:relative;border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/3}
-.hc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 36%;outline:1px solid rgba(0,0,0,.1);outline-offset:-1px}
+.hc-media{margin:0;position:relative;min-height:0;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);background:#cfdceb}
+.hc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;opacity:0;transition:opacity .2s ease-in-out;outline:1px solid rgba(0,0,0,.1);outline-offset:-1px}
+.hc-media img[data-for=employer]{object-position:50% 38%}
+.hc-media img[data-for=candidate]{object-position:50% 22%}
+[data-audience=employer] .hc-media img[data-for=employer],[data-audience=candidate] .hc-media img[data-for=candidate]{opacity:1}
+.hc-media-badge{opacity:0;transition:opacity .2s ease-in-out;position:absolute;inset-inline-start:16px;bottom:16px;max-width:calc(100% - 32px);padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.94);box-shadow:0 6px 20px rgba(9,27,49,.18);font-size:14px;font-weight:600;line-height:1.3;color:var(--navy-ink);backdrop-filter:blur(6px)}
+[data-audience=employer] .hc-media-badge[data-for=employer],[data-audience=candidate] .hc-media-badge[data-for=candidate]{opacity:1}
 
-/* Role tiles */
-.hc-tiles{list-style:none;margin:clamp(40px,5vw,64px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.hc-tile{display:flex;flex-direction:column;gap:6px;height:100%;padding:24px 24px 20px;border:1px solid var(--line);border-radius:var(--radius-card);background:#fff;box-shadow:var(--shadow-sm);transition:box-shadow .25s var(--ease-out),transform .25s var(--ease-out),border-color .2s}
-.hc-tile:hover,.hc-tile:focus-visible{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:#e3c778}
+/* Role tiles: 2x2, each tile is one link */
+.hc-tiles{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.hc-tiles>li{position:relative;min-height:var(--hc-tile-h,0)}
+.hc-tile{position:relative;display:flex;align-items:flex-start;gap:16px;height:100%;padding:24px;padding-inline-end:52px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 1px 2px rgba(9,27,49,.04);transition:box-shadow .2s var(--ease-out),transform .2s var(--ease-out),border-color .2s var(--ease-out)}
+.hc-tile:hover,.hc-tile:focus-visible{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:#e3b83a}
 .hc-tile:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
-.hc-tile-icon{display:grid;place-items:center;width:46px;height:46px;margin-bottom:10px;border-radius:12px;background:#fff7e0;color:var(--amber)}
+.hc-tile-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:50%;background:#fff3d1;color:#c18b0b}
 .hc-tile-icon svg{stroke-width:1.7}
-.hc-tile strong{font-size:18px;font-weight:600;line-height:1.3;letter-spacing:-.01em;color:var(--navy-ink)}
-.hc-tile-text{font-size:15.5px;line-height:1.5;color:var(--text-2)}
-/* Everything inside a tile keeps the tile text colour: no link-blue, no highlight, whatever the browser or an extension adds. */
-.hc-tile,.hc-tile:visited{color:var(--text-2);text-decoration:none}
-.hc-tile strong{color:var(--navy-ink)}
-.hc-tile-text,.hc-tile-text *{color:var(--text-2);text-decoration:none;background:none}
-.hc-tile-arrow{display:inline-flex;margin-top:auto;padding-top:10px;color:var(--amber);transition:transform .25s var(--ease-out)}
-.hc-tile:hover .hc-tile-arrow,.hc-tile:focus-visible .hc-tile-arrow{transform:translateX(5px)}
-html[dir=rtl] .hc-tile-arrow svg{transform:rotate(180deg)}
-html[dir=rtl] .hc-tile:hover .hc-tile-arrow,html[dir=rtl] .hc-tile:focus-visible .hc-tile-arrow{transform:translateX(-5px)}
+.hc-tile-body{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.hc-tile strong{font-size:20px;font-weight:600;line-height:1.25;letter-spacing:-.012em;color:var(--navy-ink)}
+.hc-tile-text{font-size:15.5px;line-height:1.45;color:#2f3e54}
+.hc-tile,.hc-tile:visited{text-decoration:none}
+.hc-tile-text,.hc-tile-text *{text-decoration:none;background:none}
+.hc-tile-arrow{position:absolute;top:28px;inset-inline-end:22px;display:inline-flex;align-items:center;height:16px;color:#c18b0b;transition:transform .2s var(--ease-out)}
+.hc-tile:hover .hc-tile-arrow,.hc-tile:focus-visible .hc-tile-arrow{transform:translateX(3px)}
+html[dir=rtl] .hc-tile-arrow svg,html[dir=rtl] .hc-actions .btn-arrow svg,html[dir=rtl] .hc-actions .text-link svg{transform:rotate(180deg)}
+html[dir=rtl] .hc-tile:hover .hc-tile-arrow,html[dir=rtl] .hc-tile:focus-visible .hc-tile-arrow{transform:translateX(-3px)}
+html[dir=rtl] .hc-actions .button{padding:0 26px 0 10px}
+.hc-tile-more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .3s var(--ease-out),opacity .25s ease}
+.hc-tile-more>span{min-height:0;overflow:hidden;font-size:14px;line-height:1.45;font-weight:600;color:var(--gold-ink)}
+.hc-tile:hover .hc-tile-more,.hc-tile:focus-visible .hc-tile-more{grid-template-rows:1fr;opacity:1}
+/* Touch screens have no hover: always show the specialties line */
+@media(hover:none),(max-width:850px){.hc-tile-more{grid-template-rows:1fr;opacity:1}.hc-tile-more>span{padding-top:4px}}
+/* Desktop hover: the tile grows downward over its neighbour to show the specialties line. The row keeps its resting height (--hc-tile-h), so nothing moves. */
+@media(hover:hover) and (min-width:851px){
+ .hc-tile:hover,.hc-tile:focus-visible{position:absolute;top:0;inset-inline:0;height:auto;min-height:100%;z-index:3}
+}
 
-/* Navy strip: what we check + facility types */
-.hc-strip{margin-top:clamp(24px,3vw,32px);padding:clamp(22px,2.6vw,30px) clamp(22px,3vw,40px);border-radius:var(--radius-card);background:var(--navy);color:#fff;display:grid;gap:0}
-.hc-strip-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px}
-.hc-strip-row--facilities{margin-top:clamp(18px,2vw,22px);padding-top:clamp(18px,2vw,22px);border-top:1px solid rgba(255,255,255,.15)}
-.hc-strip h3{margin:0;flex:none;min-width:136px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f5b51d}
+/* Navy strip: two groups side by side with a centred divider, inside the container */
+.hc-strips{margin-top:64px}
+.hc-strip{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:stretch;padding:40px;border-radius:20px;background:var(--navy);color:#fff}
+.hc-group{min-width:0;padding-inline-end:40px}
+.hc-group+.hc-group{position:relative;padding-inline-end:0;padding-inline-start:40px}
+.hc-group+.hc-group:before{content:'';position:absolute;inset-inline-start:0;top:6px;bottom:6px;width:1px;background:rgba(255,255,255,.2)}
+.hc-strip h3{margin:0 0 20px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f5b51d}
 html[dir=rtl] .hc-strip h3{letter-spacing:0;font-size:14px}
-.hc-badges{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:12px clamp(20px,3vw,40px)}
-.hc-badges li{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:500;line-height:1.3;color:#fff}
-.hc-badges svg{flex:none;color:#f5b51d;stroke-width:2.6}
-.hc-facilities{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0;font-size:16px;line-height:1.5;color:#fff}
-.hc-dot{color:#f5b51d;font-weight:700}
+.hc-items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:16px 40px}
+.hc-items li{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:500;line-height:1.3;color:#fff}
+.hc-items svg{flex:none;color:#f5b51d;stroke-width:2.6}
+.hc-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.hc-chips li{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.1);font-size:15px;font-weight:500;line-height:1.2;color:#fff}
+.hc-chips svg{flex:none;color:#f5b51d;stroke-width:2}
 .hc-licensing{display:grid;gap:4px;margin:18px 0 0;padding:14px 16px;border:1px solid rgba(245,181,29,.4);border-radius:12px;background:rgba(255,255,255,.06)}
 .hc-licensing strong{font-size:15px;color:#fff}
 .hc-licensing span{font-size:15px;line-height:1.55;color:rgba(255,255,255,.82)}
 
-html[dir=rtl] .hc-actions .btn-arrow svg,html[dir=rtl] .hc-actions .text-link svg{transform:rotate(180deg)}
-html[dir=rtl] .hc-actions .button{padding:0 26px 0 10px}
-@media(max-width:1100px){.hc-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Tablet: image above the copy at full width, tiles stay 2x2 */
 @media(max-width:1000px){
- .hc-top{grid-template-columns:minmax(0,1fr);gap:36px}
- .hc-media{order:-1;aspect-ratio:16/10}
- .hc-copy h2{max-width:none}
+ .hc-stage{grid-template-columns:minmax(0,1fr);gap:32px}
+ .hc-media{order:-1;width:100%;aspect-ratio:auto;height:clamp(260px,46vw,420px)}
+ .hc-copy h2{max-width:18ch}
+ .hc-strip{grid-template-columns:minmax(0,1fr)}
+ .hc-group,.hc-group+.hc-group{padding-inline:0}
+ .hc-group+.hc-group{margin-top:28px;padding-top:28px;border-top:1px solid rgba(255,255,255,.2)}
+ .hc-group+.hc-group:before{display:none}
 }
+/* Mobile: switch stacked, tiles one column, strip groups stacked */
 @media(max-width:600px){
- .hc-tiles{gap:12px}
- .hc-tile{padding:18px 18px 16px}
- .hc-tile-text{font-size:15px}
- .hc-badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;width:100%}
- .hc-badges li{font-size:15px;align-items:flex-start}
- .hc-strip h3{min-width:0;width:100%}
+ .hc-select{grid-template-columns:minmax(0,1fr);margin-bottom:36px}
+ .hc-card{min-height:68px}
+ .hc-tiles{grid-template-columns:minmax(0,1fr);margin-top:28px;gap:12px}
+ .hc-tile{padding:20px;padding-inline-end:48px}
+ .hc-strips{margin-top:48px}
  .hc-actions{align-items:stretch;flex-direction:column}
  .hc-actions .button{justify-content:space-between}
  .hc-actions .text-link{justify-content:center}
+ .hc-items{grid-template-columns:minmax(0,1fr)}
+ .hc-strip{padding:28px 24px}
+ .hc-card{min-height:72px}
 }
-@media(prefers-reduced-motion:reduce){.hc-actions .btn-arrow,.hc-tile,.hc-tile-arrow{transition:none}.hc-tile:hover,.hc-tile:hover .hc-tile-arrow{transform:none}}
+@media(prefers-reduced-motion:reduce){.hc-pane,.hc-pane.is-active,.hc-card,.hc-card-icon,.hc-card-check,.hc-media img,.hc-actions .btn-arrow,.hc-tile,.hc-tile-more,.hc-tile-arrow{transition:none}.hc-pane{translate:none}.hc-tile:hover,.hc-card:hover{transform:none}}
+
+/* Scroll reveal for this section: 12px fade-up, 60ms stagger (JS adds data-reveal; skipped for reduced motion) */
+@keyframes hc-reveal{from{opacity:0;translate:0 12px}to{opacity:1;translate:0 0}}
+.js-reveal #healthcare [data-reveal].is-visible{animation:hc-reveal .5s var(--ease-out) backwards;animation-delay:calc(var(--i,0)*60ms)}
+
+/* Words inside the section always take the surrounding text colour. Anything a browser, translator or extension injects into the text
+   (auto-links, highlights) is flattened to the text colour. */
+#healthcare :is(p,span,strong,h2,h3,figcaption) :is(a:not(.hc-tile):not(.button):not(.text-link),mark,ins,ruby,dfn,abbr,u){color:inherit!important;background:none!important;text-decoration:none!important;border:0!important;box-shadow:none!important}

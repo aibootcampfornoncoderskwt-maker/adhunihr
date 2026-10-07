@@ -1,0 +1,4 @@
+Edited with built-in image_gen on 7 October 2026.
+Asset: public/images/professional-tab-healthcare-v2.png
+
+Edit the most recent portrait of the female nurse walking through a bright GCC hospital corridor. Remove the entire stethoscope from around her neck and shoulders, including all tubing, earpieces and metal chest piece. Seamlessly reconstruct the navy scrub fabric underneath with matching folds, seams, texture and lighting. Change nothing else: preserve her exact face, hair, expression, pose, hands, blank ID badge, clothing, watch, corridor, windows, skyline, lighting, colours, framing and portrait 4:5 aspect ratio.
