@@ -2,7 +2,8 @@ import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-const site = process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://adhunihrsolutions.com');
+// The main address has no 'www': a www host is always rewritten to the bare domain so canonicals and the sitemap never use it.
+const site = (process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://adhunihrsolutions.com')).replace('://www.adhunihrsolutions.com', '://adhunihrsolutions.com');
 const redirects={
   "/services/overseas-recruitment/": "/services/",
   "/services/project-bulk-hiring/": "/services/high-volume-recruitment/",

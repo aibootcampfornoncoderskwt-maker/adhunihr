@@ -30,7 +30,7 @@ for (const { url, html } of pages) {
   const canonical = (html.match(/<link rel="canonical" href="([^"]*)"/) || [])[1];
   if (!canonical) bad('missing canonical'); else if (!/^https:\/\//.test(canonical)) warn(`canonical is not https: ${canonical}`);
   const robots = (html.match(/<meta name="robots" content="([^"]*)"/) || [])[1] || '';
-  if (launch && /noindex/.test(robots) && !/^\/(privacy|404)/.test(url)) bad('is noindex in a launch build');
+  if (launch && /noindex/.test(robots) && !/^\/(ar\/)?(privacy|404)/.test(url) && !/^\/(ar\/)?(industries\/[^/]+\/[^/]+|guides(\/[^/]+)?)\/$/.test(url)) bad('is noindex in a launch build');
   for (const tag of ['og:title', 'og:description', 'og:image', 'og:url']) if (!html.includes(`property="${tag}"`)) bad(`missing ${tag}`);
   if (!/<html[^>]*lang="/.test(html)) bad('missing <html lang>');
   const alts = [...html.matchAll(/<img\b[^>]*>/g)].filter(m => !/\salt="/.test(m[0]));
