@@ -54,7 +54,7 @@ We recruit nurses and technical staff for employers in the Gulf. We have written
 
 ## Lead conversion checklist
 - Set `PUBLIC_BOOKING_URL` to show a "Book a call" link on the employer call-to-action.
-- Set `PUBLIC_WHATSAPP_NUMBER` and `PUBLIC_PHONE_DISPLAY` when real.
+- The site shows no phone or WhatsApp number on purpose: visitors contact you through the enquiry forms and the Quick match pop-up, and every enquiry lands in the Google Sheet.
 - Set `PUBLIC_GA_MEASUREMENT_ID` for Google Analytics 4, and update the privacy notice first to say analytics is used.
-- Events the site sends: `employer_cta_click`, `candidate_cta_click`, `brief_builder_click`, `booking_click`, `email_click`, `phone_click`, `whatsapp_click`, `enquiry_sent`, `brief_sent`, `brief_pdf_downloaded`. In GA4 mark `enquiry_sent`, `brief_sent` and `booking_click` as key events.
+- Events the site sends: `employer_cta_click`, `candidate_cta_click`, `brief_builder_click`, `booking_click`, `email_click`, `phone_click`, `enquiry_sent`, `brief_sent`, `brief_pdf_downloaded`. In GA4 mark `enquiry_sent`, `brief_sent` and `booking_click` as key events.
 - The hiring brief builder PDF is the lead magnet. Employers who finish it have already written a clear brief.

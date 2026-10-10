@@ -79,7 +79,7 @@ function measureInPage({ specs, containerScan }) {
   const rtl = document.documentElement.dir === 'rtl';
   const ref = document.querySelector('.header-stack .nav-inner').getBoundingClientRect();
   const visible = e => { const cs = getComputedStyle(e); return cs.display !== 'none' && cs.visibility !== 'hidden' && cs.position !== 'fixed'; };
-  const skip = e => e.closest('.hero-slideshow,.ribbon-track,.whatsapp-widget,.catalog-menu,.skip-link,[hidden]') || e.tagName.toLowerCase() === 'image' || (e.closest('svg') && e.tagName.toLowerCase() !== 'svg');
+  const skip = e => e.closest('.hero-slideshow,.ribbon-track,.catalog-menu,.skip-link,[hidden]') || e.tagName.toLowerCase() === 'image' || (e.closest('svg') && e.tagName.toLowerCase() !== 'svg');
   const label = e => e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/).slice(0, 2).join('.') : '');
   const extents = root => {
     let left = Infinity, right = -Infinity;

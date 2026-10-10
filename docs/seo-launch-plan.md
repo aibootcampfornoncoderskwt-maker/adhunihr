@@ -31,6 +31,6 @@ Healthcare and oil and gas by country (12 pages), then role pages. Each page nee
 - Publish useful guides, then share them in LinkedIn groups and industry forums.
 
 ## Leads
-- Add a booking link or WhatsApp number once real (env vars already supported).
+- Add a booking link when ready (`PUBLIC_BOOKING_URL`). The site deliberately shows no phone or WhatsApp number; enquiries come through the forms and the Quick match pop-up.
 - Offer a downloadable hiring checklist in exchange for an email.
 - Run Google Ads on "nurse recruitment Kuwait"-type queries while organic ranking builds. No one can promise a #1 position; rankings take months.

@@ -9,11 +9,11 @@ if (hero) {
   const topbar = document.querySelector<HTMLElement>('.topbar');
   const nav = document.querySelector<HTMLElement>('.site-header');
   const ribbon = document.querySelector<HTMLElement>('.country-ribbon');
-  let liftWhatsApp = () => {};
+  let liftAboveTicker = () => {};
   const measure = () => {
     hero.style.setProperty('--chrome-h', `${(topbar?.offsetHeight ?? 0) + (ribbon?.offsetHeight ?? 0)}px`);
     hero.style.setProperty('--nav-h', `${nav?.offsetHeight ?? 0}px`);
-    liftWhatsApp();
+    liftAboveTicker();
   };
   measure();
   if ('ResizeObserver' in window) {
@@ -21,20 +21,20 @@ if (hero) {
     [topbar, nav, ribbon].forEach(el => el && observer.observe(el));
   }
   addEventListener('resize', measure);
-  addEventListener('load', () => liftWhatsApp());
+  addEventListener('load', () => liftAboveTicker());
 
   // 2. Header is transparent over the hero and turns solid as soon as the page scrolls.
   root.classList.add('hero-header');
-  // The WhatsApp button rides above the ticker while the first screen is showing.
-  liftWhatsApp = () => {
+  // Floating widgets ride above the ticker while the first screen is showing.
+  liftAboveTicker = () => {
     const top = ribbon?.getBoundingClientRect().top ?? innerHeight;
     const lifted = scrollY < 24 && top < innerHeight;
-    root.classList.toggle('wa-lifted', lifted);
-    if (lifted) root.style.setProperty('--wa-lift', `${Math.round(innerHeight - top + 14)}px`);
+    root.classList.toggle('ticker-lifted', lifted);
+    if (lifted) root.style.setProperty('--ticker-lift', `${Math.round(innerHeight - top + 14)}px`);
   };
-  const onScroll = () => { root.classList.toggle('is-scrolled', scrollY > 12); liftWhatsApp(); };
+  const onScroll = () => { root.classList.toggle('is-scrolled', scrollY > 12); liftAboveTicker(); };
   onScroll();
-  addEventListener('resize', liftWhatsApp);
+  addEventListener('resize', liftAboveTicker);
   addEventListener('scroll', onScroll, { passive: true });
 }
 

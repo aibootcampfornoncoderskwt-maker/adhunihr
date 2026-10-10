@@ -53,11 +53,11 @@ function init(card: HTMLElement, bar: HTMLElement) {
   let returnFocus: HTMLElement | null = null;
   let completed = false;
 
-  // ------------------------------------------------ positioning: always above the WhatsApp button
-  const widget = document.querySelector<HTMLElement>('.whatsapp-widget');
+  // ------------------------------------------------ positioning: bottom corner, lifted above the ticker on the homepage first screen
   const place = () => {
-    const top = widget?.getBoundingClientRect().top ?? innerHeight - 24;
-    card.style.setProperty('--qm-bottom', `${Math.round(innerHeight - top + 12)}px`);
+    const root = document.documentElement;
+    const lift = root.classList.contains('ticker-lifted') ? parseFloat(root.style.getPropertyValue('--ticker-lift')) || 24 : 24;
+    card.style.setProperty('--qm-bottom', `${Math.round(lift)}px`);
   };
   let ticking = false;
   const schedulePlace = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { place(); ticking = false; }); } };
@@ -258,7 +258,7 @@ function init(card: HTMLElement, bar: HTMLElement) {
     bar.hidden = true;
     root.classList.remove('qm-bar-on');
     place();
-    window.setTimeout(place, 420); // the WhatsApp button glides to its resting spot first
+    window.setTimeout(place, 420);
     card.hidden = false;
     void card.offsetWidth;
     card.classList.add('is-open');

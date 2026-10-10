@@ -3,7 +3,7 @@ import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import SocialLinks from './SocialLinks.astro';
 import {services,countries} from '../data/site';
-import {companyDetails,phoneDisplay,whatsappUrl} from '../data/contact';
+import {companyDetails} from '../data/contact';
 import '../styles/footer-polish.css';
 const guidesLive=import.meta.env.PUBLIC_GUIDES_LIVE==='true';
 // Footer links use sentence case (names such as 'About Adhuni' keep their capitals).
@@ -11,8 +11,6 @@ const sentence=(text:string)=>text.charAt(0)+text.slice(1).toLowerCase();
 // Trust details: each one renders only when it has a real value (see src/data/contact.ts and .env.example).
 const details=[
   companyDetails.address&&{label:'Office',value:companyDetails.address},
-  phoneDisplay&&{label:'Phone',value:phoneDisplay,href:`tel:${phoneDisplay.replace(/[^+\d]/g,'')}`,ltr:true},
-  whatsappUrl&&{label:'WhatsApp',value:'Message us on WhatsApp',href:whatsappUrl,external:true},
   companyDetails.registration&&{label:'Commercial registration (CR)',value:companyDetails.registration,ltr:true},
   companyDetails.licence&&{label:'Licence number',value:companyDetails.licence,ltr:true}
 ].filter(Boolean) as {label:string;value:string;href?:string;ltr?:boolean;external?:boolean}[];

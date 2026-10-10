@@ -30,7 +30,7 @@
     },
     {
       "name": "phone",
-      "label": "Phone / WhatsApp",
+      "label": "Phone",
       "required": true,
       "type": "tel",
       "placeholder": "e.g. +971 50 123 4567"
@@ -148,7 +148,7 @@
     },
     {
       "name": "phone",
-      "label": "Phone / WhatsApp",
+      "label": "Phone",
       "required": true,
       "type": "tel",
       "placeholder": "+965 / +971 / +91 ..."
@@ -287,7 +287,7 @@
     },
     {
       "name": "phone",
-      "label": "Phone / WhatsApp",
+      "label": "Phone",
       "required": true,
       "type": "tel",
       "placeholder": "+965 / +971 ..."

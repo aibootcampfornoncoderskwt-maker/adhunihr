@@ -61,7 +61,7 @@ html[dir=rtl] .qm-btn svg{transform:rotate(180deg)}
 .qm-check{display:grid;place-items:center;width:52px;height:52px;margin:6px auto 4px;border-radius:50%;background:rgba(245,181,29,.16);color:#f5b51d}
 .qm-upload{width:100%}
 .qm-finish{margin-top:6px;min-width:120px}
-/* phones: slim bar, then a full-width card above the WhatsApp button */
+/* phones: slim bar, then a full-width card */
 .qm-bar{display:none}
 @media(max-width:700px){
  .qm{inset-inline:12px;width:auto;max-width:none}
@@ -73,8 +73,6 @@ html[dir=rtl] .qm-btn svg{transform:rotate(180deg)}
  .qm-bar-arrow{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:#f5b51d;color:#08283f}
  html[dir=rtl] .qm-bar-arrow svg{transform:rotate(180deg)}
  .qm-bar-close{flex:none;width:44px;color:#b9cadb}
- html.qm-bar-on:not(.wa-lifted) .whatsapp-widget{bottom:calc(max(12px,env(safe-area-inset-bottom)) + 64px)}
- html.qm-bar-on.wa-lifted .whatsapp-widget{bottom:max(calc(max(12px,env(safe-area-inset-bottom)) + 64px),var(--wa-lift,0px))}
 }
 @keyframes qm-bar-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.qm{transform:none;transition:opacity .01s}.qm-btn,.qm-chip,.qm-back,.qm-close,.qm-dot{transition:none}.qm-bar:not([hidden]){animation:none}}

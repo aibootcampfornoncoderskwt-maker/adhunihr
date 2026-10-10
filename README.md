@@ -129,8 +129,9 @@ People images are still AI-generated illustrations. Real stock photographs were 
 ## Latest section redesign
 Sectors: two wide feature cards plus four compact cards. FAQ and contact: full-width split layouts. Credentials: three structured cards. Candidate invitation and role table refreshed. Country guide now uses six locally bundled real photographs with public credits. Oil/gas and manufacturing also use real photographs. Other people imagery remains generated; replacement is still pending.
 
-## WhatsApp and social profiles
-Set PUBLIC_WHATSAPP_NUMBER (international digits, no +), PUBLIC_INSTAGRAM_URL and PUBLIC_LINKEDIN_URL in Vercel, then rebuild. Use only verified Adhuni-owned destinations. Missing social URLs show non-clickable icons with an accessible pending label; the WhatsApp panel explains availability and links to enquiry options. It never directs to a guessed account. The widget has restrained ring animation, Escape/close/outside dismissal and reduced-motion support.
+## Social profiles
+(The WhatsApp button and phone number were removed by client direction; contact is through the forms and the Quick match pop-up.)
+Set PUBLIC_INSTAGRAM_URL and PUBLIC_LINKEDIN_URL in Vercel, then rebuild. Use only verified Adhuni-owned destinations. Missing social URLs show non-clickable icons with an accessible pending label; the WhatsApp panel explains availability and links to enquiry options. It never directs to a guessed account. The widget has restrained ring animation, Escape/close/outside dismissal and reduced-motion support.
 
 ## Hero and brand icon cleanup
 Removed duplicate static hero flags/country list; animated market ribbon remains. Replaced approximate social and WhatsApp paths with Font Awesome brand SVG geometry. Client-owned WhatsApp/social destinations still required in environment configuration.
