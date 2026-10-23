@@ -5,6 +5,7 @@ import PageQuestions from '../../components/PageQuestions.astro';
 import IndustryCards from '../../components/IndustryCards.astro';
 import ServiceList from '../../components/ServiceList.astro';
 import AudienceCta from '../../components/AudienceCta.astro';
+import OfficeContact from '../../components/OfficeContact.astro';
 import {countries,industries} from '../../data/site';
 import {countryExtras,countryFaqs} from '../../data/country-content';
 import {countryOffices} from '../../data/contact';
@@ -37,6 +38,7 @@ const faqSchema={'@context':'https://schema.org','@type':'FAQPage','@id':new URL
 <section class="section surface"><div class="container svc-layout"><div class="svc-intro"><div class="eyebrow">OUR SERVICES</div><h2>How we can help.</h2><p>Pick the service that fits your hiring plan. Not sure which? Tell us what you need and we'll recommend one.</p></div><ServiceList slugs={['permanent-recruitment','contract-project-staffing','skilled-technical-manpower']}/></div></section>
 <section class="section"><div class="container faq-wrap"><div><div class="eyebrow">QUESTIONS &amp; ANSWERS</div><h2>Common questions.</h2></div><PageQuestions questions={questions}/></div></section>
 <section class="section surface co-markets-section"><div class="container"><nav class="co-markets" aria-label="Other markets"><span class="co-markets-label">OTHER MARKETS</span><ul>{otherMarkets.map(c=><li><a href={`/locations/${c.slug}/`}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</a></li>)}</ul></nav></div></section>
+<OfficeContact slug={country.slug}/>
 <AudienceCta/>
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g,'\u003c')}/>
 </Base>

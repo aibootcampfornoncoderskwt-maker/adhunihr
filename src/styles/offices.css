@@ -1,0 +1,61 @@
+/* Office directory (Contact page), office network (homepage) and country-page office block. Navy headings, white cards, restrained gold. */
+.of-section{background:#fff}
+.of-head{max-width:680px;margin:0 0 40px}
+.of-head h2{margin:0;color:var(--ink,#143353)}
+.of-head p{margin:14px 0 0;font-size:18px;line-height:1.6;color:var(--body,#536174)}
+.of-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch}
+.of-card{position:relative;display:flex;flex-direction:column;min-width:0;padding:30px 28px 26px;border:1px solid #dce3eb;border-radius:16px;background:#fff;box-shadow:0 1px 2px rgba(15,45,77,.04);scroll-margin-top:calc(var(--header-height,132px) + 24px);transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.of-card:before{content:'';position:absolute;inset-inline-start:28px;top:-1px;width:44px;height:3px;border-radius:0 0 3px 3px;background:var(--amber,#d9a520)}
+.of-card:hover{border-color:#c9d5e2;box-shadow:0 12px 30px rgba(15,45,77,.08);transform:translateY(-2px)}
+/* Linked from other pages: briefly highlight the targeted card */
+.of-card:target{border-color:var(--amber,#d9a520);box-shadow:0 0 0 3px rgba(217,165,32,.22),0 12px 30px rgba(15,45,77,.08)}
+.of-card-head{display:flex;align-items:center;gap:12px;margin:0 0 20px}
+.of-flag{display:grid;place-items:center;flex:none;width:26px;height:18px}
+.of-flag img{display:block;width:24px;height:18px;border-radius:2px;box-shadow:0 0 0 1px rgba(15,45,77,.14)}
+.of-card h3{margin:0;font-size:21px;line-height:1.25;font-weight:700;letter-spacing:-.01em;color:#12365a}
+.of-lines{list-style:none;margin:0;padding:0;display:flex;flex:1;flex-direction:column;gap:14px}
+.of-lines>li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start}
+/* Email sits at the bottom of the card so rows line up across a row of cards */
+.of-card .of-email{margin-top:auto;padding-top:4px}
+.of-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#fbf3df;color:#9a6b0c}
+.of-text{min-width:0;padding-top:6px;font-size:16px;line-height:1.6;color:#3d4b5c;overflow-wrap:anywhere}
+.of-text address{font-style:normal}
+.of-line{display:block}
+.of-link{display:inline-flex;align-items:center;min-height:44px;margin:-10px 0 -12px;color:#12365a;font-weight:600;text-decoration:underline;text-decoration-color:rgba(18,54,90,.25);text-underline-offset:3px;overflow-wrap:anywhere}
+.of-link:hover{color:#0b2540;text-decoration-color:var(--amber,#d9a520)}
+.of-map{display:inline-flex;align-items:center;gap:7px;min-height:44px;margin:2px 0 -10px;margin-inline-start:-10px;padding:0 10px;border-radius:8px;color:#7a5508;font-size:15px;font-weight:600;text-decoration:none;transition:background-color .15s ease,color .15s ease}
+.of-map:hover{background:#fbf3df;color:#5c3f04}
+.of-map svg{flex:none}
+html[dir=rtl] .of-map svg{transform:scaleX(-1)}
+.of-link:focus-visible,.of-map:focus-visible,.on-link:focus-visible,.on-all:focus-visible,.oc-more:focus-visible{outline:2px solid #12365a;outline-offset:3px;border-radius:6px}
+@media(max-width:1000px){.of-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+@media(max-width:640px){.of-grid{grid-template-columns:minmax(0,1fr);gap:16px}.of-card{padding:26px 22px 22px}.of-head{margin-bottom:28px}}
+@media(prefers-reduced-motion:reduce){.of-card,.of-map,.on-link{transition:none}.of-card:hover,.on-link:hover{transform:none}}
+
+/* Homepage: "Our Office Network" (static; distinct from the market ticker) */
+.on-section{background:#fff;border-top:1px solid #e6ecf2}
+.on-inner{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:clamp(32px,5vw,72px);align-items:center}
+.on-head h2{margin:0;color:var(--ink,#143353)}
+.on-head p{margin:14px 0 0;font-size:18px;line-height:1.6;color:var(--body,#536174)}
+.on-all{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:18px;color:#12365a;font-size:16px;font-weight:700;text-decoration:underline;text-decoration-color:var(--amber,#d9a520);text-underline-offset:5px}
+.on-all:hover{color:#0b2540}
+html[dir=rtl] .on-all svg{transform:scaleX(-1)}
+.on-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.on-link{display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 18px;border:1px solid #dce3eb;border-radius:14px;background:#fff;color:#12365a;font-size:17px;font-weight:700;text-decoration:none;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.on-link:hover{border-color:var(--amber,#d9a520);box-shadow:0 10px 24px rgba(15,45,77,.08);transform:translateY(-2px)}
+.on-link img{display:block;width:24px;height:18px;flex:none;border-radius:2px;box-shadow:0 0 0 1px rgba(15,45,77,.14)}
+.on-link .on-go{margin-inline-start:auto;color:#9a6b0c;display:grid}
+html[dir=rtl] .on-link .on-go svg{transform:scaleX(-1)}
+@media(max-width:1000px){.on-inner{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.on-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.on-link{min-height:56px;padding:10px 14px;font-size:16px;gap:10px}}
+
+/* Country pages: "Contact our [Country] office" */
+.oc-card{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px 48px;align-items:start;padding:34px 36px;border:1px solid #dce3eb;border-radius:18px;background:#fff;position:relative;scroll-margin-top:calc(var(--header-height,132px) + 24px)}
+.oc-card:before{content:'';position:absolute;inset-inline-start:36px;top:-1px;width:52px;height:3px;border-radius:0 0 3px 3px;background:var(--amber,#d9a520)}
+.oc-head{display:flex;flex-direction:column;gap:10px}
+.oc-title{display:flex;align-items:center;gap:12px}
+.oc-title h2{margin:0;font-size:clamp(26px,2.4vw,34px);color:var(--ink,#143353)}
+.oc-title img{display:block;width:24px;height:18px;flex:none;border-radius:2px;box-shadow:0 0 0 1px rgba(15,45,77,.14)}
+.oc-more{display:inline-flex;align-items:center;gap:8px;min-height:44px;align-self:flex-start;color:#12365a;font-size:15px;font-weight:700;text-decoration:underline;text-decoration-color:var(--amber,#d9a520);text-underline-offset:5px}
+html[dir=rtl] .oc-more svg{transform:scaleX(-1)}
+@media(max-width:800px){.oc-card{grid-template-columns:minmax(0,1fr);padding:28px 22px}}

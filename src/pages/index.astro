@@ -4,6 +4,7 @@ import Icon from '../components/Icon.astro';
 import HeroSlideshow from '../components/HeroSlideshow.astro';
 import {heroSlides,heroStaticPhrase,heroHeadingText,heroFixedLine} from '../data/hero-slides';
 import MarketsMap from '../components/MarketsMap.astro';
+import OfficeNetwork from '../components/OfficeNetwork.astro';
 import HealthcareSection from '../components/HealthcareSection.astro';
 import AudienceCta from '../components/AudienceCta.astro';
 import ServiceList from '../components/ServiceList.astro';
@@ -23,6 +24,7 @@ const featuredSectors=['engineering-technical','construction-infrastructure','oi
 <section id="industries" class="section surface ind"><div class="ind-inner"><div class="ind-head"><div class="eyebrow">INDUSTRIES WE SERVE</div><h2>Recruitment that knows your industry.</h2><p>We hire across {industries.length} industries, from site and plant roles to corporate offices. Choose yours to see the roles we fill.</p></div><IndustryCards featured="healthcare" slugs={['healthcare','oil-gas-energy','engineering-technical','construction-infrastructure','logistics-supply-chain','information-technology','manufacturing']}/><a class="ind-all" href="/industries/">Explore all {industries.length} industries <Icon name="arrow" size={16}/></a></div></section>
 <section id="approach" class="section appr"><div class="appr-inner"><div class="appr-head"><div class="eyebrow light">OUR APPROACH</div><h2>From hiring brief to joining.</h2><p>One clear process, with one contact keeping you updated at every stage.</p></div><ApproachSteps/><div class="appr-actions"><a class="button amber" href="/employers/#request-form">Request Candidates <span class="btn-arrow"><Icon name="arrow" size={16}/></span></a><a class="button outline-light" href="/our-approach/">See how our recruitment process works <span class="btn-arrow"><Icon name="arrow" size={16}/></span></a></div></div></section>
 <MarketsMap/>
+<OfficeNetwork/>
 <AudienceCta/>
 </Base>
 

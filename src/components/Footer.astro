@@ -4,13 +4,13 @@ import Icon from './Icon.astro';
 import SocialLinks from './SocialLinks.astro';
 import {services,countries} from '../data/site';
 import {companyDetails} from '../data/contact';
+import {offices,officeHref,officeFlag} from '../data/offices';
 import '../styles/footer-polish.css';
 const guidesLive=import.meta.env.PUBLIC_GUIDES_LIVE==='true';
 // Footer links use sentence case (names such as 'About Adhuni' keep their capitals).
 const sentence=(text:string)=>text.charAt(0)+text.slice(1).toLowerCase();
 // Trust details: each one renders only when it has a real value (see src/data/contact.ts and .env.example).
 const details=[
-  companyDetails.address&&{label:'Office',value:companyDetails.address},
   companyDetails.registration&&{label:'Commercial registration (CR)',value:companyDetails.registration,ltr:true},
   companyDetails.licence&&{label:'Licence number',value:companyDetails.licence,ltr:true}
 ].filter(Boolean) as {label:string;value:string;href?:string;ltr?:boolean;external?:boolean}[];
@@ -23,7 +23,7 @@ const endsWithCtaCards=['/','/employers/','/contact/','/candidates/','/about/','
 <div class="footer-brand"><Logo footer/><p>Manpower sourcing and recruitment for employers across the Middle East.</p><SocialLinks/></div>
 <div><h3>Explore</h3><a href="/">Home</a><a href="/about/">About Adhuni</a><a href="/industries/">Industries</a><a href="/our-approach/">Our approach</a>{guidesLive&&<a href="/guides/">Guides</a>}<a href="/employers/">For employers</a><a href="/candidates/">For candidates</a><a href="/candidates/#how-it-works">Candidate process</a><a href="/contact/">Contact</a></div>
 <div><h3>Recruitment</h3><a href="/services/">Our services</a>{services.map(s=><a href={`/services/${s.slug}/`}>{sentence(s.title)}</a>)}</div>
-<div class="footer-contact"><h3>Let’s connect</h3><a class="footer-email" href="mailto:info@adhunihr.com"><span class="footer-contact-icon"><Icon name="mail" size={20}/></span><span><small>Email our team</small><bdi dir="ltr">info@adhunihr.com</bdi></span></a><p>Tell us the role, the market and the timing.</p><a class="footer-contact-link" href="/contact/">Start a conversation</a>{details.length>0&&<ul class="footer-details">{details.map(d=><li><small>{d.label}</small>{d.href?<a href={d.href} target={d.external?"_blank":undefined} rel={d.external?"noopener noreferrer":undefined}>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</a>:<span>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</span>}</li>)}</ul>}</div>
+<div class="footer-contact"><h3>Let’s connect</h3><a class="footer-email" href="mailto:info@adhunihr.com"><span class="footer-contact-icon"><Icon name="mail" size={20}/></span><span><small>Email our team</small><bdi dir="ltr">info@adhunihr.com</bdi></span></a><p>Tell us the role, the market and the timing.</p><a class="footer-contact-link" href="/contact/">Start a conversation</a><nav class="footer-offices" aria-label="Our Offices"><a class="footer-offices-title" href="/contact/#offices"><Icon name="pin" size={15}/>Our Offices</a><ul>{offices.map(o=><li><a href={officeHref(o)}><img src={officeFlag(o)} alt="" width="20" height="15" loading="lazy" decoding="async"/>{o.country}</a></li>)}</ul></nav>{details.length>0&&<ul class="footer-details">{details.map(d=><li><small>{d.label}</small>{d.href?<a href={d.href} target={d.external?"_blank":undefined} rel={d.external?"noopener noreferrer":undefined}>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</a>:<span>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</span>}</li>)}</ul>}</div>
 </div>
 <div class="footer-markets"><span class="footer-markets-title">Our markets</span><nav aria-label="GCC recruitment markets">{countries.map(c=><a class="footer-market" href={`/locations/${c.slug}/`}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</a>)}</nav></div>
 <div class="footer-bottom"><span>© {new Date().getFullYear()} Adhuni HR Solutions.</span><a href="/privacy/">Privacy notice</a><a class="footer-top-link" href="#top">Back to top <span aria-hidden="true">↑</span></a><a href="https://www.ticodetech.com/" target="_blank" rel="noopener noreferrer">Developed by <strong>Ticode Technologies</strong></a></div>

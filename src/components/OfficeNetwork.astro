@@ -1,0 +1,10 @@
+---
+// Homepage: the six GCC offices, each linking to its card in the Contact page directory. Static (no autoplay); separate from the market ticker.
+import Icon from './Icon.astro';
+import {gccOffices,officeHref,officeFlag} from '../data/offices';
+import '../styles/offices.css';
+---
+<section id="office-network" class="section on-section" aria-labelledby="office-network-title"><div class="container on-inner">
+<div class="on-head"><div class="eyebrow">OFFICES</div><h2 id="office-network-title">Our Office Network</h2><p>Connect with our teams across the GCC.</p><a class="on-all" href="/contact/#offices">View all offices <Icon name="arrow" size={16}/></a></div>
+<ul class="on-list">{gccOffices.map(office=><li><a class="on-link" href={officeHref(office)}><img src={officeFlag(office)} alt="" width="24" height="18" loading="lazy" decoding="async"/><span>{office.country}</span><span class="on-go" aria-hidden="true"><Icon name="arrow" size={16}/></span></a></li>)}</ul>
+</div></section>

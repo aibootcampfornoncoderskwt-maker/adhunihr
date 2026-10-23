@@ -1,0 +1,12 @@
+---
+import OfficeLines from './OfficeLines.astro';
+import {offices,officeAnchor,officeFlag} from '../data/offices';
+import '../styles/offices.css';
+---
+<section id="offices" class="section of-section" aria-labelledby="offices-title"><div class="container">
+<div class="of-head"><div class="eyebrow">CONTACT</div><h2 id="offices-title">Our Offices</h2><p>Connect with our team at an office near you.</p></div>
+<ul class="of-grid">{offices.map(office=><li class="of-card" id={officeAnchor(office)}>
+<div class="of-card-head"><span class="of-flag" aria-hidden="true"><img src={officeFlag(office)} alt="" width="24" height="18" loading="lazy" decoding="async"/></span><h3>{office.title}</h3></div>
+<OfficeLines office={office}/>
+</li>)}</ul>
+</div></section>

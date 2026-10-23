@@ -1,0 +1,12 @@
+---
+// Address, telephone (only when supplied) and email rows for one office. Shared by the Contact page cards and the country pages.
+import Icon from './Icon.astro';
+import {officeMapUrl,type Office} from '../data/offices';
+interface Props {office:Office;}
+const {office}=Astro.props;
+---
+<ul class="of-lines">
+<li><span class="of-icon" aria-hidden="true"><Icon name="pin" size={18}/></span><span class="of-text"><span class="sr-only">Address: </span><address>{office.address.map(line=><span class="of-line">{line}</span>)}</address><a class="of-map" href={officeMapUrl(office)} target="_blank" rel="noopener noreferrer" aria-label={`View map: ${office.title}`}>View map <Icon name="arrow" size={15}/></a></span></li>
+{office.phone&&<li><span class="of-icon" aria-hidden="true"><Icon name="phone" size={18}/></span><span class="of-text"><span class="sr-only">Telephone: </span><a class="of-link" href={`tel:${office.phone.tel}`}><bdi dir="ltr">{office.phone.display}</bdi></a></span></li>}
+<li class="of-email"><span class="of-icon" aria-hidden="true"><Icon name="mail" size={18}/></span><span class="of-text"><span class="sr-only">Email: </span><a class="of-link" href={`mailto:${office.email}`}><bdi dir="ltr">{office.email}</bdi></a></span></li>
+</ul>

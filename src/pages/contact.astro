@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Contact from '../components/Contact.astro';
+import OfficeDirectory from '../components/OfficeDirectory.astro';
 import Icon from '../components/Icon.astro';
 const paths=[
  {type:'Employer – hiring request',title:'For Employers',text:'Need staff? Share the role, number of vacancies and start date.',cta:'Request Candidates',primary:true,href:'/employers/#request-form'},
@@ -14,4 +15,5 @@ const paths=[
 <figure class="ct-hero-visual"><img src="/pages/contact-hero.webp" alt="Illustrative scene of a professional taking a phone call beside a laptop at a high-rise office desk, with a Gulf city skyline behind." width="1536" height="1024" fetchpriority="high"/><figcaption>Every brief starts with a conversation.</figcaption></figure></div></div></section>
 <section class="ct-paths" aria-label="Choose your enquiry"><div class="container"><ul class="ct-path-grid">{paths.map(path=><li><a class:list={['ct-path',{'is-primary':path.primary}]} href={path.href??'#general-enquiry'} data-enquiry-type={path.href?undefined:path.type}><h2>{path.title}</h2><p>{path.text}</p><span class="ct-path-cta">{path.cta} <Icon name="arrow" size={16}/></span></a></li>)}</ul></div></section>
 <Contact showHeading={false}/>
+<OfficeDirectory/>
 </Base>

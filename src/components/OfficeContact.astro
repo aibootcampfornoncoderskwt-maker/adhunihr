@@ -1,0 +1,13 @@
+---
+// Country pages: "Contact our [Country] office" with that office's details and a link to its card in the Contact page directory.
+import Icon from './Icon.astro';
+import OfficeLines from './OfficeLines.astro';
+import {officeBySlug,officeHref,officeFlag} from '../data/offices';
+import '../styles/offices.css';
+interface Props {slug:string;}
+const office=officeBySlug(Astro.props.slug);
+---
+{office&&<section class="section oc-section" aria-labelledby="office-contact-title"><div class="container"><div class="oc-card" id="office-contact">
+<div class="oc-head"><div class="oc-title"><img src={officeFlag(office)} alt="" width="24" height="18" loading="lazy" decoding="async"/><h2 id="office-contact-title">{`Contact our ${office.country} office`}</h2></div><a class="oc-more" href={officeHref(office)}>View in our office directory <Icon name="arrow" size={16}/></a></div>
+<OfficeLines office={office}/>
+</div></div></section>}
