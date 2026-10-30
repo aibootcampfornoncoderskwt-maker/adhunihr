@@ -50,14 +50,14 @@ if (viewport && track && !reducedMotion) {
     const build = () => {
       const width = viewport.clientWidth;
       if (!width || width === builtFor) return;
-      builtFor = width;
       track.querySelectorAll('.ribbon-group').forEach(group => group !== base && group.remove());
       // Widen the gap between markets until one loop is at least as wide as the bar, so no country shows twice at once.
       viewport.style.removeProperty('--ticker-gap');
       const markets = base.querySelectorAll('.ribbon-market').length;
       const baseGap = parseFloat(getComputedStyle(viewport).getPropertyValue('--ticker-gap')) || 0;
       let unit = base.getBoundingClientRect().width;
-      if (!unit) return;
+      if (!unit) return; // not laid out yet: leave builtFor unset so the next resize retries
+      builtFor = width;
       if (markets && unit < width) {
         const gap = baseGap + (width - unit) / (markets * 2) + 6;
         viewport.style.setProperty('--ticker-gap', `${gap}px`);
@@ -66,6 +66,7 @@ if (viewport && track && !reducedMotion) {
       for (let i = 1; i < Math.max(2, Math.ceil(width / unit) + 1); i++) {
         const copy = base.cloneNode(true) as HTMLElement;
         copy.setAttribute('aria-hidden', 'true');
+        copy.querySelectorAll('a').forEach(link => link.setAttribute('tabindex', '-1'));
         track.append(copy);
       }
       track.style.setProperty('--ticker-w', `${unit}px`);

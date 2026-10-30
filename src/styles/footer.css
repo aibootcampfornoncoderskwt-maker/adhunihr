@@ -1,0 +1,88 @@
+/* Site footer: brand and actions, three link groups, office selector, bottom bar. */
+.ft{--ft-gold:#f5b51d;--ft-text:#b9ccd9;--ft-line:rgba(255,255,255,.12);background:#092a40;color:var(--ft-text);border-top:2px solid var(--ft-gold);font-size:15px;line-height:1.6}
+.ft a{color:inherit;text-decoration:none}
+.ft a:focus-visible,.ft button:focus-visible{outline:2px solid var(--ft-gold);outline-offset:3px;border-radius:6px}
+.ft h2,.ft h3{margin:0;color:#fff;font-family:var(--font-heading)}
+.ft-diag{display:inline-grid;margin-inline-end:4px;transform:rotate(-45deg)}
+html[dir=rtl] .ft-diag{transform:rotate(-135deg)}
+html[dir=rtl] .ft-more>svg{transform:scaleX(-1)}
+
+.ft-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px 64px;align-items:center;padding:44px 0 36px;border-bottom:1px solid var(--ft-line)}
+.ft-brand{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+.ft-brand .footer-logo{display:block;width:230px;max-width:100%;height:auto;margin:0;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible}
+.ft-brand .brand-logo svg{display:block;width:100%;height:auto}
+.ft-brand p{margin:0;max-width:44ch;font-size:16px}
+.ft-email{display:inline-flex;align-items:center;gap:10px;min-height:40px;color:#fff!important;font-weight:600;overflow-wrap:anywhere}
+.ft-email svg{color:var(--ft-gold);flex:none}
+.ft-email:hover{text-decoration:underline;text-underline-offset:3px}
+.ft-brand .social-follow{display:flex;align-items:center;gap:12px}
+.ft-brand .follow-label{font-size:14px}
+.ft-brand .social-links a,.ft-brand .social-unconfigured{width:40px;height:40px}
+.ft-details{list-style:none;margin:0;padding:0;font-size:13px}
+.ft-cta{min-width:0}
+.ft-kicker{display:block;margin-bottom:10px;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--ft-gold)}
+html[dir=rtl] .ft-kicker{letter-spacing:0;font-size:14px}
+.ft-cta h2{font-size:clamp(32px,3.4vw,50px);line-height:1.1;letter-spacing:-.02em}
+.ft-cta h2 span{display:block}
+.ft-cta h2 .ft-gold{color:var(--ft-gold)}
+.ft-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.ft-btn{flex:1 1 220px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:10px 20px;border-radius:999px;font-size:16px;font-weight:700;text-align:center;transition:background-color .2s ease,border-color .2s ease,transform .2s ease}
+.ft-btn:hover{transform:translateY(-1px)}
+.ft-btn-primary{background:var(--ft-gold);color:#0b2540!important}
+.ft-btn-primary:hover{background:#ffc63d}
+.ft-btn-secondary{background:#12395a;border:1px solid rgba(255,255,255,.28);color:#fff!important}
+.ft-btn-secondary:hover{background:#184468;border-color:var(--ft-gold)}
+
+.ft-nav{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);gap:32px 40px;padding:32px 0;border-bottom:1px solid var(--ft-line)}
+.ft-nav h3{margin-bottom:10px;font-size:16px;font-weight:700}
+.ft-nav ul{list-style:none;margin:0;padding:0}
+.ft-nav li a{display:inline-flex;align-items:center;min-height:32px;padding-block:3px;font-size:15px;line-height:1.35}
+.ft-nav li a:hover,.ft-bar a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.ft-solutions ul{columns:2;column-gap:32px}
+.ft-solutions li{break-inside:avoid}
+.ft-more{display:inline-flex;align-items:center;gap:8px;min-height:40px;color:var(--ft-gold)!important;font-size:15px;font-weight:700}
+.ft-more:hover{text-decoration:underline;text-underline-offset:3px}
+
+.ft-offices{padding:28px 0 32px}
+.ft-offices-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 24px;margin-bottom:12px}
+.ft-offices-head h3{font-size:18px;font-weight:700}
+.ft-tabs{display:flex;flex-wrap:wrap;gap:8px}
+.ft-tab{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:transparent;color:#dbe6ee;font:600 14px/1.2 var(--font-body);cursor:pointer;transition:background-color .15s ease,border-color .15s ease}
+.ft-tab:hover{border-color:rgba(245,181,29,.6)}
+.ft-tab[aria-pressed=true]{border-color:var(--ft-gold);background:#123d5e;color:#fff;box-shadow:inset 0 0 0 1px var(--ft-gold)}
+.ft-tab img{display:block;width:20px;height:15px;flex:none;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.25)}
+/* All panels share one grid cell, so the tallest sets the height and nothing jumps when switching */
+.ft-panels{display:grid;grid-template-columns:minmax(0,1fr);margin-top:16px}
+.ft-office{grid-area:1/1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px 28px;min-width:0}
+.ft-office.is-off{visibility:hidden}
+.ft-office strong{flex:0 0 100%;color:#fff;font-size:16px}
+.ft-address{display:flex;gap:8px;margin:0;min-width:0;flex:0 1 auto}
+.ft-address svg,.ft-phone svg{flex:none;margin-top:4px;color:var(--ft-gold)}
+.ft-phone{display:inline-flex;align-items:flex-start;gap:8px;color:#fff!important;font-weight:600;min-height:32px}
+.ft-phone:hover{text-decoration:underline;text-underline-offset:3px}
+
+.ft-bar{background:#071f31;border-top:1px solid var(--ft-line);font-size:13.5px}
+.ft-bar .container{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 32px;padding-block:14px}
+.ft-bar-group{display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px}
+.ft-bar a{display:inline-flex;align-items:center;gap:6px;min-height:32px}
+.ft-bar strong{color:#fff}
+
+@media(max-width:1000px){
+ .ft-top{gap:32px 40px;padding-top:36px}
+ .ft-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px}
+ .ft-solutions{grid-column:1/-1}
+}
+@media(max-width:760px){
+ .ft-top{grid-template-columns:minmax(0,1fr)}
+ .ft-actions{max-width:520px}
+}
+@media(max-width:600px){
+ .ft-nav li a{min-height:40px}
+ .ft-solutions ul{columns:1}
+ .ft-btn{flex-basis:100%}
+ .ft-office{flex-flow:column nowrap}
+ .ft-address{max-width:100%}
+ .ft-bar .container{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:360px){.ft-tab{padding:0 10px}}
+@media(prefers-reduced-motion:reduce){.ft-btn,.ft-tab{transition:none}.ft-btn:hover{transform:none}}

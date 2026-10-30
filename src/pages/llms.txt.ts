@@ -6,7 +6,7 @@ export const GET:APIRoute=({site})=>{
  const u=(path:string)=>new URL(path,site).href;
  const body=`# ${brand.name}
 
-> ${brand.name} is a recruitment company connecting employers in the Middle East with candidates from India. Healthcare recruitment comes first (nurses, doctors, allied health), then oil, gas and energy. Employers are in Kuwait, Saudi Arabia, the UAE, Qatar, Bahrain and Oman. The site is available in English and Arabic (/ar/).
+> ${brand.name} is a recruitment company connecting employers in the Middle East with candidates from India, Sri Lanka, Bangladesh, Nepal and the Philippines. Healthcare recruitment comes first (nurses, doctors, allied health), then oil, gas and energy. Employers are in Kuwait, Saudi Arabia, the UAE, Qatar, Bahrain and Oman. The site is available in English and Arabic (/ar/).
 
 ## Core pages
 - [Home](${u('/')}): what we do and who we recruit for

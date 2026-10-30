@@ -2,29 +2,38 @@
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import SocialLinks from './SocialLinks.astro';
-import {services,countries} from '../data/site';
+import {services} from '../data/site';
 import {companyDetails} from '../data/contact';
-import {offices,officeHref,officeFlag} from '../data/offices';
-import '../styles/footer-polish.css';
+import {offices,officeFlag} from '../data/offices';
+import '../styles/footer.css';
 const guidesLive=import.meta.env.PUBLIC_GUIDES_LIVE==='true';
 // Footer links use sentence case (names such as 'About Adhuni' keep their capitals).
 const sentence=(text:string)=>text.charAt(0)+text.slice(1).toLowerCase();
 // Trust details: each one renders only when it has a real value (see src/data/contact.ts and .env.example).
 const details=[
-  companyDetails.registration&&{label:'Commercial registration (CR)',value:companyDetails.registration,ltr:true},
-  companyDetails.licence&&{label:'Licence number',value:companyDetails.licence,ltr:true}
-].filter(Boolean) as {label:string;value:string;href?:string;ltr?:boolean;external?:boolean}[];
-// Pages that already end with the Employers/Candidates card component do not repeat the invitation band.
-const endsWithCtaCards=['/','/employers/','/contact/','/candidates/','/about/','/our-approach/','/services/','/hiring-brief-builder/'].includes(Astro.url.pathname)||/^\/(services|industries|locations)\/[^/]+\/$/.test(Astro.url.pathname);
+  companyDetails.registration&&{label:'Commercial registration (CR)',value:companyDetails.registration},
+  companyDetails.licence&&{label:'Licence number',value:companyDetails.licence}
+].filter(Boolean) as {label:string;value:string}[];
+const defaultOffice='kuwait';
+const explore=[['Home','/'],['About Adhuni','/about/'],['Industries','/industries/'],['Recruitment markets','/#markets'],...(guidesLive?[['Guides','/guides/']]:[]),['Contact','/contact/']];
+const work=[['For employers','/employers/'],['For candidates','/candidates/'],['Our approach','/our-approach/'],['Candidate process','/candidates/#how-it-works']];
 ---
-<footer id="site-footer" class="site-footer footer-refined"><div class="container">
-{!endsWithCtaCards && <div class="footer-invitation"><div><span class="eyebrow light">PEOPLE. POSSIBILITY. THE NEXT STEP.</span><h2>Your next hire starts<br/>with a conversation.</h2></div><a class="button amber" href="/contact/">Discuss your hiring needs</a></div>}
-<div class="footer-grid">
-<div class="footer-brand"><Logo footer/><p>Manpower sourcing and recruitment for employers across the Middle East.</p><SocialLinks/></div>
-<div><h3>Explore</h3><a href="/">Home</a><a href="/about/">About Adhuni</a><a href="/industries/">Industries</a><a href="/our-approach/">Our approach</a>{guidesLive&&<a href="/guides/">Guides</a>}<a href="/employers/">For employers</a><a href="/candidates/">For candidates</a><a href="/candidates/#how-it-works">Candidate process</a><a href="/contact/">Contact</a></div>
-<div><h3>Recruitment</h3><a href="/services/">Our services</a>{services.map(s=><a href={`/services/${s.slug}/`}>{sentence(s.title)}</a>)}</div>
-<div class="footer-contact"><h3>Let’s connect</h3><a class="footer-email" href="mailto:info@adhunihr.com"><span class="footer-contact-icon"><Icon name="mail" size={20}/></span><span><small>Email our team</small><bdi dir="ltr">info@adhunihr.com</bdi></span></a><p>Tell us the role, the market and the timing.</p><a class="footer-contact-link" href="/contact/">Start a conversation</a><nav class="footer-offices" aria-label="Our Offices"><a class="footer-offices-title" href="/contact/#offices"><Icon name="pin" size={15}/>Our Offices</a><ul>{offices.map(o=><li><a href={officeHref(o)}><img src={officeFlag(o)} alt="" width="20" height="15" loading="lazy" decoding="async"/>{o.country}</a></li>)}</ul></nav>{details.length>0&&<ul class="footer-details">{details.map(d=><li><small>{d.label}</small>{d.href?<a href={d.href} target={d.external?"_blank":undefined} rel={d.external?"noopener noreferrer":undefined}>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</a>:<span>{d.ltr?<bdi dir="ltr">{d.value}</bdi>:d.value}</span>}</li>)}</ul>}</div>
+<footer id="site-footer" class="ft"><div class="container">
+<div class="ft-top">
+<div class="ft-brand"><Logo footer/><p>Healthcare-first recruitment for Middle East employers, and a direct route to your next role.</p><a class="ft-email" href="mailto:info@adhunihr.com"><Icon name="mail" size={18}/><bdi dir="ltr">info@adhunihr.com</bdi></a><SocialLinks/>{details.length>0&&<ul class="ft-details">{details.map(d=><li><small>{d.label}</small> <bdi dir="ltr">{d.value}</bdi></li>)}</ul>}</div>
+<div class="ft-cta"><span class="ft-kicker">YOUR NEXT CHAPTER STARTS HERE</span><h2><span>Great people.</span><span class="ft-gold">Greater possibilities.</span></h2><div class="ft-actions"><a class="ft-btn ft-btn-primary" href="/employers/#request-form">I’m looking to hire <span class="ft-diag" aria-hidden="true"><Icon name="arrow" size={17}/></span></a><a class="ft-btn ft-btn-secondary" href="/candidates/">I’m looking for a role <span class="ft-diag" aria-hidden="true"><Icon name="arrow" size={17}/></span></a></div></div>
 </div>
-<div class="footer-markets"><span class="footer-markets-title">Our markets</span><nav aria-label="GCC recruitment markets">{countries.map(c=><a class="footer-market" href={`/locations/${c.slug}/`}><span class={`flag flag-${c.code}`} aria-hidden="true"></span>{c.name}</a>)}</nav></div>
-<div class="footer-bottom"><span>© {new Date().getFullYear()} Adhuni HR Solutions.</span><a href="/privacy/">Privacy notice</a><a class="footer-top-link" href="#top">Back to top <span aria-hidden="true">↑</span></a><a href="https://www.ticodetech.com/" target="_blank" rel="noopener noreferrer">Developed by <strong>Ticode Technologies</strong></a></div>
-</div></footer>
+<nav class="ft-nav" aria-label="Footer">
+<div><h3>Explore Adhuni</h3><ul>{explore.map(([label,href])=><li><a href={href}>{label}</a></li>)}</ul></div>
+<div><h3>Work with us</h3><ul>{work.map(([label,href])=><li><a href={href}>{label}</a></li>)}</ul></div>
+<div class="ft-solutions"><h3>Recruitment solutions</h3><ul>{services.map(s=><li><a href={`/services/${s.slug}/`}>{sentence(s.title)}</a></li>)}</ul><a class="ft-more" href="/services/">Explore all services <Icon name="arrow" size={16}/></a></div>
+</nav>
+<section class="ft-offices" aria-labelledby="ft-offices-title">
+<div class="ft-offices-head"><h3 id="ft-offices-title">Our offices</h3><a class="ft-more" href="/contact/#offices">View all locations <span class="ft-diag" aria-hidden="true"><Icon name="arrow" size={16}/></span></a></div>
+<div class="ft-tabs" role="group" aria-labelledby="ft-offices-title">{offices.map(o=><button type="button" class="ft-tab" data-office={o.slug} aria-pressed={o.slug===defaultOffice?'true':'false'} aria-controls={`ft-office-${o.slug}`}><img src={officeFlag(o)} alt="" width="20" height="15" loading="lazy" decoding="async"/>{o.country}</button>)}</div>
+<div class="ft-panels" aria-live="polite">{offices.map(o=><div class:list={["ft-office",{"is-off":o.slug!==defaultOffice}]} id={`ft-office-${o.slug}`} data-office={o.slug}><strong>{o.title}</strong><p class="ft-address"><Icon name="pin" size={16}/><span>{o.address.map(line=><span>{line} </span>)}</span></p>{o.phone&&<a class="ft-phone" href={`tel:${o.phone.tel}`}><Icon name="phone" size={16}/><bdi dir="ltr">{o.phone.display}</bdi></a>}</div>)}</div>
+</section>
+</div>
+<div class="ft-bar"><div class="container"><div class="ft-bar-group"><span>© {new Date().getFullYear()} Adhuni HR Solutions.</span><a href="/privacy/">Privacy notice</a></div><div class="ft-bar-group"><a class="ft-top-link" href="#top">Back to top <span aria-hidden="true">↑</span></a><a href="https://www.ticodetech.com/" target="_blank" rel="noopener noreferrer">Developed by <strong>Ticode Technologies</strong></a></div></div></div>
+</footer>
+<script>import '../scripts/footer';</script>

@@ -74,7 +74,7 @@ export function marketPage(industry, country) {
       faqHeading: L === 'en' ? 'Common questions.' : 'أسئلة شائعة.',
       faq: [
         [L === 'en' ? `Do you recruit ${isHealth ? 'healthcare staff' : 'oil, gas and energy staff'} for ${name}?` : `هل توظّفون ${isHealth ? 'كوادر الرعاية الصحية' : 'كوادر النفط والغاز والطاقة'} لـ${name}؟`,
-         L === 'en' ? `Yes. Adhuni recruits for employers in ${name}, connecting them with candidates from India. Send the roles, location and joining date and we will discuss how to run the search.` : `نعم. توظّف أدهوني لأصحاب العمل في ${name} وتربطهم بمرشحين من الهند. أرسل الوظائف والموقع وتاريخ المباشرة ونناقش كيفية إجراء البحث.`],
+         L === 'en' ? `Yes. Adhuni recruits for employers in ${name}, connecting them with candidates from India, Sri Lanka, Bangladesh, Nepal and the Philippines. Send the roles, location and joining date and we will discuss how to run the search.` : `نعم. توظّف أدهوني لأصحاب العمل في ${name} وتربطهم بمرشحين من الهند وسريلانكا وبنغلاديش ونيبال والفلبين. أرسل الوظائف والموقع وتاريخ المباشرة ونناقش كيفية إجراء البحث.`],
         [L === 'en' ? 'What should the brief say?' : 'ماذا ينبغي أن يتضمن الطلب؟',
          L === 'en' ? `${i.brief.en[0]}; ${i.brief.en[1].charAt(0).toLowerCase()}${i.brief.en[1].slice(1)}; and the number of positions and joining date.` : `${i.brief.ar[0]}؛ ${i.brief.ar[1]}؛ وعدد الوظائف وتاريخ المباشرة.`],
         [L === 'en' ? 'Does an enquiry guarantee a job or placement?' : 'هل يضمن الاستفسار وظيفة أو تعيينًا؟',

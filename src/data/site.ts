@@ -18,7 +18,7 @@ export const pipelines = [
  {id:'corporate',label:'Corporate & specialist',title:'Experience for the business behind the work',image:'office.webp',text:'Recruit for the functions that connect your organisation. Start with the systems, responsibilities and judgement needed in each role.',tags:['Finance & accounts','Human resources','IT & technology','Administration']}
 ];
 export const faqs = [
- ['Which countries does Adhuni focus on?','Our recruitment focus connects India with employers in Kuwait, Saudi Arabia, the UAE, Qatar, Oman and Bahrain. Contact us to discuss the scope of your specific requirement.'],
+ ['Which countries does Adhuni focus on?','We recruit talent from India, Sri Lanka, Bangladesh, Nepal and the Philippines for employers in Kuwait, Saudi Arabia, the UAE, Qatar, Oman and Bahrain. Contact us to discuss the scope of your specific requirement.'],
  ['What should I include in a hiring brief?','Share the job title, responsibilities, essential experience, work location, number of positions, proposed compensation and expected joining date. Include any role-specific qualifications or project requirements.'],
  ['Can we discuss several positions at once?','Yes. List the roles, quantities and priorities in your enquiry. This makes it possible to discuss the requirement as a coordinated hiring plan.'],
  ['How long does recruitment take?','Timing depends on the role, candidate availability, interview decisions and any destination-specific requirements. A timetable should be agreed after reviewing the actual brief; there is no fixed lead-time promise.'],

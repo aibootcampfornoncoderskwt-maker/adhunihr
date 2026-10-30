@@ -1,4 +1,4 @@
-// Homepage map: country cards and map pins highlight each other; the map is cropped on small screens.
+// Homepage map: country cards and map pins highlight each other; map labels follow the page language.
 const section = document.querySelector<HTMLElement>('#markets');
 const svg = section?.querySelector<SVGSVGElement>('.map-svg');
 if (section && svg) {
@@ -12,15 +12,6 @@ if (section && svg) {
     el.addEventListener('focusout', () => highlight(null));
   });
 
-  // Phones: zoom in on the Gulf-to-India corridor so labels stay readable.
-  const narrow = matchMedia('(max-width: 850px)');
-  const fit = () => {
-    svg.setAttribute('viewBox', narrow.matches ? '40 100 580 200' : '0 0 760 480');
-    svg.classList.toggle('is-cropped', narrow.matches);
-  };
-  fit();
-  narrow.addEventListener('change', fit);
-
   // The language toggle skips SVG text, so swap the map labels here.
   const labels = [...svg.querySelectorAll<SVGTextElement>('text[data-ar]')];
   let shown = '';
@@ -33,4 +24,22 @@ if (section && svg) {
   };
   syncLabels();
   new MutationObserver(syncLabels).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+  // Phones: the two parts of the map stack, GCC above the source countries, so labels stay readable.
+  const full = svg.getAttribute('viewBox')!;
+  const [, , width, height] = full.split(' ').map(Number);
+  const split = 380;
+  const lower = svg.cloneNode(true) as SVGSVGElement;
+  lower.setAttribute('viewBox', `${split} 0 ${width - split} ${height}`);
+  lower.setAttribute('aria-hidden', 'true');
+  lower.removeAttribute('role');
+  lower.removeAttribute('aria-label');
+  lower.classList.add('map-svg-lower');
+  const phone = matchMedia('(max-width: 600px)');
+  const fit = () => {
+    svg.setAttribute('viewBox', phone.matches ? `0 0 ${split} ${height}` : full);
+    if (phone.matches) svg.after(lower); else lower.remove();
+  };
+  fit();
+  phone.addEventListener('change', fit);
 }
