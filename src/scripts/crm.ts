@@ -35,6 +35,8 @@ login?.addEventListener('submit', async event => {
   const button = login.querySelector<HTMLButtonElement>('button[type=submit]')!;
   error.textContent = '';
   const data = new FormData(login);
+  const pass = login.querySelector<HTMLInputElement>('input[name=password]'); const eye = login.querySelector('[data-pass-toggle]');
+  if (pass && pass.type !== 'password') { pass.type = 'password'; eye?.setAttribute('aria-pressed', 'false'); eye?.setAttribute('aria-label', 'Show password'); }
   button.disabled = true; button.textContent = 'Signing in…';
   try {
     await api('login', { username: String(data.get('username') || ''), password: String(data.get('password') || '') });
@@ -44,6 +46,17 @@ login?.addEventListener('submit', async event => {
     (login.elements.namedItem('password') as HTMLInputElement).value = '';
     (login.elements.namedItem('password') as HTMLInputElement).focus();
   } finally { button.disabled = false; button.textContent = 'Sign in'; }
+});
+document.querySelector<HTMLButtonElement>('[data-pass-toggle]')?.addEventListener('click', event => {
+  const toggle = event.currentTarget as HTMLButtonElement;
+  const input = document.getElementById(toggle.getAttribute('aria-controls') || '') as HTMLInputElement | null;
+  if (!input) return;
+  const show = input.type === 'password';
+  input.type = show ? 'text' : 'password';
+  toggle.setAttribute('aria-pressed', String(show));
+  const label = show ? 'Hide password' : 'Show password';
+  toggle.setAttribute('aria-label', label); toggle.title = label;
+  input.focus();
 });
 document.querySelector('[data-logout]')?.addEventListener('click', async () => { try { await api('logout', {}); } catch { /* cookies are cleared regardless */ } location.href = '/crm/login'; });
 const menu = document.querySelector<HTMLButtonElement>('[data-menu]');

@@ -45,7 +45,11 @@ export const industryExtras:Record<string,IndustryExtra>={
   faqs:[
    {q:'Which healthcare roles do you recruit?',a:'Nurses, doctors and specialists, allied health professionals, and healthcare support and administration staff.'},
    {q:'Do you check licences and registration?',ownerKey:'healthcare-licence-check'},
-   {q:'Can you hire for a new hospital or clinic opening?',a:"Yes. Tell us the departments, roles and opening date, and we'll plan the hiring in phases."}
+   {q:'Can you hire for a new hospital or clinic opening?',a:"Yes. Tell us the departments, roles and opening date, and we'll plan the hiring in phases."},
+   {q:'Which countries do you recruit healthcare staff for?',a:'Kuwait, Saudi Arabia, the UAE, Qatar, Bahrain and Oman. Each country licenses practitioners differently, so tell us where the role is based.'},
+   {q:'Where do your healthcare candidates come from?',a:'We recruit from India, Sri Lanka, Bangladesh, Nepal and the Philippines.'},
+   {q:'What should a healthcare hiring brief include?',a:'The department, specialty and patient group; the licence or registration you require; years of relevant experience; and the shift pattern, number of positions and joining date.'},
+   {q:'Are the roles on this page current vacancies?',a:'No. They are examples of roles hospitals and clinics hire for, not advertised jobs.'}
   ],
   services:['permanent-recruitment','high-volume-recruitment','contract-project-staffing']
  },
@@ -67,7 +71,7 @@ export const industryExtras:Record<string,IndustryExtra>={
   services:['contract-project-staffing','skilled-technical-manpower','high-volume-recruitment']
  },
  'oil-gas-energy':{
-  seoTitle:'Oil, Gas and Energy Recruitment in the Middle East',
+  seoTitle:'Oil, Gas & Energy Recruitment in the Middle East',
   seoDescription:'Recruit technicians, inspectors, HSE and operations staff for oil, gas and energy sites in Kuwait, Saudi Arabia, UAE, Qatar, Bahrain and Oman.',
   hero:{image:'/industries/industry-oil-gas.webp',alt:'Illustrative scene of an operator in coveralls and a hard hat walking along a pipe-rack walkway at a refinery at dusk.',position:'36% 42%',zoom:1.25},
   heroText:"Technicians, inspectors and HSE professionals for facilities where safety and experience can't be compromised.",

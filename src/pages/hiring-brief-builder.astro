@@ -17,7 +17,7 @@ const parent={name:'For Employers',href:'/employers/'};
 <noscript><p class="bb-noscript">The hiring brief builder needs JavaScript. You can <a href="/employers/#request-form">use the employer form</a> instead.</p></noscript>
 <div class="bb-mount"></div>
 <form id="bb-send" class="bb-send" hidden data-open="false" novalidate aria-labelledby="bb-send-title">
-<h3 id="bb-send-title">Send your brief to Adhuni</h3>
+<h2 id="bb-send-title">Send your brief to Adhuni</h2>
 <p class="bb-send-intro">Add your details and we will reply within one business day.</p>
 <div class="bb-grid2">
 <div class="field"><label for="bb-s-name">Name</label><input id="bb-s-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="bb-s-name-err"/><span class="field-error" id="bb-s-name-err"></span></div>
@@ -34,6 +34,16 @@ const parent={name:'For Employers',href:'/employers/'};
 </form>
 <p class="bb-sr" id="bb-live" aria-live="polite"></p>
 </div></div></section>
+<section class="section surface bb-intro-section"><div class="container bb-intro">
+<div><div class="eyebrow">ABOUT THE BRIEF</div><h2>What goes into a hiring brief.</h2><p>A hiring brief tells a recruiter what you need before the search starts. This builder takes you through it in four steps. Nothing is sent until you choose to send it.</p></div>
+<ol class="bb-intro-steps">
+<li><strong>Roles.</strong><span>Choose positions from healthcare, oil and gas, construction and other industries, or add your own.</span></li>
+<li><strong>Numbers.</strong><span>Enter how many people you need for each role.</span></li>
+<li><strong>Location and timing.</strong><span>The country, the city or site, the employment type and the target start date.</span></li>
+<li><strong>Requirements.</strong><span>Minimum experience, certifications or licences, languages and any notes.</span></li>
+</ol>
+<p class="bb-intro-after">Download the finished brief as a PDF to share inside your company, or send it to Adhuni. Our recruitment team reviews it and contacts you to agree the search. <a href="/employers/#request-form">Prefer a form? Use the employer request form</a></p>
+</div></section>
 <script type="application/json" id="bb-data" set:html={JSON.stringify(data).replace(/</g,'\u003c')}/>
 <script>import '../scripts/brief-builder';</script>
 {enabled&&key&&<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}

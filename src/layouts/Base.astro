@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import QuickMatch from '../components/QuickMatch.astro';
 import Footer from '../components/Footer.astro';
 import ThankYouDialog from '../components/ThankYouDialog.astro';
+import {offices,gccOffices,officeAddress} from '../data/offices';
 import '../styles/global.css';
 import '../styles/home-polish.css';
 import '../styles/buttons.css';
@@ -16,14 +17,18 @@ import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-500.css';
 interface Props {title?:string;description?:string;noindex?:boolean;image?:string;pageType?:string;breadcrumbs?:{name:string;href:string}[];mainEntity?:Record<string,unknown>;}
-const {title='Manpower & Recruitment | Adhuni HR Solutions',description='Reliable manpower sourcing and recruitment solutions for businesses across industries, with a strong focus on the Middle East.',noindex=false,image='/images/hero-gcc.webp',pageType='WebPage',breadcrumbs=[],mainEntity}=Astro.props;
+const {title:fullTitle='Manpower & Recruitment | Adhuni HR Solutions',description='Reliable manpower sourcing and recruitment solutions for businesses across industries, with a strong focus on the Middle East.',noindex=false,image='/images/hero-gcc.webp',pageType='WebPage',breadcrumbs=[],mainEntity}=Astro.props;
+// Google cuts titles at about 60 characters. Long titles end with the short brand so the name stays visible.
+const title=fullTitle.length>60&&fullTitle.endsWith(' | Adhuni HR Solutions')?fullTitle.slice(0,-' | Adhuni HR Solutions'.length)+' | Adhuni HR':fullTitle;
 const launch=import.meta.env.PUBLIC_LAUNCH_READY==='true';
 // Google Analytics 4 loads only when PUBLIC_GA_MEASUREMENT_ID is set (and the privacy notice has been updated to say so).
 const gaId=/^G-[A-Z0-9]{6,}$/.test((import.meta.env.PUBLIC_GA_MEASUREMENT_ID||'').trim())?(import.meta.env.PUBLIC_GA_MEASUREMENT_ID||'').trim():'';
 const canonical=new URL(Astro.url.pathname,Astro.site);
 const absolute=(path:string)=>new URL(path,Astro.site).href;
 const organisationId=absolute('/#organisation'),websiteId=absolute('/#website'),pageId=canonical.href+'#webpage';
-const organization={'@type':'Organization','@id':organisationId,name:'Adhuni HR Solutions',logo:absolute('/images/adhuni-approved.png'),url:absolute('/'),description:'Multi-industry manpower sourcing and recruitment, with a strong focus on the Middle East / GCC.'};
+// Business markup: one organisation, with each client-supplied office as a department (address, and telephone only where confirmed).
+const sameAs=[import.meta.env.PUBLIC_LINKEDIN_URL,import.meta.env.PUBLIC_INSTAGRAM_URL].map(u=>(u||'').trim()).filter(u=>/^https:\/\//.test(u));
+const organization={'@type':'Organization','@id':organisationId,name:'Adhuni HR Solutions',alternateName:'Adhuni HR',logo:absolute('/images/adhuni-approved.png'),url:absolute('/'),email:'info@adhunihr.com',description:'Multi-industry manpower sourcing and recruitment, with a strong focus on the Middle East / GCC.',areaServed:gccOffices.map(o=>o.country),...(sameAs.length?{sameAs}:{}),department:offices.map(o=>({'@type':'Organization',name:o.title,email:o.email,...(o.phone?{telephone:o.phone.display}:{}),address:{'@type':'PostalAddress',streetAddress:officeAddress(o),addressCountry:o.flag.toUpperCase()}}))};
 const crumbs=[{name:'Home',href:'/'},...breadcrumbs];
 const schema={'@context':'https://schema.org','@graph':[organization,{'@type':'WebSite','@id':websiteId,url:absolute('/'),name:'Adhuni HR Solutions',publisher:{'@id':organisationId}}, {'@type':pageType,'@id':pageId,url:canonical.href,name:title,description,inLanguage:'en',isPartOf:{'@id':websiteId},primaryImageOfPage:{'@type':'ImageObject',url:absolute(image)},...(breadcrumbs.length?{breadcrumb:{'@id':canonical.href+'#breadcrumb'}}:{}),...(mainEntity?{mainEntity:{'@id':canonical.href+'#service'}}:{})},...(breadcrumbs.length?[{'@type':'BreadcrumbList','@id':canonical.href+'#breadcrumb',itemListElement:crumbs.map((crumb,index)=>({'@type':'ListItem',position:index+1,name:crumb.name,item:absolute(crumb.href)}))}]:[]),...(mainEntity?[{...mainEntity,'@id':canonical.href+'#service',url:canonical.href,provider:{'@id':organisationId},areaServed:['Kuwait','Saudi Arabia','United Arab Emirates','Qatar','Oman','Bahrain']}]:[])]};
 ---

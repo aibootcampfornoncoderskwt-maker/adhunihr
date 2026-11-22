@@ -17,8 +17,11 @@ const dictionary = { ...readJson('src/data/arabic.json'), ...readJson('src/data/
 import { marketPaths, marketPage } from '../src/data/market-pages.mjs';
 import { guideList, guidesIndex, guideLabels } from '../src/data/guides.mjs';
 const normalise = text => text.replace(/\s+/g, ' ').trim();
+// Long titles end with the short brand " | Adhuni HR" (src/layouts/Base.astro); reuse the Arabic of the full-brand title.
+const shortBrand = ' | Adhuni HR', fullBrand = ' | Adhuni HR Solutions';
 const translate = text => {
-  const result = dictionary[normalise(text)];
+  const key = normalise(text);
+  const result = dictionary[key] ?? (key.endsWith(shortBrand) ? dictionary[key.slice(0, -shortBrand.length) + fullBrand] : undefined);
   return result ? (text.match(/^\s*/)?.[0] || '') + result + (text.match(/\s*$/)?.[0] || '') : text.replace(/Showing (\d+) role examples?/g, 'عرض $1 أمثلة للأدوار');
 };
 // Market pages carry their own Arabic; pair the strings one to one.

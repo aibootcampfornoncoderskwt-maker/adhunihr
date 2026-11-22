@@ -54,7 +54,7 @@ export function marketPage(industry, country) {
     const name = c[L], noun = i[L === 'en' ? 'enNoun' : 'arNoun'], title = i[L === 'en' ? 'enTitle' : 'arTitle'];
     const t = {
       title: L === 'en' ? `${title} recruitment in ${name}` : `${noun} في ${name}`,
-      seoTitle: L === 'en' ? `${title} Recruitment in ${name} | Adhuni HR Solutions` : `${noun} في ${name} | أدهوني لحلول الموارد البشرية`,
+      seoTitle: L === 'en' ? `${isHealth ? 'Healthcare' : 'Oil, Gas & Energy'} Recruitment in ${name} | Adhuni HR Solutions` : `${noun} في ${name} | أدهوني لحلول الموارد البشرية`,
       description: L === 'en'
         ? `${isHealth ? 'Recruit nurses, doctors and allied health staff' : 'Recruit technicians, inspectors and HSE staff'} for employers in ${name}. Licensing, roles and what to put in your brief.`
         : `${isHealth ? 'وظّف الممرضين والأطباء والكوادر الصحية المساندة' : 'وظّف الفنيين والمفتشين وكوادر السلامة'} لأصحاب العمل في ${name}. الترخيص والوظائف وما يجب ذكره في طلبك.`,

@@ -86,10 +86,20 @@ body.crm-drawer-open:after{content:'';position:fixed;inset:0;z-index:19;backgrou
 /* login */
 .crm-bare{min-height:100dvh;display:grid;place-items:center;background:radial-gradient(ellipse at 80% 0%,#1b4a73,transparent 60%),var(--navy)}
 .crm-login{width:100%;padding:24px}
-.crm-login-card{width:min(400px,100%);margin:0 auto;display:grid;gap:14px;padding:32px 28px;border-radius:20px;background:#fff;border-top:4px solid var(--gold);box-shadow:0 30px 80px rgba(0,0,0,.35)}
-.crm-login-card img{width:160px;height:auto;margin:0 auto 4px}
-.crm-login-card h1{margin:0;text-align:center;font-size:24px;color:var(--navy)}
-.crm-login-card label{display:grid;gap:6px;font-weight:600;font-size:14px}
+.crm-login-card{width:min(480px,100%);margin:0 auto;display:grid;gap:16px;padding:44px 40px 36px;border-radius:20px;background:#fff;border-top:4px solid var(--gold);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.crm-login-card img{width:190px;height:auto;margin:0 auto 4px}
+.crm-login-card h1{margin:0;text-align:center;font-size:28px;color:var(--navy)}
+.crm-login-card label,.crm-field{display:grid;gap:6px;font-weight:600;font-size:14px}
+.crm-login-card input{min-height:48px;font-size:16px}
+.crm-login-card .crm-btn-primary{min-height:50px;font-size:16px;margin-top:4px}
+.crm-alert code{font-size:12.5px;word-break:break-all}
+.crm-pass{position:relative}
+.crm-pass input{padding-inline-end:52px}
+.crm-pass-toggle{position:absolute;inset-block:4px;inset-inline-end:4px;width:44px;display:grid;place-items:center;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer}
+.crm-pass-toggle:hover{background:#f1f4f8;color:var(--navy)}
+.crm-pass-toggle .crm-eye-off,.crm-pass-toggle[aria-pressed=true] .crm-eye{display:none}
+.crm-pass-toggle[aria-pressed=true] .crm-eye-off{display:block}
+@media(max-width:480px){.crm-login{padding:16px}.crm-login-card{padding:32px 22px 28px}}
 .crm-login-note{margin:-6px 0 4px;text-align:center;color:var(--muted);font-size:14px}
 .crm-login-error{margin:0;min-height:1.4em;color:#a3251a;font-size:14px}
 .crm-alert{margin:0;padding:10px 12px;border-radius:10px;background:#fff4d6;color:#7a5508;font-size:14px}
