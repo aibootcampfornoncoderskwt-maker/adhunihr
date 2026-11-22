@@ -1,0 +1,25 @@
+---
+import Crm from '../../layouts/Crm.astro';
+import {hasSession,crmHeaders} from '../../lib/crm/guard';
+import {loginConfigured} from '../../lib/crm/auth';
+export const prerender=false;
+if(await hasSession(Astro.request))return Astro.redirect('/crm/');
+Object.entries(crmHeaders).forEach(([k,v])=>Astro.response.headers.set(k,v));
+const expired=Astro.url.searchParams.has('expired');
+const ready=loginConfigured();
+---
+<Crm title="Sign in" view="login" bare>
+<main class="crm-login">
+<form class="crm-login-card" data-login novalidate>
+<img src="/images/adhuni-approved.webp" alt="Adhuni HR Solutions" width="180" height="92"/>
+<h1>CRM sign in</h1>
+<p class="crm-login-note">For Adhuni HR Solutions staff only.</p>
+{expired&&<p class="crm-alert" role="status">Your session ended. Please sign in again.</p>}
+{!ready&&<p class="crm-alert crm-alert-error" role="status">The CRM login has not been configured yet (CRM_ADMIN_PASSWORD_HASH).</p>}
+<label>Username<input name="username" autocomplete="username" required value="admin" spellcheck="false" autocapitalize="off"/></label>
+<label>Password<input name="password" type="password" autocomplete="current-password" required/></label>
+<button type="submit" class="crm-btn crm-btn-primary" disabled={!ready}>Sign in</button>
+<p class="crm-login-error" role="alert" aria-live="assertive"></p>
+</form>
+</main>
+</Crm>

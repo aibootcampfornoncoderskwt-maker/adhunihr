@@ -26,7 +26,7 @@ node scripts/prepare-client-content.mjs # regenerates src/data/client-content.js
 
 ## Architecture
 
-Astro 7 + Tailwind 4 (via `@tailwindcss/vite`) site for Adhuni HR Solutions (GCC/India recruitment). `output: 'static'`; the only server code is the Vercel-hosted enquiry endpoint `src/pages/api/contact.ts` (Resend email + Cloudflare Turnstile, origin check, honeypot). Most markup and CSS are dense one-line Astro templates plus a single large `src/styles/global.css` (no per-component styles).
+Astro 7 + Tailwind 4 (via `@tailwindcss/vite`) site for Adhuni HR Solutions (GCC/India recruitment). `output: 'static'`; server code is the Vercel-hosted enquiry endpoint `src/pages/api/contact.ts` (origin check, honeypot, optional Turnstile) and the admin CRM (`src/pages/crm/`, `src/pages/api/crm/`). Both relay to the Google Apps Script backend in `google/apps-script/Code.gs` (Sheets, private Drive files, MailApp notifications); setup is in `docs/crm-setup.md`. Most markup and CSS are dense one-line Astro templates plus a single large `src/styles/global.css` (no per-component styles).
 
 - **Content lives in data files, pages are generated from them.** `src/data/catalog.ts` (7 services, 12 industries with long-form copy, images, icons) drives `services/[slug]`, `industries/[slug]`, `locations/[slug]` and the listing pages via `CatalogDetail.astro`. `src/data/site.ts` holds countries, FAQs, sample roles. Adding an entry generates a route at build time.
 - **Redirects and sitemap** are configured in `astro.config.mjs`. Old slugs redirect to the current service/industry pages; the sitemap filter excludes 404, privacy and redirect sources. When renaming or removing a slug, update the `redirects` map.
@@ -38,7 +38,7 @@ Astro 7 + Tailwind 4 (via `@tailwindcss/vite`) site for Adhuni HR Solutions (GCC
 
 ## Environment / launch gating
 
-See `.env.example`. The site ships in review mode: `PUBLIC_LAUNCH_READY=false` makes every page noindex and `robots.txt.ts` disallow all; `PUBLIC_CONTACT_ENABLED=false` makes the API return 503 and the UI never claims a message was sent. `SITE_URL` falls back to `VERCEL_PROJECT_PRODUCTION_URL`, then localhost. `PUBLIC_*` vars are build-time, so changes need a rebuild/redeploy; secrets (`RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`) must never be `PUBLIC_*`. WhatsApp/social links render as inert placeholders until their env URLs are set.
+See `.env.example`. The site ships in review mode: `PUBLIC_LAUNCH_READY=false` makes every page noindex and `robots.txt.ts` disallow all; `PUBLIC_CONTACT_ENABLED=false` makes the API return 503 and the UI never claims a message was sent. `SITE_URL` falls back to `VERCEL_PROJECT_PRODUCTION_URL`, then localhost. `PUBLIC_*` vars are build-time, so changes need a rebuild/redeploy; secrets (`GOOGLE_SHEET_SECRET`, `CRM_ADMIN_PASSWORD_HASH`, `TURNSTILE_SECRET_KEY`) must never be `PUBLIC_*`. WhatsApp/social links render as inert placeholders until their env URLs are set.
 
 ## Content rules from the README
 

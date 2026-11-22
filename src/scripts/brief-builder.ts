@@ -1,6 +1,8 @@
 // Hiring brief builder: a four-step form that ends in a printable brief (PDF) or a message to the Adhuni team.
 // The brief lives in the browser only (localStorage) until the visitor chooses "Send to Adhuni".
 import {track} from './analytics';
+import {newKey,showThankYou} from './contact-form';
+let bbKey='',bbPrint='';
 import arabic from '../data/arabic.json';
 import clientArabic from '../data/client-arabic.json';
 
@@ -346,10 +348,15 @@ async function sendBrief(){
   if(exp)body.set('experience_required',cut(exp,480));
   body.set('job_description',cut(`Hiring brief builder submission. ${m.total} people across ${m.rows.length} roles.\n${m.rows.map(line).join('\n')}`,3900));
   body.set('additional_requirements',cut(`Countries: ${m.countries.join(', ')}${m.type?`\nEmployment type: ${m.type}`:''}\nSent from the hiring brief builder.`,3900));
+  const print=[...body.entries()].filter(([k])=>k!=='cf-turnstile-response').map(([k,v])=>k+'='+String(v)).join('&');
+  if(!bbKey||print!==bbPrint){bbKey=newKey();bbPrint=print;}
+  body.set('submission_id',bbKey);
   const response=await fetch('/api/contact',{method:'POST',body});
   const result=await response.json();
   if(!response.ok)throw new Error(result.error||'Your brief could not be sent. Please try again.');
-  setSend('Thank you. Your brief is on its way. We will reply within one business day.','ok');
+  bbKey='';bbPrint='';
+  setSend('Thank you. Your brief has been received.','ok');
+  showThankYou('employer',String(result.reference||''),submit);
   track('brief_sent',{roles:m.rows.length,people:m.total,language:isAr()?'ar':'en'});
   sendForm.reset();
   try{localStorage.removeItem(STORE);}catch{/* ignore */}

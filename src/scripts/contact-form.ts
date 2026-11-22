@@ -46,8 +46,37 @@ function problem(control: Control) {
 const visibleControls = (form: HTMLFormElement) =>
   [...form.querySelectorAll<Control>('input:not([type=hidden]), select, textarea')].filter(control => !control.closest('[hidden], .honeypot'));
 
+/** Random key that identifies one submission, so retries and double clicks are recognised by the server. */
+export const newKey = () => (crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`).replace(/[^A-Za-z0-9]/g, '').slice(0, 40).padEnd(24, '0');
+const fingerprint = (data: FormData) => [...data.entries()].filter(([name]) => name !== 'cf-turnstile-response' && name !== 'submission_id')
+  .map(([name, value]) => `${name}=${value instanceof File ? `${value.name}:${value.size}:${value.lastModified}` : value}`).join('&');
+
+/** Opens the branded thank-you dialog with the record reference; focus returns to `returnTo` when it closes. */
+export function showThankYou(type: string, reference: string, returnTo?: HTMLElement | null) {
+  const dialog = document.querySelector<HTMLDialogElement>('#thank-you-dialog');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+  const variant = ['candidate', 'employer', 'general'].includes(type) ? type : 'general';
+  dialog.querySelectorAll<HTMLElement>('.ty-variant').forEach(block => {
+    const on = block.dataset.variant === variant;
+    block.hidden = !on;
+    block.querySelector('[data-ty-title]')?.toggleAttribute('id', false);
+    block.querySelector('[data-ty-text]')?.toggleAttribute('id', false);
+    if (on) { block.querySelector('[data-ty-title]')!.id = 'ty-title'; block.querySelector('[data-ty-text]')!.id = 'ty-text'; }
+    const ref = block.querySelector<HTMLElement>('[data-ty-ref]');
+    if (ref) ref.textContent = reference;
+    block.querySelector<HTMLElement>('.ty-ref')!.hidden = !reference;
+  });
+  const close = dialog.querySelector<HTMLButtonElement>('[data-ty-close]')!;
+  close.onclick = () => dialog.close();
+  dialog.onclick = event => { if (event.target === dialog) dialog.close(); };
+  dialog.onclose = () => returnTo?.focus({ preventScroll: true });
+  dialog.showModal();
+  close.focus();
+}
+
 function initForm(form: HTMLFormElement) {
   const status = form.querySelector<HTMLElement>('.form-status')!;
+  let saving = false, pendingKey = '', pendingPrint = '';
 
   // Fields that only apply to one choice (e.g. vacancies for employer enquiries).
   const conditional = [...form.querySelectorAll<HTMLElement>('.field[data-show-field]')];
@@ -81,6 +110,7 @@ function initForm(form: HTMLFormElement) {
   const fileInput = zone?.querySelector<HTMLInputElement>('input[type=file]') ?? null;
   const fileRow = form.querySelector<HTMLElement>('.dz-file');
   const showFile = () => {
+    if (!fileInput) return; // forms without an upload field
     const file = fileInput?.files?.[0];
     const text = fileProblem(fileInput!);
     if (fileInput) setError(fileInput, text);
@@ -120,27 +150,39 @@ function initForm(form: HTMLFormElement) {
       status.textContent = 'This is a website preview. No information has been sent or stored.';
       return;
     }
+    if (saving) return; // a second click while the first is still saving does nothing
     const submit = form.querySelector<HTMLButtonElement>('[type=submit]')!;
+    const data = new FormData(form);
+    // The same submission keeps the same key across retries; changing any field starts a new submission.
+    const print = fingerprint(data);
+    if (!pendingKey || print !== pendingPrint) { pendingKey = newKey(); pendingPrint = print; }
+    data.set('submission_id', pendingKey);
+    saving = true;
     submit.disabled = true;
-    status.textContent = 'Sending your enquiry…';
+    submit.setAttribute('aria-busy', 'true');
+    form.classList.add('is-saving');
+    status.textContent = data.get('attachment') instanceof File && (data.get('attachment') as File).size ? 'Uploading your CV and saving your details…' : 'Saving your details…';
     try {
-      const data = new FormData(form);
       const response = await fetch('/api/contact', { method: 'POST', body: data });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Your enquiry could not be sent. Please try again.');
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.error || 'We could not save your details just now. Your entries are still here, please try again.');
       track('enquiry_sent',{form:form.dataset.audience||form.id||'enquiry',page:location.pathname.replace(/^\/ar(?=\/)/,'')});
+      pendingKey = ''; pendingPrint = '';
       status.classList.add('success');
-      status.textContent = form.dataset.success || 'Thank you. Your enquiry is on its way.';
-      form.reset();
-      syncConditional();
-      showFile();
-      status.focus();
-      status.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
+      status.textContent = 'Thank you. Your details have been received.';
+      // The record is saved: tidying the form must never turn this into an error message.
+      try { form.reset(); syncConditional(); showFile(); } catch { /* cosmetic only */ }
+      showThankYou(String(data.get('type') || 'general'), String(result.reference || ''), submit);
     } catch (error) {
+      // Nothing is cleared: the visitor can correct or retry without retyping.
       status.classList.add('error');
       status.textContent = error instanceof Error ? error.message : 'Unable to send. Please try again.';
+      status.focus();
     } finally {
+      saving = false;
       submit.disabled = false;
+      submit.removeAttribute('aria-busy');
+      form.classList.remove('is-saving');
       const widget = (window as unknown as { turnstile?: { reset: (el: Element) => void } }).turnstile;
       const element = form.querySelector('.cf-turnstile');
       if (widget && element) widget.reset(element);

@@ -1,4 +1,6 @@
 // Quick match lead assistant: triggers, step flow, accessibility, submission and analytics.
+import { newKey } from './contact-form';
+let qmKey = '', qmPrint = '';
 const card = document.querySelector<HTMLElement>('#quick-match');
 const bar = document.querySelector<HTMLElement>('.qm-bar');
 
@@ -228,10 +230,14 @@ function init(card: HTMLElement, bar: HTMLElement) {
       body.set('cf-turnstile-response', token);
       // The answers travel as structured lines so the lead arrives pre-sorted.
       body.set('message', ['Source: Quick match', `Roles needed: ${detail.roles}`, `People needed: ${detail.headcount}`, `Countries: ${detail.countries}`].join('\n'));
+      const print = [...body.entries()].filter(([k]) => k !== 'cf-turnstile-response').map(([k, v]) => k + '=' + String(v)).join('&');
+      if (!qmKey || print !== qmPrint) { qmKey = newKey(); qmPrint = print; }
+      body.set('submission_id', qmKey);
       const response = await fetch('/api/contact', { method: 'POST', body });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Your enquiry could not be sent. Please try again.');
       track('quick_match_submitted', detail);
+      qmKey = ''; qmPrint = '';
       completed = true; store.set();
       finishEmployer(false);
     } catch (error) {

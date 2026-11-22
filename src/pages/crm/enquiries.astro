@@ -1,0 +1,10 @@
+---
+import Crm from '../../layouts/Crm.astro';
+import {hasSession,crmHeaders} from '../../lib/crm/guard';
+import fields from '../../data/enquiry-fields.json';
+export const prerender=false;
+if(!(await hasSession(Astro.request)))return Astro.redirect('/crm/login');
+Object.entries(crmHeaders).forEach(([k,v])=>Astro.response.headers.set(k,v));
+const options={countries:(fields.general.find(f=>f.name==='country') as any)?.options??[],categories:(fields.general.find(f=>f.name==='enquiry_type') as any)?.options??[],categoryLabel:'Enquiry type'};
+---
+<Crm title="General enquiries" view="enquiries" type="general" options={options}></Crm>

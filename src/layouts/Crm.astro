@@ -1,0 +1,36 @@
+---
+// Admin CRM shell. Rendered on the server only after the session has been checked by the page.
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '../styles/crm.css';
+import BrandArtwork from '../components/BrandArtwork.astro';
+interface Props {title:string;view:string;type?:string;options?:Record<string,unknown>;bare?:boolean;}
+const {title,view,type='',options={},bare=false}=Astro.props;
+const nav=[['overview','Overview','/crm/'],['candidates','Candidates','/crm/candidates'],['clients','Client requests','/crm/clients'],['enquiries','General enquiries','/crm/enquiries'],['status','System status','/crm/status']];
+const icons:Record<string,string>={overview:'M3 13h8V3H3v10Zm10 8h8V11h-8v10ZM3 21h8v-6H3v6Zm10-18v6h8V3h-8Z',candidates:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2',clients:'M8 7V4h8v3M3 7h18v14H3V7ZM3 12c6 4 12 4 18 0',enquiries:'M4 4h16v12H9l-5 4V4Z',status:'M22 12h-4l-3 9L9 3l-3 9H2'};
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/><meta name="referrer" content="no-referrer"/>
+<title>{title} | Adhuni CRM</title>
+<link rel="icon" href="/favicon-approved.svg" type="image/svg+xml"/>
+</head>
+<body class:list={['crm',{'crm-bare':bare}]}>
+{bare?<slot/>:<div class="crm-shell">
+<aside class="crm-side" id="crm-side">
+<a class="crm-brand" href="/crm/" aria-label="Adhuni HR Solutions CRM"><BrandArtwork class="crm-logo" reversed decorative filterId="crm-logo-reverse"/><span>CRM</span></a>
+<nav aria-label="CRM sections"><ul>{nav.map(([key,label,href])=><li><a href={href} aria-current={key===view?'page':undefined}><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={icons[key]}/></svg>{label}</a></li>)}</ul></nav>
+<button type="button" class="crm-logout" data-logout>Sign out</button>
+</aside>
+<div class="crm-main">
+<header class="crm-top"><button type="button" class="crm-menu" aria-controls="crm-side" aria-expanded="false" data-menu><span class="sr-only">Menu</span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button><h1>{title}</h1></header>
+<main id="crm-app" data-view={view} data-type={type} data-options={JSON.stringify(options)}><slot/></main>
+</div>
+</div>}
+<script>import '../scripts/crm';</script>
+</body>
+</html>

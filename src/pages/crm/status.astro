@@ -1,0 +1,9 @@
+---
+import Crm from '../../layouts/Crm.astro';
+import {hasSession,crmHeaders} from '../../lib/crm/guard';
+export const prerender=false;
+if(!(await hasSession(Astro.request)))return Astro.redirect('/crm/login');
+Object.entries(crmHeaders).forEach(([k,v])=>Astro.response.headers.set(k,v));
+const options={};
+---
+<Crm title="System status" view="status" type="" options={options}></Crm>

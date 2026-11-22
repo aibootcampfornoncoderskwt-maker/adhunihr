@@ -1,0 +1,18 @@
+---
+// Thank-you popup shown after an enquiry has been saved. One native <dialog> (focus trap, Escape, screen-reader dialog
+// semantics come with it); the wording for each form is rendered here so the Arabic pages are translated at build time.
+import Icon from './Icon.astro';
+import '../styles/thank-you.css';
+const variants=[
+ {type:'candidate',title:'Thank you for submitting your CV',text:'Your details have been received by Adhuni HR Solutions. Our recruitment team will review your profile and contact you when a suitable opportunity matches your skills and experience.',label:'Submission reference'},
+ {type:'employer',title:'Thank you for your recruitment enquiry',text:'Your hiring requirements have been received by Adhuni HR Solutions. Our team will review your request and contact you to discuss the next steps.',label:'Enquiry reference'},
+ {type:'general',title:'Thank you for contacting Adhuni',text:'Your message has been received. Our team will review your enquiry and get back to you.',label:'Enquiry reference'}
+];
+---
+<dialog class="ty" id="thank-you-dialog" aria-labelledby="ty-title" aria-describedby="ty-text">
+<div class="ty-card">
+<span class="ty-icon" aria-hidden="true"><Icon name="check" size={30}/></span>
+{variants.map(v=><div class="ty-variant" data-variant={v.type} hidden={v.type!=='general'}><h2 id={v.type==='general'?'ty-title':undefined} data-ty-title>{v.title}</h2><p id={v.type==='general'?'ty-text':undefined} data-ty-text>{v.text}</p><p class="ty-ref"><span>{v.label}</span><bdi dir="ltr" data-ty-ref></bdi></p></div>)}
+<button type="button" class="ty-close" data-ty-close>Close</button>
+</div>
+</dialog>

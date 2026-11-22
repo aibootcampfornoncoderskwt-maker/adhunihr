@@ -1,16 +1,18 @@
 import type { APIRoute } from 'astro';
 import { Buffer } from 'node:buffer';
+import { randomBytes } from 'node:crypto';
 import fields from '../../data/enquiry-fields.json';
+import { backend, backendReady, clientIp } from '../../lib/crm/backend';
 export const prerender=false;
+// Website enquiries (candidate, employer, general, quick match, brief builder) are validated here and relayed to the
+// Apps Script backend, which saves them in Google Sheets and Drive and then sends the notification email.
 const json=(body:object,status=200)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const MAX_FILE=2*1024*1024;
 const MAX_BODY=MAX_FILE+128*1024;
+const env=(key:string)=>process.env[key] ?? (import.meta.env as Record<string,string|undefined>)[key];
 export const POST:APIRoute=async({request})=>{
- const apiKey=process.env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY,from=process.env.CONTACT_FROM || import.meta.env.CONTACT_FROM,to=process.env.CONTACT_TO || import.meta.env.CONTACT_TO,secret=process.env.TURNSTILE_SECRET_KEY || import.meta.env.TURNSTILE_SECRET_KEY;
- // Enquiries go to a Google Sheet through an Apps Script web app (see docs/google-sheets-setup.md). Email through Resend is optional and extra.
- const sheetUrl=process.env.GOOGLE_SHEET_WEBHOOK_URL || import.meta.env.GOOGLE_SHEET_WEBHOOK_URL,sheetSecret=process.env.GOOGLE_SHEET_SECRET || import.meta.env.GOOGLE_SHEET_SECRET;
- const sheetReady=Boolean(sheetUrl&&sheetSecret&&/^https:\/\/script\.google\.com\//.test(sheetUrl)),emailReady=Boolean(apiKey&&from&&to);
- if((process.env.PUBLIC_CONTACT_ENABLED || import.meta.env.PUBLIC_CONTACT_ENABLED)!=='true'||(!sheetReady&&!emailReady))return json({error:'Online enquiries are not available yet. Please try again after launch.'},503);
+ const turnstileSecret=env('TURNSTILE_SECRET_KEY');
+ if(env('PUBLIC_CONTACT_ENABLED')!=='true'||!backendReady())return json({error:'Online enquiries are not available yet. Please try again after launch.'},503);
  const origin=request.headers.get('origin');
  if(!origin||origin!==new URL(request.url).origin)return json({error:'Request not permitted.'},403);
  const contentType=request.headers.get('content-type')||'';
@@ -36,34 +38,35 @@ export const POST:APIRoute=async({request})=>{
   }
   const email=text('email');if(!/^\S+@[^\s@]+\.[^\s@]+$/.test(email)||/[\r\n]/.test(email))return json({error:'Please enter a valid email address.'},400);
   // Cloudflare Turnstile is optional: it is checked only when TURNSTILE_SECRET_KEY is set. The honeypot and origin check always apply.
-  const token=text('cf-turnstile-response');if(secret&&(!token||token.length>2048))return json({error:'Please complete the security check.'},400);
-  const attachments:{filename:string;content:string}[]=[];
+  const token=text('cf-turnstile-response');if(turnstileSecret&&(!token||token.length>2048))return json({error:'Please complete the security check.'},400);
+  let file:{extension:string;base64:string}|undefined;
   const upload=data.get('attachment');
   if(upload instanceof File&&upload.size){
    if(upload.size>MAX_FILE)return json({error:'Attachment must be 2 MB or smaller.'},413);
-   const extension=upload.name.split('.').pop()?.toLowerCase();
+   const extension=upload.name.split('.').pop()?.toLowerCase()||'';
    const bytes=Buffer.from(await upload.arrayBuffer());
+   // The extension and the file's own signature must agree (PDF, legacy Word, or a Word document package).
    const valid=extension==='pdf'?bytes.subarray(0,5).toString()==='%PDF-':extension==='doc'?bytes.subarray(0,8).equals(Buffer.from([0xd0,0xcf,0x11,0xe0,0xa1,0xb1,0x1a,0xe1])):extension==='docx'?bytes.subarray(0,4).equals(Buffer.from([0x50,0x4b,0x03,0x04]))&&bytes.includes(Buffer.from('[Content_Types].xml'))&&bytes.includes(Buffer.from('word/document.xml')):false;
    if(!valid)return json({error:'Please attach a valid PDF, DOC or DOCX file.'},400);
-   attachments.push({filename:`${type}-attachment.${extension}`,content:bytes.toString('base64')});
+   file={extension,base64:bytes.toString('base64')};
   }
-  if(secret){
-   const verification=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',body:new URLSearchParams({secret,response:token}),signal:AbortSignal.timeout(10000)});
+  if(turnstileSecret){
+   const verification=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',body:new URLSearchParams({secret:turnstileSecret,response:token}),signal:AbortSignal.timeout(10000)});
    const result=await verification.json();if(!verification.ok||!result.success||result.hostname!==new URL(request.url).hostname)return json({error:'Security check expired or failed. Please try again.'},400);
   }
   const service=text('service');if(service&&!/^[a-z-]{1,70}$/.test(service))return json({error:'Please check the recruitment service.'},400);
-  const details=(service?`Recruitment service: ${service}\n`:'')+schema.filter(field=>field.type!=='file').map(field=>`${field.label}: ${text(field.name)||'Not provided'}`).join('\n');
-  let delivered=false;
-  if(sheetReady){
-   // One row per enquiry. The Apps Script saves any attachment to Drive and writes its link into the row.
-   const row={secret:sheetSecret,type,submittedAt:new Date().toISOString(),service,language:(request.headers.get('referer')||'').includes('/ar/')?'ar':'en',fields:Object.fromEntries(schema.filter(field=>field.type!=='file').map(field=>[field.label,text(field.name)])),...(attachments.length?{file:{name:attachments[0].filename,base64:attachments[0].content}}:{})};
-   try{const response=await fetch(sheetUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(row),redirect:'follow',signal:AbortSignal.timeout(20000)});const reply=await response.json().catch(()=>null);delivered=response.ok&&reply?.ok===true;}catch{delivered=false;}
-  }
-  if(emailReady){
-   const delivery=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({from,to:[to],reply_to:email,subject:`Adhuni ${type} enquiry`,text:`Type: ${type}\n${details}\n\nConsent to enquiry contact: yes`,...(attachments.length?{attachments}:{})}),signal:AbortSignal.timeout(10000)}).catch(()=>null);
-   delivered=Boolean(delivery?.ok)||delivered;
-  }
-  if(!delivered)return json({error:'Your enquiry could not be delivered. Please try again later.'},502);
-  return json({ok:true});
+  // Retries of the same submission reuse the browser's key, so a double click or a retry cannot create a second record.
+  const key=text('submission_id');
+  const idempotencyKey=/^[A-Za-z0-9_-]{16,80}$/.test(key)?key:randomBytes(18).toString('base64url');
+  const values:Record<string,string>=Object.fromEntries(schema.filter(field=>field.type!=='file').map(field=>[field.name,text(field.name)]));
+  if(type==='employer')values.service=service;
+  const referer=request.headers.get('referer')||'';
+  let source='';try{source=referer?new URL(referer).pathname:'';}catch{source='';}
+  const saved=await backend('submit',{type,fields:values,file,idempotencyKey,source,language:source.startsWith('/ar/')?'ar':'en',consent:true,ip:clientIp(request)},45000);
+  if(saved.ok&&typeof saved.reference==='string')return json({ok:true,reference:saved.reference});
+  if(saved.code===409)return json({error:String(saved.error||'This submission was already sent with different details.')},409);
+  if(saved.code===429)return json({error:String(saved.error||'Too many submissions. Please wait a few minutes and try again.')},429);
+  if(saved.code===400&&saved.error)return json({error:String(saved.error)},400);
+  return json({error:'We could not save your details just now. Nothing was submitted, and your entries are still in the form. Please try again in a moment.'},502);
  }catch{return json({error:'Unable to process the enquiry. Please try again.'},400);}
 };
